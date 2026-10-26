@@ -1,5 +1,4 @@
-
-package persistencia;
+package Modelo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,6 +6,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class Conexion {
+
     private String URL;
     private String user;
     private String password;
@@ -17,22 +17,22 @@ public class Conexion {
         this.user = user;
         this.password = password;
     }
-    
+
     public Connection initConnection() {
         if (connection == null) {
 
             try {
-                
-                Class.forName("com.mysql.jdbc.Driver");
-                
-                connection = DriverManager.getConnection(URL, user, password); 
 
-            } catch (SQLException ex) { 
-                JOptionPane.showMessageDialog(null, "No se pudo establecer la conexion " + ex); 
-                
-            } catch (ClassNotFoundException ex) { 
+                Class.forName("com.mysql.jdbc.Driver");
+
+                connection = DriverManager.getConnection(URL, user, password);
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "No se pudo establecer la conexion " + ex);
+
+            } catch (ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "No se pudo cargar el Driver de conexion");
-            }       
+            }
         }
         return connection;
     }

@@ -1,9 +1,6 @@
 package vistas;
 
-/**
- *
- * @author ramir
- */
+
 public class TestConsola {
 
     

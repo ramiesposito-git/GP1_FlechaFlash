@@ -1,7 +1,7 @@
-
 package persistencia;
 
-import Entidades.Pasajero;
+import Modelo.Conexion;
+import Modelo.Pasajero;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
-
 public class PasajeroData {
-     private Connection connection = null;
+
+    private Connection connection = null;
 
     public PasajeroData(Conexion conexion) {
         this.connection = conexion.initConnection();

@@ -1,9 +1,8 @@
-
-package Entidades;
-
+package Modelo;
 
 public class Pasajero {
-      private int idPasajero;
+
+    private int idPasajero;
     private String dni;
     private String nombre;
     private String apellido;
@@ -84,5 +83,5 @@ public class Pasajero {
     public String toString() {
         return "Pasajero{" + "idPasajero=" + idPasajero + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", correo=" + correo + ", telefono=" + telefono + ", estado=" + estado + '}';
     }
-    
+
 }
