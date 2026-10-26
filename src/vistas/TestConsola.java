@@ -20,9 +20,19 @@ public class TestConsola {
             pasajeroData.guardarPasajero(p2);
             pasajeroData.guardarPasajero(p3);
             
-            pasajeroData.buscarPasajeroPorId(1);
-            pasajeroData.buscarPasajeroPorId(2);
-            pasajeroData.buscarPasajeroPorId(3);
+            Pasajero pa1 = pasajeroData.buscarPasajeroPorId(1);
+            if (pa1 != null) {
+                System.out.println(pa1);
+            }
+            Pasajero pa2 = pasajeroData.buscarPasajeroPorId(2);
+            if (pa2 != null) {
+                System.out.println(pa2);
+            }
+            Pasajero pa3 = pasajeroData.buscarPasajeroPorId(3);
+            if (pa3 != null) {
+                System.out.println(pa3);
+            }
+            
         }catch(Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
