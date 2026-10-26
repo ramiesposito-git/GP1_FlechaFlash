@@ -18,7 +18,7 @@ public class PasajeroData {
     }
 
     public void guardarPasajero(Pasajero pasajero) {
-        String sql = "INSERT INTO Pasajeros (DNI, Nombre, Apellido, Correo, Telefono, Estado) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Pasajero (dni, nombre, apellido, correo, telefono, estado) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, pasajero.getDni());
@@ -41,7 +41,7 @@ public class PasajeroData {
     }
 
     public Pasajero buscarPasajeroPorId(int id) {
-        String sql = "SELECT DNI, Nombre, Apellido, Correo, Telefono, Estado FROM Pasajeros WHERE ID_Pasajero = ?";
+        String sql = "SELECT dni, nombre, apellido, correo, telefono, estado FROM Pasajero WHERE idPasajero = ?";
         Pasajero pasajero = null;
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -50,12 +50,12 @@ public class PasajeroData {
             if (rs.next()) {
                 pasajero = new Pasajero();
                 pasajero.setIdPasajero(id);
-                pasajero.setDni(rs.getString("DNI"));
-                pasajero.setNombre(rs.getString("Nombre"));
-                pasajero.setApellido(rs.getString("Apellido"));
-                pasajero.setCorreo(rs.getString("Correo"));
-                pasajero.setTelefono(rs.getString("Telefono"));
-                pasajero.setEstado(rs.getBoolean("Estado"));
+                pasajero.setDni(rs.getString("dni"));
+                pasajero.setNombre(rs.getString("nombre"));
+                pasajero.setApellido(rs.getString("apellido"));
+                pasajero.setCorreo(rs.getString("correo"));
+                pasajero.setTelefono(rs.getString("telefono"));
+                pasajero.setEstado(rs.getBoolean("estado"));
             } else {
                 JOptionPane.showMessageDialog(null, "No existe el pasajero con ID: " + id);
             }
