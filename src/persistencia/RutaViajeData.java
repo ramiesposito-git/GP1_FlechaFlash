@@ -1,8 +1,8 @@
 package persistencia;
 
 
-import Modelo.Conexion;
-import Modelo.RutaViaje;
+import modelo.Conexion;
+import modelo.RutaViaje;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;

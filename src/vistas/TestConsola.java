@@ -1,7 +1,7 @@
 package vistas;
 
-import Modelo.Conexion;
-import Modelo.Pasajero;
+import modelo.Conexion;
+import modelo.Pasajero;
 import persistencia.PasajeroData;
 
 

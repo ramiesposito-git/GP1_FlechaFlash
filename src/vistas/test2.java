@@ -1,9 +1,9 @@
 package vistas;
 
-import Modelo.Conexion;
+import modelo.Conexion;
 import persistencia.AsientoData;
-import Modelo.Asiento;
-import Modelo.Colectivo;
+import modelo.Asiento;
+import modelo.Colectivo;
 import java.util.ArrayList;
 
 public class test2 {

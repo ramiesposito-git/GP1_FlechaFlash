@@ -1,5 +1,5 @@
 
-package Modelo;
+package modelo;
 
 public class Colectivo {
     private int ID_colectivo;

@@ -1,9 +1,9 @@
 package persistencia;
 
-import Modelo.Asiento;
-import Modelo.Colectivo;
-import Modelo.Conexion;
-import com.mysql.jdbc.Statement;
+import modelo.Asiento;
+import modelo.Colectivo;
+import modelo.Conexion;
+import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;

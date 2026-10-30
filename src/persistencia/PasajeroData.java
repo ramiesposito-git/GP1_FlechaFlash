@@ -1,7 +1,7 @@
 package persistencia;
 
-import Modelo.Conexion;
-import Modelo.Pasajero;
+import modelo.Conexion;
+import modelo.Pasajero;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
