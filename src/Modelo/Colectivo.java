@@ -23,6 +23,17 @@ public class Colectivo {
         this.estado = estado;
     }
 
+    public Colectivo(String matricula, String marca, String modelo, int capacidad, String chofer, boolean estado) {
+        this.matricula = matricula;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.capacidad = capacidad;
+        this.chofer = chofer;
+        this.estado = estado;
+    }
+    
+    
+
     public int getID_colectivo() {
         return ID_colectivo;
     }

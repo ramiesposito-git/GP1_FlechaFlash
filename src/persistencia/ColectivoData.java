@@ -44,25 +44,25 @@ public class ColectivoData {
 
     public Colectivo buscarColectivoPorId(int id) {
         Colectivo colectivo = null;
-        String sql = "SELECT id_colectivo,matricula,marca,modelo,capacidad,chofer,estado FROM colectivo WHERE id_colectivo=?";
+        String sql = "SELECT `ID_colectivo`, `matricula`, `marca`, `modelo`, `capacidad`, `chofer`, `estado` FROM `colectivos`  WHERE ID_colectivo = ? ";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
+            
+            while (rs.next()) {
                 colectivo = new Colectivo();
-                colectivo.setID_colectivo(rs.getInt("id_colectivo"));
+                colectivo.setID_colectivo(rs.getInt("ID_colectivo"));
                 colectivo.setMatricula(rs.getString("matricula"));
                 colectivo.setMarca(rs.getString("marca"));
                 colectivo.setModelo(rs.getString("modelo"));
                 colectivo.setCapacidad(rs.getInt("capacidad"));
                 colectivo.setChofer(rs.getString("chofer"));
                 colectivo.setEstado(rs.getBoolean("estado"));
-            } else {
-                JOptionPane.showMessageDialog(null, "no existe colectivo con este id");
-            }
+            } 
+            
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al buscar colectivo" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "ERROR AL BUSCAR POR ID: " + ex.getMessage());
         }
         return colectivo;
     }
@@ -137,7 +137,7 @@ public class ColectivoData {
 
     public List<Colectivo> listarColectivo() {
         List<Colectivo> colectivos = new ArrayList<>();
-        String sql="SELECT id_colectivo,matricula,marca,modelo,capacidad,chofer,estado FROM colectivo";
+        String sql = "SELECT id_colectivo,matricula,marca,modelo,capacidad,chofer,estado FROM colectivo";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
@@ -152,7 +152,7 @@ public class ColectivoData {
                 colectivo.setEstado(rs.getBoolean("estado"));
                 colectivos.add(colectivo);
             }
-        }catch(SQLException ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al listar colectivos" + ex.getMessage());
         }
         return colectivos;
