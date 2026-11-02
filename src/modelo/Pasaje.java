@@ -6,7 +6,7 @@ import java.time.LocalTime;
 public class Pasaje {
     
     private int idPasaje;
-    private Pasaje pasajero;
+    private Pasajero pasajero;
     private Asiento asiento;
     private RutaViaje viaje;
     private LocalDate fechaVenta;
@@ -17,7 +17,7 @@ public class Pasaje {
     public Pasaje() {
     }
 
-    public Pasaje(int idPasaje, Pasaje pasajero, Asiento asiento, RutaViaje viaje, LocalDate fechaVenta, LocalTime HoraVenta, double precio, boolean estado) {
+    public Pasaje(int idPasaje, Pasajero pasajero, Asiento asiento, RutaViaje viaje, LocalDate fechaVenta, LocalTime HoraVenta, double precio, boolean estado) {
         this.idPasaje = idPasaje;
         this.pasajero = pasajero;
         this.asiento = asiento;
@@ -28,7 +28,7 @@ public class Pasaje {
         this.estado = estado;
     }
 
-    public Pasaje(Pasaje pasajero, Asiento asiento, RutaViaje viaje, LocalDate fechaVenta, LocalTime HoraVenta, double precio, boolean estado) {
+    public Pasaje(Pasajero pasajero, Asiento asiento, RutaViaje viaje, LocalDate fechaVenta, LocalTime HoraVenta, double precio, boolean estado) {
         this.pasajero = pasajero;
         this.asiento = asiento;
         this.viaje = viaje;
@@ -38,6 +38,9 @@ public class Pasaje {
         this.estado = estado;
     }
 
+    
+    
+    
     public int getIdPasaje() {
         return idPasaje;
     }
@@ -46,11 +49,11 @@ public class Pasaje {
         this.idPasaje = idPasaje;
     }
 
-    public Pasaje getPasajero() {
+    public Pasajero getPasajero() {
         return pasajero;
     }
 
-    public void setPasajero(Pasaje pasajero) {
+    public void setPasajero(Pasajero pasajero) {
         this.pasajero = pasajero;
     }
 
@@ -94,7 +97,7 @@ public class Pasaje {
         this.precio = precio;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
@@ -104,7 +107,5 @@ public class Pasaje {
     
     
     
-
-
     
 }
