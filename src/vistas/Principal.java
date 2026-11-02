@@ -1,7 +1,5 @@
 package vistas;
 
-import persistencia.*;
-import java.sql.*;
 import modelo.Conexion;
 
 public class Principal extends javax.swing.JFrame {
@@ -23,7 +21,7 @@ public class Principal extends javax.swing.JFrame {
         jmbPrincipal = new javax.swing.JMenuBar();
         jmGestion = new javax.swing.JMenu();
         menuPasajero = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuColectivo = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jmConsultar = new javax.swing.JMenu();
 
@@ -33,7 +31,7 @@ public class Principal extends javax.swing.JFrame {
         jdpPrincipal.setLayout(jdpPrincipalLayout);
         jdpPrincipalLayout.setHorizontalGroup(
             jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 658, Short.MAX_VALUE)
+            .addGap(0, 966, Short.MAX_VALUE)
         );
         jdpPrincipalLayout.setVerticalGroup(
             jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -42,12 +40,15 @@ public class Principal extends javax.swing.JFrame {
 
         jmGestion.setText("Gestion");
 
+        menuPasajero.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuPasajero.setText("Pasajero");
         menuPasajero.addActionListener(this::menuPasajeroActionPerformed);
         jmGestion.add(menuPasajero);
 
-        jMenuItem2.setText("Colectivo");
-        jmGestion.add(jMenuItem2);
+        menuColectivo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuColectivo.setText("Colectivo");
+        menuColectivo.addActionListener(this::menuColectivoActionPerformed);
+        jmGestion.add(menuColectivo);
 
         jMenuItem3.setText("Ruta");
         jmGestion.add(jMenuItem3);
@@ -82,10 +83,24 @@ public class Principal extends javax.swing.JFrame {
         VistaPasajero vp = new VistaPasajero();
         jdpPrincipal.add(vp);
         vp.setVisible(true);
-        
+
         jdpPrincipal.revalidate();
         jdpPrincipal.repaint();
     }//GEN-LAST:event_menuPasajeroActionPerformed
+
+    private void menuColectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuColectivoActionPerformed
+
+        jdpPrincipal.removeAll();
+
+        VistaColectivo va  = new VistaColectivo();
+        jdpPrincipal.add(va);
+
+        va.setVisible(true);
+
+        jdpPrincipal.revalidate();
+        jdpPrincipal.repaint();
+
+    }//GEN-LAST:event_menuColectivoActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -110,12 +125,12 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JDesktopPane jdpPrincipal;
     private javax.swing.JMenu jmConsultar;
     private javax.swing.JMenu jmGestion;
     private javax.swing.JMenuBar jmbPrincipal;
+    private javax.swing.JMenuItem menuColectivo;
     private javax.swing.JMenuItem menuPasajero;
     // End of variables declaration//GEN-END:variables
 }

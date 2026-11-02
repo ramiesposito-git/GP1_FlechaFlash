@@ -33,7 +33,9 @@ public class PasajeData {
             ps.setDouble(6, pasaje.getPrecio());
             ps.setBoolean(7, pasaje.getEstado());
 
-            ResultSet rs = ps.executeQuery();
+            ps.executeUpdate();
+            
+            ResultSet rs = ps.getGeneratedKeys();
 
             if (rs.next()) {
                 int id = rs.getInt(1);

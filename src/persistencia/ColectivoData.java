@@ -20,7 +20,7 @@ public class ColectivoData {
     }
 
     public void guardarColectivo(Colectivo colectivo) {
-        String sql = "INSERT INTO Colectivo (matricula,marca,modelo,capacidad,chofer,estado) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO colectivos (matricula,marca,modelo,capacidad,chofer,estado) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, colectivo.getMatricula());
@@ -32,6 +32,7 @@ public class ColectivoData {
 
             stm.executeUpdate();
             ResultSet rs = stm.getGeneratedKeys();
+            
             if (rs.next()) {
                 colectivo.setID_colectivo(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Colectivo guardado exitosamente.");
