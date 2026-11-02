@@ -69,9 +69,11 @@ public class ColectivoData {
     }
 
     public void actualizarColectivo(Colectivo colectivo) {
-        String sql = "UPDATE Colectivo SET matricula=?,marca=?,modelo=?,capacidad=?,chofer=?,estado=? WHERE id_colectivo=?";
+        
+        String SQL = "UPDATE `colectivos` SET `matricula`= ?,`marca`= ?,`modelo`= ?,`capacidad`= ?,`chofer`= ?,`estado`= ? WHERE ID_colectivo = ?";
+        
         try {
-            PreparedStatement stm = connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(SQL);
             stm.setString(1, colectivo.getMatricula());
             stm.setString(2, colectivo.getMarca());
             stm.setString(3, colectivo.getModelo());
@@ -79,8 +81,9 @@ public class ColectivoData {
             stm.setString(5, colectivo.getChofer());
             stm.setBoolean(6, colectivo.isEstado());
             stm.setInt(7, colectivo.getID_colectivo());
-            int exito = stm.executeUpdate();
-            if (exito == 1) {
+            
+            int aa = stm.executeUpdate();
+            if (aa == 1) {
                 JOptionPane.showMessageDialog(null, "Colectivo actualizado con exito");
             }
         } catch (SQLException ex) {

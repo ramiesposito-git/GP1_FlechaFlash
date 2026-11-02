@@ -250,7 +250,8 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         Colectivo colectivo = new Colectivo(matricula, marca, modelo, capacidad, chofer, estado);
 
         cd.guardarColectivo(colectivo);
-
+        
+        vaciarCampos();
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -265,12 +266,12 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         }
 
         Colectivo colectivo = cd.buscarColectivoPorId(id);
-        
+
         if (colectivo == null) {
             JOptionPane.showMessageDialog(this, "No se encontro un colectivo con el ID especificado!");
             return;
         }
-        
+
         txtMatricula.setText(colectivo.getMatricula());
         txtMarca.setText(colectivo.getMarca());
         txtModelo.setText(colectivo.getModelo());
@@ -288,10 +289,20 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
             return;
         }
 
-//        if (esIgual(Integer.valueOf(txtID.getText()))) {
-//            JOptionPane.showMessageDialog(this, "debe modificar al menos uno de sus datos!");
-//            return;
-//        }
+        if (esIgual(Integer.valueOf(txtID.getText()))) {
+            JOptionPane.showMessageDialog(this, "debe modificar al menos uno de sus datos!");
+            return;
+        }
+
+        String matricula = txtMatricula.getText();
+        String marca = txtMarca.getText();
+        String modelo = txtModelo.getText();
+        int capacidad = (Integer) SpinnerCapacidad.getValue();
+        String chofer = txtChofer.getText();
+        boolean estado = checkActivo.isSelected();
+
+        Colectivo colectivo = new Colectivo(matricula, marca, modelo, capacidad, chofer, estado);
+        cd.actualizarColectivo(colectivo);
 
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -334,17 +345,37 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
 
     }
 
-    
-    public boolean esIgual( int id ){
-        
+    public boolean esIgual(int id) {
+
         boolean igual = true;
-        
-        cd.buscarColectivoPorId(int id);
-        
-        if (txtMatricula.getText().equals()) {
-            
+
+        Colectivo colectivo = cd.buscarColectivoPorId(id);
+
+        if (!txtMatricula.getText().equals(colectivo.getMatricula())) {
+            igual = false;
+        } else if (!txtMarca.getText().equals(colectivo.getMarca())) {
+            igual = false;
+        } else if (!txtModelo.getText().equals(colectivo.getModelo())) {
+            igual = false;
+        } else if ((Integer) SpinnerCapacidad.getValue() != colectivo.getCapacidad()) {
+            igual = false;
+        } else if (!txtChofer.getText().equals(colectivo.getChofer())) {
+            igual = false;
+        } else if (checkActivo.isSelected() == colectivo.isEstado()) {
+            igual = false;
         }
-    
-    
+
+        return igual;
+
     }
+
+    public void vaciarCampos() {
+        txtMatricula.setText("");
+        txtMarca.setText("");
+        txtModelo.setText("");
+        SpinnerCapacidad.setValue(1);
+        txtChofer.setText("");
+        checkActivo.setSelected(false);
+    }
+
 }
