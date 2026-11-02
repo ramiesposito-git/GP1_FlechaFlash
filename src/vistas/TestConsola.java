@@ -5,7 +5,7 @@ import modelo.Pasajero;
 import persistencia.PasajeroData;
 
 
-public class TestConsola {
+public class testConsola {
     
     public static void main(String[] args) {
         try{

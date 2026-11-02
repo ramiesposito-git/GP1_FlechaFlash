@@ -21,7 +21,7 @@ public class AsientoData {
         cd = new ColectivoData(conexion);
     }
 
-    public void guardarAsiento(Asiento asiento) {
+    public void crearAsiento(Asiento asiento) {
 
         String SQL = "INSERT INTO `asiento` (`ID_colectivo`, `numero_asiento`, `estado`) VALUES (?, ?, ?)";
 
