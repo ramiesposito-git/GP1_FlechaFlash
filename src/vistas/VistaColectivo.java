@@ -301,7 +301,7 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         String chofer = txtChofer.getText();
         boolean estado = checkActivo.isSelected();
 
-        Colectivo colectivo = new Colectivo(matricula, marca, modelo, capacidad, chofer, estado);
+        Colectivo colectivo = new Colectivo( Integer.parseInt(txtID.getText()), matricula, marca, modelo, capacidad, chofer, estado);
         cd.actualizarColectivo(colectivo);
 
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -361,7 +361,7 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
             igual = false;
         } else if (!txtChofer.getText().equals(colectivo.getChofer())) {
             igual = false;
-        } else if (checkActivo.isSelected() == colectivo.isEstado()) {
+        } else if (!checkActivo.isSelected() == colectivo.isEstado()) {
             igual = false;
         }
 
