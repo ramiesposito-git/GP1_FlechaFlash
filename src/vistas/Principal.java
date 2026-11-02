@@ -5,12 +5,11 @@ import java.sql.*;
 import modelo.Conexion;
 
 public class Principal extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Principal.class.getName());
-    
+
     static Conexion conexion;
-   
-    
+
     public Principal() {
         initComponents();
         conexion = new Conexion("jdbc:mysql://localhost:3306/flechaflashdb", "root", "");
@@ -23,7 +22,7 @@ public class Principal extends javax.swing.JFrame {
         jdpPrincipal = new javax.swing.JDesktopPane();
         jmbPrincipal = new javax.swing.JMenuBar();
         jmGestion = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuPasajero = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jmConsultar = new javax.swing.JMenu();
@@ -38,13 +37,14 @@ public class Principal extends javax.swing.JFrame {
         );
         jdpPrincipalLayout.setVerticalGroup(
             jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 405, Short.MAX_VALUE)
+            .addGap(0, 677, Short.MAX_VALUE)
         );
 
         jmGestion.setText("Gestion");
 
-        jMenuItem1.setText("Pasajero");
-        jmGestion.add(jMenuItem1);
+        menuPasajero.setText("Pasajero");
+        menuPasajero.addActionListener(this::menuPasajeroActionPerformed);
+        jmGestion.add(menuPasajero);
 
         jMenuItem2.setText("Colectivo");
         jmGestion.add(jMenuItem2);
@@ -69,14 +69,23 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jdpPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jdpPrincipal)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void menuPasajeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPasajeroActionPerformed
+        jdpPrincipal.removeAll();
+
+        VistaPasajero vp = new VistaPasajero();
+        jdpPrincipal.add(vp);
+        vp.setVisible(true);
+        
+        jdpPrincipal.revalidate();
+        jdpPrincipal.repaint();
+    }//GEN-LAST:event_menuPasajeroActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -101,12 +110,12 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JDesktopPane jdpPrincipal;
     private javax.swing.JMenu jmConsultar;
     private javax.swing.JMenu jmGestion;
     private javax.swing.JMenuBar jmbPrincipal;
+    private javax.swing.JMenuItem menuPasajero;
     // End of variables declaration//GEN-END:variables
 }

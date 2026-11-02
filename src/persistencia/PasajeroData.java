@@ -69,7 +69,7 @@ public class PasajeroData {
     }
 
     public void actualizarPasajero(Pasajero pasajero) {
-        String sql = "UPDATE Pasajero SET dni=?,nombre=?,apellido=?,correo=?,telefono=?,estado=? WHERE id_pasajero=?";
+        String sql = "UPDATE Pasajero SET dni=?,nombre=?,apellido=?,correo=?,telefono=?,estado=? WHERE pasajero.idPasajero=?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, pasajero.getDni());
@@ -78,6 +78,8 @@ public class PasajeroData {
             stm.setString(4, pasajero.getCorreo());
             stm.setString(5, pasajero.getTelefono());
             stm.setBoolean(6, pasajero.isEstado());
+            
+            stm.setInt(7, pasajero.getIdPasajero());
 
             int exito = stm.executeUpdate();
             if (exito == 1) {
