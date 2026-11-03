@@ -22,7 +22,7 @@ public class Principal extends javax.swing.JFrame {
         jmGestion = new javax.swing.JMenu();
         menuPasajero = new javax.swing.JMenuItem();
         menuColectivo = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        menuRuta = new javax.swing.JMenuItem();
         jmConsultar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -50,8 +50,9 @@ public class Principal extends javax.swing.JFrame {
         menuColectivo.addActionListener(this::menuColectivoActionPerformed);
         jmGestion.add(menuColectivo);
 
-        jMenuItem3.setText("Ruta");
-        jmGestion.add(jMenuItem3);
+        menuRuta.setText("Ruta");
+        menuRuta.addActionListener(this::menuRutaActionPerformed);
+        jmGestion.add(menuRuta);
 
         jmbPrincipal.add(jmGestion);
 
@@ -102,6 +103,18 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_menuColectivoActionPerformed
 
+    private void menuRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRutaActionPerformed
+        jdpPrincipal.removeAll();
+        
+        VistaRutaViaje VR = new VistaRutaViaje();
+        jdpPrincipal.add(VR);
+        
+        VR.setVisible(true);
+        
+        jdpPrincipal.revalidate();
+        jdpPrincipal.repaint();
+    }//GEN-LAST:event_menuRutaActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -125,12 +138,12 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JDesktopPane jdpPrincipal;
     private javax.swing.JMenu jmConsultar;
     private javax.swing.JMenu jmGestion;
     private javax.swing.JMenuBar jmbPrincipal;
     private javax.swing.JMenuItem menuColectivo;
     private javax.swing.JMenuItem menuPasajero;
+    private javax.swing.JMenuItem menuRuta;
     // End of variables declaration//GEN-END:variables
 }

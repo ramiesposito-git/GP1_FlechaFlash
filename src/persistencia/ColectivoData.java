@@ -92,7 +92,7 @@ public class ColectivoData {
     }
 
     public void altaColectivo(int id) {
-        String sql = "UPDATE Colectivo SET estado=1 WHERE id_colectivo=?";
+        String sql = "UPDATE colectivos SET estado=1 WHERE id_colectivo=?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
@@ -108,7 +108,7 @@ public class ColectivoData {
     }
 
     public void bajaColectivo(int id) {
-        String sql = "UPDATE Colectivo SET estado=0 WHERE id_colectivo=?";
+        String sql = "UPDATE colectivos SET estado=0 WHERE id_colectivo=?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
@@ -124,7 +124,7 @@ public class ColectivoData {
     }
 
     public void borrarColectivo(int id) {
-        String sql = "DELETE FROM Colectivo WHERE id_colectivo=?";
+        String sql = "DELETE FROM colectivos WHERE id_colectivo=?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
@@ -141,7 +141,7 @@ public class ColectivoData {
 
     public List<Colectivo> listarColectivo() {
         List<Colectivo> colectivos = new ArrayList<>();
-        String sql = "SELECT id_colectivo,matricula,marca,modelo,capacidad,chofer,estado FROM colectivo";
+        String sql = "SELECT id_colectivo,matricula,marca,modelo,capacidad,chofer,estado FROM colectivos";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
