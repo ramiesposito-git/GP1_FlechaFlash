@@ -410,7 +410,7 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
         txtHoraSalida.setText("");
         txtHoraLlegada.setText("");
         txtPrecio.setText("");
-        checkEstado.setSelected(true);
+        checkEstado.setSelected(false);
         if (comboxIdColectivo.getItemCount() > 0) {
             comboxIdColectivo.setSelectedIndex(0);
         }

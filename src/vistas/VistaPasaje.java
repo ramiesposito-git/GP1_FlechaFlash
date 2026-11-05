@@ -1,15 +1,38 @@
 package vistas;
 
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import modelo.Asiento;
+import modelo.Pasaje;
+import modelo.Pasajero;
+import modelo.RutaViaje;
+import persistencia.AsientoData;
 import persistencia.PasajeData;
+import persistencia.PasajeroData;
+import persistencia.RutaViajeData;
 
 
 public class VistaPasaje extends javax.swing.JInternalFrame {
 
     private PasajeData pd;
+    private PasajeroData pjd;
+    private RutaViajeData rvd;
+    private AsientoData ad;
+    private final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
     
     public VistaPasaje() {
         initComponents();
         pd = new PasajeData(Principal.conexion);
+        pjd = new PasajeroData(Principal.conexion);
+        rvd = new RutaViajeData(Principal.conexion);
+        ad = new AsientoData(Principal.conexion);
+        
+        cargarComboPasajeros();
+        cargarComboAsientos();
+        cargarComboRuta();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -41,20 +64,14 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        comboxPasajero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Pasajero:");
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Asiento:");
 
-        comboxAsiento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Destino de Viaje:");
-
-        comboxRuta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Fecha de venta:");
@@ -70,6 +87,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
         btnCrear.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnCrear.setText("Crear");
+        btnCrear.addActionListener(this::btnCrearActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -173,14 +191,43 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        Pasajero pasajero = (Pasajero) comboxPasajero.getSelectedItem();
+        RutaViaje ruta = (RutaViaje) comboxRuta.getSelectedItem();
+        Asiento asiento = (Asiento) comboxAsiento.getSelectedItem();
+ 
+        if (pasajero == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione un pasajero (si no hay ninguno, cargue uno primero).");
+            return;
+        }
+        if (ruta == null) {
+            JOptionPane.showMessageDialog(this, "No hay viajes disponibles para hoy.");
+            return;
+        }
+        if (asiento == null) {
+            JOptionPane.showMessageDialog(this, "No quedan asientos disponibles en esta ruta.");
+            return;
+        }
+ 
+        Pasaje pasaje = new Pasaje();
+        pasaje.setPasajero(pasajero);
+        pasaje.setAsiento(asiento);
+        pasaje.setViaje(ruta);
+        pasaje.setPrecio(ruta.getPrecio());
+        pasaje.setEstado(true);
+        
+        pd.crearPasaje(pasaje);
+        limpiar();
+    }//GEN-LAST:event_btnCrearActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnSalir;
     private javax.swing.JCheckBox checkboxEstado;
-    private javax.swing.JComboBox<String> comboxAsiento;
-    private javax.swing.JComboBox<String> comboxPasajero;
-    private javax.swing.JComboBox<String> comboxRuta;
+    private javax.swing.JComboBox<Asiento> comboxAsiento;
+    private javax.swing.JComboBox<Pasajero> comboxPasajero;
+    private javax.swing.JComboBox<RutaViaje> comboxRuta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -194,4 +241,41 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtHoraVenta;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarComboPasajeros() {
+        ArrayList<Pasajero> pasajero = (ArrayList<Pasajero>) pjd.listarPasajero();
+        
+        for (Pasajero p : pasajero) {
+            comboxPasajero.addItem(p);
+        }
+    }
+    
+    private void cargarComboAsientos() {
+        ArrayList<Asiento> asiento = (ArrayList<Asiento>) ad.listarAsientos();
+        
+        for (Asiento a : asiento) {
+            comboxAsiento.addItem(a);
+        }
+    }
+    
+    private void cargarComboRuta(){
+        ArrayList<RutaViaje> ruta = (ArrayList<RutaViaje>) rvd.listarRutaViaje();
+        
+        for (RutaViaje r : ruta) {
+            comboxRuta.addItem(r);
+        }
+    }
+    
+    private void limpiar() {
+        txtFechaVenta.setText("");
+        txtHoraVenta.setText("");
+        txtPrecio.setText("");
+        checkboxEstado.setSelected(true);
+        if (comboxPasajero.getItemCount() > 0) {
+            comboxPasajero.setSelectedIndex(0);
+        }
+        if (comboxRuta.getItemCount() > 0) {
+            comboxRuta.setSelectedIndex(0);
+        }
+    }
 }

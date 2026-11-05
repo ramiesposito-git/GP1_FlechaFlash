@@ -24,6 +24,7 @@ public class Principal extends javax.swing.JFrame {
         menuColectivo = new javax.swing.JMenuItem();
         menuRuta = new javax.swing.JMenuItem();
         menuAsiento = new javax.swing.JMenuItem();
+        jmiPasaje = new javax.swing.JMenuItem();
         jmConsultar = new javax.swing.JMenu();
         consultarAsiento = new javax.swing.JMenuItem();
 
@@ -60,6 +61,10 @@ public class Principal extends javax.swing.JFrame {
         menuAsiento.setText("Asiento");
         menuAsiento.addActionListener(this::menuAsientoActionPerformed);
         jmGestion.add(menuAsiento);
+
+        jmiPasaje.setText("Pasaje");
+        jmiPasaje.addActionListener(this::jmiPasajeActionPerformed);
+        jmGestion.add(jmiPasaje);
 
         jmbPrincipal.add(jmGestion);
 
@@ -152,6 +157,18 @@ public class Principal extends javax.swing.JFrame {
         jdpPrincipal.revalidate();
     }//GEN-LAST:event_consultarAsientoActionPerformed
 
+    private void jmiPasajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPasajeActionPerformed
+        jdpPrincipal.removeAll();
+        
+        VistaPasaje va = new VistaPasaje();
+        
+        jdpPrincipal.add(va);
+        va.setVisible(true);
+        
+        jdpPrincipal.repaint();
+        jdpPrincipal.revalidate();
+    }//GEN-LAST:event_jmiPasajeActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -180,6 +197,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jmConsultar;
     private javax.swing.JMenu jmGestion;
     private javax.swing.JMenuBar jmbPrincipal;
+    private javax.swing.JMenuItem jmiPasaje;
     private javax.swing.JMenuItem menuAsiento;
     private javax.swing.JMenuItem menuColectivo;
     private javax.swing.JMenuItem menuPasajero;
