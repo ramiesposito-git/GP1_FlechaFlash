@@ -163,17 +163,47 @@ public class AsientoData {
             PreparedStatement ps = connexion.prepareStatement(SQL);
             ps.setInt(1, asiento.getColectivo().getID_colectivo());
             ps.setInt(2, asiento.getNumeroAsiento());
-            
+
             ResultSet rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 return true;
             }
-            
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-        
+
         return false;
+    }
+
+    public ArrayList<Asiento> buscarAsientoPorColectivo(Colectivo colectivo) {
+
+        String SQL = "SELECT * FROM asiento WHERE ID_colectivo = ?";
+         ArrayList <Asiento> asientos = new ArrayList<>();
+
+        try {
+            PreparedStatement stm = connexion.prepareStatement(SQL);
+            stm.setInt(1, colectivo.getID_colectivo());
+
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("ID_asiento");
+                int nroAsiento = rs.getInt("numero_asiento");
+                boolean estado = rs.getBoolean("estado");
+
+                Asiento asiento = new Asiento(id, colectivo, nroAsiento, estado);
+                asientos.add(asiento);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+            return null;
+        }
+
+        return asientos;
+
     }
 }

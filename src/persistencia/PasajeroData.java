@@ -78,7 +78,7 @@ public class PasajeroData {
             stm.setString(4, pasajero.getCorreo());
             stm.setString(5, pasajero.getTelefono());
             stm.setBoolean(6, pasajero.isEstado());
-            
+
             stm.setInt(7, pasajero.getIdPasajero());
 
             int exito = stm.executeUpdate();
@@ -105,7 +105,8 @@ public class PasajeroData {
             JOptionPane.showMessageDialog(null, "Error al dar de alta el pasajero" + ex.getMessage());
         }
     }
-     public void bajaPasajero(int id) {
+
+    public void bajaPasajero(int id) {
         String sql = "UPDATE Pasajero SET estado=0 WHERE id_pasajero=?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -120,7 +121,8 @@ public class PasajeroData {
             JOptionPane.showMessageDialog(null, "Error al dar de baja el pasajero" + ex.getMessage());
         }
     }
-      public void borrarpasajero(int id) {
+
+    public void borrarpasajero(int id) {
         String sql = "DELETE FROM Colectivo WHERE id_pasajero=?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -135,19 +137,31 @@ public class PasajeroData {
             JOptionPane.showMessageDialog(null, "Error al borrar el pasajero" + ex.getMessage());
         }
     }
-       public List<Pasajero> listarPasajero() {
-        List<Pasajero> pasajeros = new ArrayList<>();
-        String sql="SELECT id_colectivo,matricula,marca,modelo,capacidad,chofer,estado FROM colectivo";
+
+    public ArrayList<Pasajero> listarPasajero() {
+        ArrayList<Pasajero> pasajeros = new ArrayList<>();
+
+        String SQL = "SELECT * FROM Pasajero";
         try {
-            PreparedStatement stm = connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(SQL);
+
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Pasajero pasajero = new Pasajero();
-                pasajero.setIdPasajero(rs.getInt("id_pasajero"));
-                pasajero.setIdPasajero(rs.getInt("id_pasajero"));
+
+                int idPasajero = rs.getInt("idPasajero");
+                String dni = rs.getString("dni");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String correo = rs.getString("correo");
+                String telefono = rs.getString("telefono");
+                boolean estado = rs.getBoolean("estado");
+                
+                Pasajero p = new Pasajero(idPasajero, dni, nombre, apellido, correo, telefono, estado);
+                pasajeros.add(p);
             }
-        }catch(SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al listar colectivos" + ex.getMessage());
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return pasajeros;
     }

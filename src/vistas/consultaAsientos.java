@@ -35,7 +35,7 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
         buscarID = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        buscarPorColectivo = new javax.swing.JButton();
         ComboBoxColectivos = new javax.swing.JComboBox<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -97,8 +97,9 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Colectivo");
 
-        jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton2.setText("buscar");
+        buscarPorColectivo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        buscarPorColectivo.setText("buscar");
+        buscarPorColectivo.addActionListener(this::buscarPorColectivoActionPerformed);
 
         ComboBoxColectivos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -113,7 +114,7 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jButton2))
+                        .addComponent(buscarPorColectivo))
                     .addComponent(ComboBoxColectivos, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -125,7 +126,7 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(ComboBoxColectivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(buscarPorColectivo)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -183,11 +184,31 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
         modelo.addRow(new Object[]{asiento.getIdAsiento(), asiento.getColectivo().getID_colectivo(), asiento.getNumeroAsiento()});
     }//GEN-LAST:event_buscarIDActionPerformed
 
+    private void buscarPorColectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPorColectivoActionPerformed
+
+        limpiarTable();
+        
+        Colectivo colectivo = (Colectivo) ComboBoxColectivos.getSelectedItem();
+
+        ArrayList<Asiento> asientos = ad.buscarAsientoPorColectivo(colectivo);
+
+        if (asientos == null) {
+            JOptionPane.showMessageDialog(null, "No se encontraron asientos para el Colectivo seleccionado!!");
+            return;
+        }
+
+        for (Asiento asiento : asientos) {
+            modelo.addRow(new Object[]{asiento.getIdAsiento(), asiento.getColectivo().getID_colectivo(), asiento.getNumeroAsiento()});
+        }
+
+
+    }//GEN-LAST:event_buscarPorColectivoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Colectivo> ComboBoxColectivos;
     private javax.swing.JButton buscarID;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton buscarPorColectivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
