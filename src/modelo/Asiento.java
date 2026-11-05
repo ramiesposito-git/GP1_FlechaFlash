@@ -22,8 +22,6 @@ public class Asiento {
         this.numeroAsiento = numeroAsiento;
         this.estado = estado;
     }
-    
-    
 
     public int getIdAsiento() {
         return IdAsiento;
@@ -59,9 +57,7 @@ public class Asiento {
 
     @Override
     public String toString() {
-        return "IdAsiento=" + IdAsiento + ", colectivo=" + colectivo + ", numeroAsiento=" + numeroAsiento + '}';
+        return "Asiento: " + this.numeroAsiento + " - colectivo: " + this.colectivo.getID_colectivo();
     }
 
-    
-    
 }
