@@ -2,6 +2,10 @@ package vistas;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerDateModel;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+import modelo.Asiento;
 import modelo.Colectivo;
 import persistencia.AsientoData;
 import persistencia.ColectivoData;
@@ -10,12 +14,15 @@ import persistencia.ColectivoData;
 public class VistaAsiento extends javax.swing.JInternalFrame {
 
     private AsientoData ad; 
+    SpinnerModel sm = new SpinnerNumberModel(1,1,80,1);
+    
     
     public VistaAsiento() {
         initComponents();
         ad = new AsientoData(Principal.conexion);
         vaciarCampos();
         cargarCombo();
+        SpinnerNroAsiento.setModel(sm);
     }
 
     @SuppressWarnings("unchecked")
@@ -54,6 +61,8 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
 
         SpinnerNroAsiento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        ComboBoxColectivos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -67,17 +76,17 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
                         .addComponent(ComboBoxColectivos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(82, 82, 82))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(SpinnerNroAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(checkActivo))))
-                        .addGap(82, 82, 82))))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(checkActivo)
+                            .addComponent(SpinnerNroAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(73, 73, 73))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,7 +125,7 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(28, 28, 28)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         pack();
@@ -129,6 +138,14 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
             return;
         }
 
+        Colectivo colectivo = (Colectivo) ComboBoxColectivos.getSelectedItem();
+        int nroAsiento = (int) SpinnerNroAsiento.getValue();
+        boolean activo = checkActivo.isSelected();
+        
+        Asiento asiento = new Asiento(colectivo, nroAsiento, activo);
+        ad.crearAsiento(asiento);
+        
+        
         vaciarCampos();
     }//GEN-LAST:event_btnCargarActionPerformed
 
@@ -160,7 +177,7 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
     }
     
     public boolean camposVacios(){
-        if (ComboBoxColectivos.getSelectedIndex() == -1 || (Integer) SpinnerNroAsiento.getValue() == 0) {
+        if (ComboBoxColectivos.getSelectedIndex() == -1 || (int) SpinnerNroAsiento.getValue() == 0 || (int) SpinnerNroAsiento.getValue() < 0) {
             return true;
         }
             

@@ -23,6 +23,11 @@ public class AsientoData {
 
     public void crearAsiento(Asiento asiento) {
 
+        if (asientoExistente(asiento)) {
+            JOptionPane.showMessageDialog(null, "Ya existe el asiento " + asiento.getNumeroAsiento() + " en el colectivo ID " + asiento.getColectivo().getID_colectivo() + "\nintente con otro!");
+            return;
+        }
+
         String SQL = "INSERT INTO `asiento` (`ID_colectivo`, `numero_asiento`, `estado`) VALUES (?, ?, ?)";
 
         try {
@@ -37,7 +42,6 @@ public class AsientoData {
 
             if (rs.next()) {
                 int id = rs.getInt(1);
-                System.out.println(id);
                 JOptionPane.showMessageDialog(null, "Asiento guardado! ID asignado: " + id);
                 asiento.setIdAsiento(id);
             }
@@ -124,31 +128,52 @@ public class AsientoData {
     public ArrayList<Asiento> listarAsientos() {
 
         String SQL = "SELECT * FROM asiento";
-        
+
         ArrayList<Asiento> asientos = new ArrayList<>();
 
         try {
             PreparedStatement ps = connexion.prepareStatement(SQL);
             ResultSet rs = ps.executeQuery();
-            
-            while(rs.next()){
-                
+
+            while (rs.next()) {
+
                 int id = rs.getInt("ID_asiento");
                 int idColectivo = rs.getInt("ID_colectivo");
                 int nro = rs.getInt("numero_asiento");
                 boolean estado = rs.getBoolean("estado");
-                
+
                 Colectivo colectivo = cd.buscarColectivoPorId(idColectivo);
-                asientos.add(new Asiento(id,colectivo,nro,estado));
-                
+                asientos.add(new Asiento(id, colectivo, nro, estado));
+
             }
-            
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         return asientos;
-        
+
     }
 
+    public boolean asientoExistente(Asiento asiento) {
+
+        String SQL = "SELECT * FROM `asiento` WHERE ID_colectivo = ? AND numero_asiento = ?";
+
+        try {
+            PreparedStatement ps = connexion.prepareStatement(SQL);
+            ps.setInt(1, asiento.getColectivo().getID_colectivo());
+            ps.setInt(2, asiento.getNumeroAsiento());
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                return true;
+            }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        
+        return false;
+    }
 }
