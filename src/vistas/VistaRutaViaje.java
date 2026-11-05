@@ -3,6 +3,7 @@ package vistas;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Colectivo;
 import modelo.RutaViaje;
@@ -82,7 +83,6 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
-        comboxIdColectivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboxIdColectivo.addActionListener(this::comboxIdColectivoActionPerformed);
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -277,7 +277,7 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
         txtPrecio.setText(String.valueOf(ruta.getPrecio()));
         checkEstado.setSelected(ruta.isEstado());
         if (ruta.getColectivo() != null) {
-            seleccionarColectivo(ruta.getColectivo().getID_colectivo());
+            seleccionarColectivo(ruta.getColectivo());
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -315,7 +315,7 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JCheckBox checkEstado;
-    private javax.swing.JComboBox<String> comboxIdColectivo;
+    private javax.swing.JComboBox<Colectivo> comboxIdColectivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -396,11 +396,10 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
     }
     
     private void cargarComboColectivos() {
-        comboxIdColectivo.removeAllItems();
-        for (Colectivo c : cd.listarColectivo()) {
-            if (c.isEstado()) { //Muestra los colectivos con estado activo o true
-                comboxIdColectivo.addItem(String.valueOf(c.getID_colectivo()));
-            }
+        ArrayList<Colectivo> colectivos = (ArrayList<Colectivo>) cd.listarColectivo();
+        
+        for (Colectivo colectivo : colectivos) {
+            comboxIdColectivo.addItem(colectivo);
         }
     }
     
@@ -418,18 +417,14 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
         rutaActual = null;
     }
     
-//    Busca y selecciona un colectivo en el combobox segun el id introducido
-//    si no encuentra el id (por ejemplo un colectivo dado de baja), 
-//    el metodo lo añade al final de la lista
-    private void seleccionarColectivo(int idColectivo) {
-        String idTexto = String.valueOf(idColectivo);
-        for (int i = 0; i < comboxIdColectivo.getItemCount(); i++) {
-            if (comboxIdColectivo.getItemAt(i).equals(idTexto)) {
-                comboxIdColectivo.setSelectedIndex(i);
-                return;
-            }
+    private void seleccionarColectivo(Colectivo colectivo) {
+    for (int i = 0; i < comboxIdColectivo.getItemCount(); i++) {
+        if (comboxIdColectivo.getItemAt(i).getID_colectivo() == colectivo.getID_colectivo()) {
+            comboxIdColectivo.setSelectedIndex(i);
+            return;
         }
-        comboxIdColectivo.addItem(idTexto);
-        comboxIdColectivo.setSelectedItem(idTexto);
     }
+    comboxIdColectivo.addItem(colectivo); 
+    comboxIdColectivo.setSelectedItem(colectivo);
+}
 }
