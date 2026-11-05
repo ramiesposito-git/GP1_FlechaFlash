@@ -23,6 +23,7 @@ public class Principal extends javax.swing.JFrame {
         menuPasajero = new javax.swing.JMenuItem();
         menuColectivo = new javax.swing.JMenuItem();
         menuRuta = new javax.swing.JMenuItem();
+        menuAsiento = new javax.swing.JMenuItem();
         jmConsultar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,6 +54,11 @@ public class Principal extends javax.swing.JFrame {
         menuRuta.setText("Ruta");
         menuRuta.addActionListener(this::menuRutaActionPerformed);
         jmGestion.add(menuRuta);
+
+        menuAsiento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuAsiento.setText("Asiento");
+        menuAsiento.addActionListener(this::menuAsientoActionPerformed);
+        jmGestion.add(menuAsiento);
 
         jmbPrincipal.add(jmGestion);
 
@@ -115,6 +121,19 @@ public class Principal extends javax.swing.JFrame {
         jdpPrincipal.repaint();
     }//GEN-LAST:event_menuRutaActionPerformed
 
+    private void menuAsientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAsientoActionPerformed
+        
+        jdpPrincipal.removeAll();
+        
+        VistaAsiento va = new VistaAsiento();
+        jdpPrincipal.add(va);
+        va.setVisible(true);
+        
+        jdpPrincipal.revalidate();
+        jdpPrincipal.repaint();
+        
+    }//GEN-LAST:event_menuAsientoActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -142,6 +161,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jmConsultar;
     private javax.swing.JMenu jmGestion;
     private javax.swing.JMenuBar jmbPrincipal;
+    private javax.swing.JMenuItem menuAsiento;
     private javax.swing.JMenuItem menuColectivo;
     private javax.swing.JMenuItem menuPasajero;
     private javax.swing.JMenuItem menuRuta;

@@ -32,7 +32,7 @@ public class ColectivoData {
 
             stm.executeUpdate();
             ResultSet rs = stm.getGeneratedKeys();
-            
+
             if (rs.next()) {
                 colectivo.setID_colectivo(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Colectivo guardado exitosamente.");
@@ -50,7 +50,7 @@ public class ColectivoData {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
-            
+
             while (rs.next()) {
                 colectivo = new Colectivo();
                 colectivo.setID_colectivo(rs.getInt("ID_colectivo"));
@@ -60,8 +60,8 @@ public class ColectivoData {
                 colectivo.setCapacidad(rs.getInt("capacidad"));
                 colectivo.setChofer(rs.getString("chofer"));
                 colectivo.setEstado(rs.getBoolean("estado"));
-            } 
-            
+            }
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "ERROR AL BUSCAR POR ID: " + ex.getMessage());
         }
@@ -69,9 +69,9 @@ public class ColectivoData {
     }
 
     public void actualizarColectivo(Colectivo colectivo) {
-        
+
         String SQL = "UPDATE `colectivos` SET `matricula`= ?,`marca`= ?,`modelo`= ?,`capacidad`= ?,`chofer`= ?,`estado`= ? WHERE ID_colectivo = ?";
-        
+
         try {
             PreparedStatement stm = connection.prepareStatement(SQL);
             stm.setString(1, colectivo.getMatricula());
@@ -81,7 +81,7 @@ public class ColectivoData {
             stm.setString(5, colectivo.getChofer());
             stm.setBoolean(6, colectivo.isEstado());
             stm.setInt(7, colectivo.getID_colectivo());
-            
+
             int aa = stm.executeUpdate();
             if (aa == 1) {
                 JOptionPane.showMessageDialog(null, "Colectivo actualizado con exito");
@@ -139,13 +139,16 @@ public class ColectivoData {
         }
     }
 
-    public List<Colectivo> listarColectivo() {
-        List<Colectivo> colectivos = new ArrayList<>();
-        String sql = "SELECT id_colectivo,matricula,marca,modelo,capacidad,chofer,estado FROM colectivos";
+    public ArrayList<Colectivo> listarColectivo() {
+        ArrayList<Colectivo> colectivos = new ArrayList<>();
+        String sql = "SELECT * FROM colectivos";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
+
+            boolean tiene_resultados = false;
             while (rs.next()) {
+                tiene_resultados = true;
                 Colectivo colectivo = new Colectivo();
                 colectivo.setID_colectivo(rs.getInt("id_colectivo"));
                 colectivo.setMatricula(rs.getString("matricula"));
@@ -156,6 +159,12 @@ public class ColectivoData {
                 colectivo.setEstado(rs.getBoolean("estado"));
                 colectivos.add(colectivo);
             }
+            
+            if (!tiene_resultados) {
+                JOptionPane.showMessageDialog(null, "No se encontraron colectivos!");
+                System.out.println("no hay resultados");
+            }
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al listar colectivos" + ex.getMessage());
         }
