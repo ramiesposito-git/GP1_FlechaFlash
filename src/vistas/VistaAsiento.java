@@ -29,6 +29,7 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -38,6 +39,8 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         btnCargar = new javax.swing.JButton();
         SpinnerNroAsiento = new javax.swing.JSpinner();
         ComboBoxColectivos = new javax.swing.JComboBox<>();
+
+        jLabel2.setText("jLabel2");
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -156,6 +159,7 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCargar;
     private javax.swing.JCheckBox checkActivo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;

@@ -25,6 +25,7 @@ public class Principal extends javax.swing.JFrame {
         menuRuta = new javax.swing.JMenuItem();
         menuAsiento = new javax.swing.JMenuItem();
         jmConsultar = new javax.swing.JMenu();
+        consultarAsiento = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,6 +64,11 @@ public class Principal extends javax.swing.JFrame {
         jmbPrincipal.add(jmGestion);
 
         jmConsultar.setText("Consultar");
+
+        consultarAsiento.setText("consultar Asientos");
+        consultarAsiento.addActionListener(this::consultarAsientoActionPerformed);
+        jmConsultar.add(consultarAsiento);
+
         jmbPrincipal.add(jmConsultar);
 
         setJMenuBar(jmbPrincipal);
@@ -111,28 +117,40 @@ public class Principal extends javax.swing.JFrame {
 
     private void menuRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRutaActionPerformed
         jdpPrincipal.removeAll();
-        
+
         VistaRutaViaje VR = new VistaRutaViaje();
         jdpPrincipal.add(VR);
-        
+
         VR.setVisible(true);
-        
+
         jdpPrincipal.revalidate();
         jdpPrincipal.repaint();
     }//GEN-LAST:event_menuRutaActionPerformed
 
     private void menuAsientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAsientoActionPerformed
-        
+
         jdpPrincipal.removeAll();
-        
-        VistaAsiento va = new VistaAsiento();
+
+        VistaAsiento va  = new VistaAsiento();
         jdpPrincipal.add(va);
         va.setVisible(true);
-        
+
         jdpPrincipal.revalidate();
         jdpPrincipal.repaint();
-        
+
     }//GEN-LAST:event_menuAsientoActionPerformed
+
+    private void consultarAsientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarAsientoActionPerformed
+        jdpPrincipal.removeAll();
+
+        consultaAsientos ca = new consultaAsientos();
+
+        jdpPrincipal.add(ca);
+        ca.setVisible(true);
+
+        jdpPrincipal.repaint();
+        jdpPrincipal.revalidate();
+    }//GEN-LAST:event_consultarAsientoActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -157,6 +175,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem consultarAsiento;
     private javax.swing.JDesktopPane jdpPrincipal;
     private javax.swing.JMenu jmConsultar;
     private javax.swing.JMenu jmGestion;
