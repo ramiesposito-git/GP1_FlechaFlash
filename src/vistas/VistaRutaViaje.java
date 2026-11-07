@@ -59,7 +59,7 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("GUARDAR NUEVA RUTA");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nueva Ruta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Origen de Viaje:");
@@ -154,7 +154,7 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Ruta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14))); // NOI18N
 
         btnBuscar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnBuscar.setText("Buscar");
@@ -184,7 +184,7 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtIdRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         btnEditar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -226,12 +226,12 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -337,13 +337,13 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
     
     // Lee y valida el formulario. Devuelve la ruta armada, o null si hay un error
     private RutaViaje validarFormulario() {
-        if (txtOrigen.getText().isEmpty() || txtDestino.getText().isEmpty() || txtHoraSalida.getText().isEmpty() || txtHoraLlegada.getText().isEmpty() || txtPrecio.getText().isEmpty()) {
+        String origen = txtOrigen.getText().trim();
+        String destino = txtDestino.getText().trim();
+        
+        if (origen.isEmpty() || destino.isEmpty() || txtHoraSalida.getText().isEmpty() || txtHoraLlegada.getText().isEmpty() || txtPrecio.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Complete todos los campos.");
             return null;
         }
-        
-        String origen = txtOrigen.getText().trim();
-        String destino = txtDestino.getText().trim();
         
         if (origen.equalsIgnoreCase(destino)) {
             JOptionPane.showMessageDialog(this, "El origen y el destino no pueden ser iguales.");
@@ -356,7 +356,7 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
             salida = LocalTime.parse(txtHoraSalida.getText().trim());
             llegada = LocalTime.parse(txtHoraLlegada.getText().trim());
         } catch (DateTimeParseException ex) {
-            JOptionPane.showMessageDialog(this, "Las horas deben tener formato Hora:Minuto (por ejemplo 08:30)."+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Las horas deben tener formato Hora:Minuto (por ejemplo 08:30).");
             return null;
         }
         
