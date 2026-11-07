@@ -3,15 +3,22 @@ package persistencia;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.*;
 
 public class PasajeData {
 
     Connection connection;
+    private PasajeroData pjd;  
+    private AsientoData ad;     
+    private RutaViajeData rvd;
 
     public PasajeData(Conexion conexion) {
         this.connection = conexion.initConnection();
+        this.pjd = new PasajeroData(conexion);
+        this.ad = new AsientoData(conexion);
+        this.rvd = new RutaViajeData(conexion);
     }
 
     public void crearPasaje(Pasaje pasaje) {
@@ -108,4 +115,111 @@ public class PasajeData {
 
     }
 
+    public Pasaje buscarPasajePorId(int id) {
+        Pasaje pasaje = null;
+        String sql = "SELECT * FROM pasaje WHERE ID_pasaje = ?";
+        try{
+            PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            
+            if (rs.next()) {
+                pasaje = new Pasaje();
+                pasaje.setIdPasaje(id);
+                pasaje.setPasajero(pjd.buscarPasajeroPorId(rs.getInt("idPasajero")));
+                pasaje.setAsiento(ad.buscarAsiento(rs.getInt("ID_asiento")));
+                pasaje.setViaje(rvd.buscarRutaViajePorId(rs.getInt("ID_ruta")));
+                pasaje.setFechaVenta(rs.getDate("fecha_venta").toLocalDate());
+                pasaje.setHoraVenta(rs.getTime("hora_venta").toLocalTime());
+                pasaje.setPrecio(rs.getDouble("precio"));
+                pasaje.setEstado(rs.getBoolean("estado"));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe una pasaje con el id: " + id);
+            }
+            stm.close();
+            rs.close();
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error al buscar el pasaje: " + ex.getMessage());
+        }
+        
+        return pasaje;
+    }
+    
+    public ArrayList<Pasaje> listarPasaje() {
+        ArrayList<Pasaje> pasajes = new ArrayList<>();
+        String sql = "SELECT * FROM pasaje";
+        try{
+            PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = stm.executeQuery();
+            
+            while(rs.next()){
+                Pasaje pasaje = new Pasaje();
+                pasaje.setIdPasaje(rs.getInt("ID_pasaje"));
+                pasaje.setPasajero(pjd.buscarPasajeroPorId(rs.getInt("idPasajero")));
+                pasaje.setAsiento(ad.buscarAsiento(rs.getInt("ID_asiento")));
+                pasaje.setViaje(rvd.buscarRutaViajePorId(rs.getInt("ID_ruta")));
+                pasaje.setFechaVenta(rs.getDate("fecha_venta").toLocalDate());
+                pasaje.setHoraVenta(rs.getTime("hora_venta").toLocalTime());
+                pasaje.setPrecio(rs.getDouble("precio"));
+                pasaje.setEstado(rs.getBoolean("estado"));
+                pasajes.add(pasaje);
+            }
+            stm.close();
+            rs.close();
+        }catch(SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar los pasajes: " + ex.getMessage());
+        }
+        return pasajes;
+    }
+    
+    public void borrarPasaje(int id) {
+        String sql = "DELETE FROM pasaje WHERE ID_pasaje=?";
+        try{
+            PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stm.setInt(1, id);
+            int exito = stm.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Pasaje borrado con exito de la base de datos");
+            }else {
+                JOptionPane.showMessageDialog(null, "No se encontro el pasaje para eliminar");
+            }
+            stm.close();
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al borrar el pasaje: " + ex.getMessage());
+        }
+    }
+    
+    public void bajaLogicaPasaje(int id) {
+        String sql = "UPDATE pasaje SET estado=0 WHERE ID_pasaje=?";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            int exito = stm.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "se dio de baja el pasaje con exito");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro ningun pasaje para dar de baja");
+            }
+            stm.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al dar de baja el pasaje: " + ex.getMessage());
+        }
+    }
+    
+    public void altaLogicaPasaje(int id) {
+        String sql = "UPDATE pasaje SET estado=1 WHERE ID_pasaje=?";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            int exito = stm.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "se dio de alta el pasaje con exito");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro ningun pasaje para dar de alta");
+            }
+            stm.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al dar de alta el pasaje: " + ex.getMessage());
+        }
+    }
 }

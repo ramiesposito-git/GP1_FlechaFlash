@@ -5,7 +5,6 @@ import modelo.Conexion;
 import modelo.RutaViaje;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -42,6 +41,7 @@ public class RutaViajeData {
                 JOptionPane.showMessageDialog(null, "Se guardo correctamente la ruta.");
             }
             stm.close();
+            rs.close();
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error al guardar ruta: " + ex.getMessage());
         } 
@@ -90,14 +90,15 @@ public class RutaViajeData {
                 JOptionPane.showMessageDialog(null, "No existe una ruta con el id: " + id);
             }
             stm.close();
+            rs.close();
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error al buscar la ruta: " + ex.getMessage());
         }
         return ruta;
     }
     
-    public List<RutaViaje> listarRutaViaje(){
-        List<RutaViaje> rutas = new ArrayList<>();
+    public ArrayList<RutaViaje> listarRutaViaje(){
+        ArrayList<RutaViaje> rutas = new ArrayList<>();
         String sql = "SELECT * FROM ruta_viaje";
         try{
             PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -105,6 +106,7 @@ public class RutaViajeData {
             
             while(rs.next()){
                 RutaViaje ruta = new RutaViaje();
+                ruta.setIdRuta(rs.getInt("ID_ruta"));
                 ruta.setOrigen(rs.getString("origen"));
                 ruta.setDestino(rs.getString("destino"));
                 ruta.setHoraSalida(rs.getTime("Hora_Salida").toLocalTime());
@@ -115,6 +117,7 @@ public class RutaViajeData {
                 rutas.add(ruta);
             }
             stm.close();
+            rs.close();
         }catch(SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al listar las rutas: " + ex.getMessage());
         }
@@ -132,6 +135,7 @@ public class RutaViajeData {
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontro ninguna ruta para dar de baja");
             }
+            stm.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al dar de baja la ruta: " + ex.getMessage());
         }
@@ -148,6 +152,7 @@ public class RutaViajeData {
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontro ninguna ruta para dar de alta");
             }
+            stm.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al dar de alta la ruta: " + ex.getMessage());
         }

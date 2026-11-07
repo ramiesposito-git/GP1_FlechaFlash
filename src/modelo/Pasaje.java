@@ -10,30 +10,30 @@ public class Pasaje {
     private Asiento asiento;
     private RutaViaje viaje;
     private LocalDate fechaVenta;
-    private LocalTime HoraVenta;
+    private LocalTime horaVenta;
     private double precio;
     private boolean estado;
 
     public Pasaje() {
     }
 
-    public Pasaje(int idPasaje, Pasajero pasajero, Asiento asiento, RutaViaje viaje, LocalDate fechaVenta, LocalTime HoraVenta, double precio, boolean estado) {
+    public Pasaje(int idPasaje, Pasajero pasajero, Asiento asiento, RutaViaje viaje, LocalDate fechaVenta, LocalTime horaVenta, double precio, boolean estado) {
         this.idPasaje = idPasaje;
         this.pasajero = pasajero;
         this.asiento = asiento;
         this.viaje = viaje;
         this.fechaVenta = fechaVenta;
-        this.HoraVenta = HoraVenta;
+        this.horaVenta = horaVenta;
         this.precio = precio;
         this.estado = estado;
     }
 
-    public Pasaje(Pasajero pasajero, Asiento asiento, RutaViaje viaje, LocalDate fechaVenta, LocalTime HoraVenta, double precio, boolean estado) {
+    public Pasaje(Pasajero pasajero, Asiento asiento, RutaViaje viaje, LocalDate fechaVenta, LocalTime horaVenta, double precio, boolean estado) {
         this.pasajero = pasajero;
         this.asiento = asiento;
         this.viaje = viaje;
         this.fechaVenta = fechaVenta;
-        this.HoraVenta = HoraVenta;
+        this.horaVenta = horaVenta;
         this.precio = precio;
         this.estado = estado;
     }
@@ -82,11 +82,11 @@ public class Pasaje {
     }
 
     public LocalTime getHoraVenta() {
-        return HoraVenta;
+        return horaVenta;
     }
 
-    public void setHoraVenta(LocalTime HoraVenta) {
-        this.HoraVenta = HoraVenta;
+    public void setHoraVenta(LocalTime horaVenta) {
+        this.horaVenta = horaVenta;
     }
 
     public double getPrecio() {
