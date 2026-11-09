@@ -27,6 +27,7 @@ public class Principal extends javax.swing.JFrame {
         jmiPasaje = new javax.swing.JMenuItem();
         jmConsultar = new javax.swing.JMenu();
         consultarAsiento = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,6 +54,7 @@ public class Principal extends javax.swing.JFrame {
         menuColectivo.addActionListener(this::menuColectivoActionPerformed);
         jmGestion.add(menuColectivo);
 
+        menuRuta.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuRuta.setText("Ruta");
         menuRuta.addActionListener(this::menuRutaActionPerformed);
         jmGestion.add(menuRuta);
@@ -62,6 +64,7 @@ public class Principal extends javax.swing.JFrame {
         menuAsiento.addActionListener(this::menuAsientoActionPerformed);
         jmGestion.add(menuAsiento);
 
+        jmiPasaje.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jmiPasaje.setText("Pasaje");
         jmiPasaje.addActionListener(this::jmiPasajeActionPerformed);
         jmGestion.add(jmiPasaje);
@@ -70,9 +73,15 @@ public class Principal extends javax.swing.JFrame {
 
         jmConsultar.setText("Consultar");
 
+        consultarAsiento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         consultarAsiento.setText("consultar Asientos");
         consultarAsiento.addActionListener(this::consultarAsientoActionPerformed);
         jmConsultar.add(consultarAsiento);
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem1.setText("consultar Colectivos");
+        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
+        jmConsultar.add(jMenuItem1);
 
         jmbPrincipal.add(jmConsultar);
 
@@ -169,6 +178,18 @@ public class Principal extends javax.swing.JFrame {
         jdpPrincipal.revalidate();
     }//GEN-LAST:event_jmiPasajeActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        consultaColectivos ccol = new consultaColectivos();
+        
+        jdpPrincipal.removeAll();
+        jdpPrincipal.add(ccol);
+        
+        ccol.setVisible(true);
+        
+        jdpPrincipal.revalidate();
+        jdpPrincipal.repaint();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -193,6 +214,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem consultarAsiento;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JDesktopPane jdpPrincipal;
     private javax.swing.JMenu jmConsultar;
     private javax.swing.JMenu jmGestion;
