@@ -28,6 +28,7 @@ public class Principal extends javax.swing.JFrame {
         jmConsultar = new javax.swing.JMenu();
         consultarAsiento = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,7 +65,7 @@ public class Principal extends javax.swing.JFrame {
         menuAsiento.addActionListener(this::menuAsientoActionPerformed);
         jmGestion.add(menuAsiento);
 
-        jmiPasaje.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiPasaje.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jmiPasaje.setText("Pasaje");
         jmiPasaje.addActionListener(this::jmiPasajeActionPerformed);
         jmGestion.add(jmiPasaje);
@@ -82,6 +83,11 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1.setText("consultar Colectivos");
         jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
         jmConsultar.add(jMenuItem1);
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem2.setText("consultar Pasajeros");
+        jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
+        jmConsultar.add(jMenuItem2);
 
         jmbPrincipal.add(jmConsultar);
 
@@ -190,6 +196,18 @@ public class Principal extends javax.swing.JFrame {
         jdpPrincipal.repaint();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        jdpPrincipal.removeAll();
+        
+        consultaPasajeros cp = new consultaPasajeros();
+        cp.setVisible(true);
+        
+        jdpPrincipal.add(cp);
+        
+        jdpPrincipal.repaint();
+        jdpPrincipal.revalidate();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -215,6 +233,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem consultarAsiento;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JDesktopPane jdpPrincipal;
     private javax.swing.JMenu jmConsultar;
     private javax.swing.JMenu jmGestion;
