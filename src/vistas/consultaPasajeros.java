@@ -17,6 +17,7 @@ public class consultaPasajeros extends javax.swing.JInternalFrame {
         pj = new PasajeroData(Principal.conexion);
 
         initTable();
+        cargarTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -56,7 +57,7 @@ public class consultaPasajeros extends javax.swing.JInternalFrame {
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Busqueda por ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(38, 52, 69))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Busqueda por ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 13), new java.awt.Color(38, 52, 69))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(38, 52, 69));
@@ -152,7 +153,7 @@ public class consultaPasajeros extends javax.swing.JInternalFrame {
                         .addComponent(BTNlistarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -173,9 +174,7 @@ public class consultaPasajeros extends javax.swing.JInternalFrame {
 
         limpiarTable();
 
-        for (Pasajero pasajero : pj.listarPasajero()) {
-            modelo.addRow(new Object[]{pasajero.getIdPasajero(), pasajero.getDni(), pasajero.getNombre(), pasajero.getApellido(), pasajero.getCorreo(), pasajero.getTelefono()});
-        }
+        cargarTable();
 
     }//GEN-LAST:event_BTNlistarTodosActionPerformed
 
@@ -217,5 +216,13 @@ public class consultaPasajeros extends javax.swing.JInternalFrame {
 
     public void limpiarTable() {
         modelo.setRowCount(0);
+    }
+
+    public void cargarTable() {
+        limpiarTable();
+
+        for (Pasajero pasajero : pj.listarPasajero()) {
+            modelo.addRow(new Object[]{pasajero.getIdPasajero(), pasajero.getDni(), pasajero.getNombre(), pasajero.getApellido(), pasajero.getCorreo(), pasajero.getTelefono()});
+        }
     }
 }
