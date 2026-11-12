@@ -43,6 +43,7 @@ public class Principal extends javax.swing.JFrame {
         jmiConsultaColectivo = new javax.swing.JMenuItem();
         jmiConsultaPasajero = new javax.swing.JMenuItem();
         jmiConsultaRuta = new javax.swing.JMenuItem();
+        jmiConsultaPasaje = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,6 +110,11 @@ public class Principal extends javax.swing.JFrame {
         jmiConsultaRuta.setText("consultar Ruta");
         jmiConsultaRuta.addActionListener(this::jmiConsultaRutaActionPerformed);
         jmConsultar.add(jmiConsultaRuta);
+
+        jmiConsultaPasaje.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiConsultaPasaje.setText("consultar Pasaje");
+        jmiConsultaPasaje.addActionListener(this::jmiConsultaPasajeActionPerformed);
+        jmConsultar.add(jmiConsultaPasaje);
 
         jmbPrincipal.add(jmConsultar);
 
@@ -241,6 +247,17 @@ public class Principal extends javax.swing.JFrame {
         jdpPrincipal.revalidate();
     }//GEN-LAST:event_jmiConsultaRutaActionPerformed
 
+    private void jmiConsultaPasajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiConsultaPasajeActionPerformed
+        jdpPrincipal.removeAll();
+        consultaPasajes cp = new consultaPasajes();
+        cp.setVisible(true);
+        
+        jdpPrincipal.add(cp);
+        jdpPrincipal.repaint();
+        jdpPrincipal.revalidate();
+
+    }//GEN-LAST:event_jmiConsultaPasajeActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -270,6 +287,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jmbPrincipal;
     private javax.swing.JMenuItem jmiConsultaAsiento;
     private javax.swing.JMenuItem jmiConsultaColectivo;
+    private javax.swing.JMenuItem jmiConsultaPasaje;
     private javax.swing.JMenuItem jmiConsultaPasajero;
     private javax.swing.JMenuItem jmiConsultaRuta;
     private javax.swing.JMenuItem jmiPasaje;

@@ -25,6 +25,7 @@ public class PasajeData {
 
         if (vendido(pasaje)) {
             JOptionPane.showMessageDialog(null, "Pasaje vendido! Intente con otro asiento...");
+            return;
         }
 
         String SQL = "INSERT INTO `pasaje`(`idPasajero`, `ID_asiento`, `ID_ruta`, `fecha_venta`, `hora_venta`, `precio`, `estado`) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
