@@ -23,7 +23,7 @@ public class AsientoData {
 
     public void crearAsiento(Asiento asiento) {
 
-        if (asientoExistente(asiento)) {
+        if (asientoExistente(asiento.getColectivo().getID_colectivo(), asiento.getNumeroAsiento())) {
             JOptionPane.showMessageDialog(null, "Ya existe el asiento " + asiento.getNumeroAsiento() + " en el colectivo ID " + asiento.getColectivo().getID_colectivo() + "\nintente con otro!");
             return;
         }
@@ -85,6 +85,34 @@ public class AsientoData {
 
     }
 
+    public boolean actualizarAsiento(int idColectivo, int numeroAsiento, boolean estado, int id) {
+
+        if(asientoExistente(idColectivo, numeroAsiento)){
+            return false;
+        }
+        
+        String SQL = "UPDATE `asiento` SET `ID_colectivo`= ?,`numero_asiento`= ?,`estado`=? WHERE ID_asiento = ?";
+
+        try {
+            PreparedStatement stm = connexion.prepareStatement(SQL);
+            stm.setInt(1, idColectivo);
+            stm.setInt(2, numeroAsiento);
+            stm.setBoolean(3, estado);
+            stm.setInt(4, id);
+
+            int a = stm.executeUpdate();
+
+            if (a > 0) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
+        return false;
+    }
+
     public void altaAsiento(int idAsiento) {
         String SQL = "UPDATE asiento SET estado=1 WHERE ID_asiento = ?";
 
@@ -125,6 +153,27 @@ public class AsientoData {
         }
     }
 
+    public boolean eliminarAsiento(int idAsiento) {
+        
+        String SQL = "DELETE FROM `asiento` WHERE ID_asiento = ?";
+        
+        try {
+            PreparedStatement psm = connexion.prepareStatement(SQL);
+            psm.setInt(1, idAsiento);
+            
+            int a = psm.executeUpdate();
+            
+            if (a>0) {
+                return true;
+            }
+            
+        } catch (SQLException ex) {
+            System.getLogger(AsientoData.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+        return false;
+    }
+
     public ArrayList<Asiento> listarAsientos() {
 
         String SQL = "SELECT * FROM asiento";
@@ -155,14 +204,15 @@ public class AsientoData {
 
     }
 
-    public boolean asientoExistente(Asiento asiento) {
+    
+    public boolean asientoExistente (int idColectivo, int numeroAsiento) {
 
         String SQL = "SELECT * FROM `asiento` WHERE ID_colectivo = ? AND numero_asiento = ?";
 
         try {
             PreparedStatement ps = connexion.prepareStatement(SQL);
-            ps.setInt(1, asiento.getColectivo().getID_colectivo());
-            ps.setInt(2, asiento.getNumeroAsiento());
+            ps.setInt(1, idColectivo);
+            ps.setInt(2, numeroAsiento);
 
             ResultSet rs = ps.executeQuery();
 
@@ -176,11 +226,13 @@ public class AsientoData {
 
         return false;
     }
+    
+    
 
     public ArrayList<Asiento> buscarAsientoPorColectivo(Colectivo colectivo) {
 
         String SQL = "SELECT * FROM asiento WHERE ID_colectivo = ?";
-         ArrayList <Asiento> asientos = new ArrayList<>();
+        ArrayList<Asiento> asientos = new ArrayList<>();
 
         try {
             PreparedStatement stm = connexion.prepareStatement(SQL);

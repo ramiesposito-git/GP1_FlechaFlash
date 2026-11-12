@@ -34,16 +34,16 @@ public class Principal extends javax.swing.JFrame {
         jmbPrincipal = new javax.swing.JMenuBar();
         jmGestion = new javax.swing.JMenu();
         menuPasajero = new javax.swing.JMenuItem();
+        jmiPasaje = new javax.swing.JMenuItem();
         menuColectivo = new javax.swing.JMenuItem();
         menuRuta = new javax.swing.JMenuItem();
         menuAsiento = new javax.swing.JMenuItem();
-        jmiPasaje = new javax.swing.JMenuItem();
         jmConsultar = new javax.swing.JMenu();
-        jmiConsultaAsiento = new javax.swing.JMenuItem();
-        jmiConsultaColectivo = new javax.swing.JMenuItem();
         jmiConsultaPasajero = new javax.swing.JMenuItem();
-        jmiConsultaRuta = new javax.swing.JMenuItem();
         jmiConsultaPasaje = new javax.swing.JMenuItem();
+        jmiConsultaRuta = new javax.swing.JMenuItem();
+        jmiConsultaColectivo = new javax.swing.JMenuItem();
+        jmiConsultaAsiento = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,6 +67,11 @@ public class Principal extends javax.swing.JFrame {
         menuPasajero.addActionListener(this::menuPasajeroActionPerformed);
         jmGestion.add(menuPasajero);
 
+        jmiPasaje.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiPasaje.setText("Pasaje");
+        jmiPasaje.addActionListener(this::jmiPasajeActionPerformed);
+        jmGestion.add(jmiPasaje);
+
         menuColectivo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuColectivo.setText("Colectivo");
         menuColectivo.addActionListener(this::menuColectivoActionPerformed);
@@ -82,39 +87,34 @@ public class Principal extends javax.swing.JFrame {
         menuAsiento.addActionListener(this::menuAsientoActionPerformed);
         jmGestion.add(menuAsiento);
 
-        jmiPasaje.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jmiPasaje.setText("Pasaje");
-        jmiPasaje.addActionListener(this::jmiPasajeActionPerformed);
-        jmGestion.add(jmiPasaje);
-
         jmbPrincipal.add(jmGestion);
 
         jmConsultar.setText("Consultar");
 
-        jmiConsultaAsiento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jmiConsultaAsiento.setText("consultar Asientos");
-        jmiConsultaAsiento.addActionListener(this::jmiConsultaAsientoActionPerformed);
-        jmConsultar.add(jmiConsultaAsiento);
-
-        jmiConsultaColectivo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jmiConsultaColectivo.setText("consultar Colectivos");
-        jmiConsultaColectivo.addActionListener(this::jmiConsultaColectivoActionPerformed);
-        jmConsultar.add(jmiConsultaColectivo);
-
         jmiConsultaPasajero.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jmiConsultaPasajero.setText("consultar Pasajeros");
+        jmiConsultaPasajero.setText("Buscar Pasajeros");
         jmiConsultaPasajero.addActionListener(this::jmiConsultaPasajeroActionPerformed);
         jmConsultar.add(jmiConsultaPasajero);
 
+        jmiConsultaPasaje.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiConsultaPasaje.setText("Buscar Pasaje");
+        jmiConsultaPasaje.addActionListener(this::jmiConsultaPasajeActionPerformed);
+        jmConsultar.add(jmiConsultaPasaje);
+
         jmiConsultaRuta.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jmiConsultaRuta.setText("consultar Ruta");
+        jmiConsultaRuta.setText("Buscar Ruta");
         jmiConsultaRuta.addActionListener(this::jmiConsultaRutaActionPerformed);
         jmConsultar.add(jmiConsultaRuta);
 
-        jmiConsultaPasaje.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jmiConsultaPasaje.setText("consultar Pasaje");
-        jmiConsultaPasaje.addActionListener(this::jmiConsultaPasajeActionPerformed);
-        jmConsultar.add(jmiConsultaPasaje);
+        jmiConsultaColectivo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiConsultaColectivo.setText("BuscarColectivos");
+        jmiConsultaColectivo.addActionListener(this::jmiConsultaColectivoActionPerformed);
+        jmConsultar.add(jmiConsultaColectivo);
+
+        jmiConsultaAsiento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiConsultaAsiento.setText("Buscar Asiento");
+        jmiConsultaAsiento.addActionListener(this::jmiConsultaAsientoActionPerformed);
+        jmConsultar.add(jmiConsultaAsiento);
 
         jmbPrincipal.add(jmConsultar);
 

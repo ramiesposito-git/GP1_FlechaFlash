@@ -92,7 +92,7 @@ public class Colectivo {
 
     @Override
     public String toString() {
-        return "ID: "+ this.ID_colectivo +" - capacidad: "+ this.capacidad;
+        return "ID: "+ this.ID_colectivo +" - Cap: "+ this.capacidad;
     }
     
     

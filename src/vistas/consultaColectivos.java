@@ -8,24 +8,25 @@ import modelo.Colectivo;
 import persistencia.ColectivoData;
 
 public class consultaColectivos extends javax.swing.JInternalFrame {
-    
+
     public DefaultTableModel modelo = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
-        
+
     };
-    
+
     ColectivoData cd;
-    
+
     public consultaColectivos() {
         initComponents();
-        
+
         cd = new ColectivoData(Principal.conexion);
         initTable();
+        cargarTable();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -103,7 +104,7 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(38, 52, 69));
 
         jLabel1.setBackground(new java.awt.Color(37, 99, 235));
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 25)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("LISTAR COLECTIVOS");
@@ -113,16 +114,16 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -130,14 +131,14 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(BTNlistarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33))
+                .addGap(20, 20, 20))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -146,52 +147,49 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
+                        .addGap(30, 30, 30)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BTNlistarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)))
+                        .addGap(44, 44, 44)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                .addGap(30, 30, 30))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void buscarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarIDActionPerformed
-        
+
         limpiarTable();
         int id = 0;
-        
+
         try {
-            
+
             id = Integer.valueOf(txtIdColectivo.getText());
-            
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Ingrese un vlaor numerico!");
             return;
         }
-        
+
         Colectivo col = cd.buscarColectivoPorId(id);
-        
+
         if (col == null) {
             JOptionPane.showMessageDialog(this, "No existe colectivo con ese ID!\nIntente uno diferente.");
             return;
         }
-        
+
         modelo.addRow(new Object[]{col.getID_colectivo(), col.getMatricula(), col.getMarca(), col.getModelo(), col.getCapacidad(), col.getChofer()});
 
     }//GEN-LAST:event_buscarIDActionPerformed
 
     private void BTNlistarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNlistarTodosActionPerformed
-        
+
         limpiarTable();
-        
-        for (Colectivo col : cd.listarColectivo()) {
-            modelo.addRow(new Object[]{col.getID_colectivo(), col.getMatricula(), col.getMarca(), col.getModelo(), col.getCapacidad(), col.getChofer()});
-        }
+        cargarTable();
 
     }//GEN-LAST:event_BTNlistarTodosActionPerformed
 
@@ -209,29 +207,34 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     public void initTable() {
-        
+
         modelo.addColumn("ID");
         modelo.addColumn("Matricula");
         modelo.addColumn("Marca");
         modelo.addColumn("Modelo");
         modelo.addColumn("Capacidad");
         modelo.addColumn("Chofer");
-        
+
         jTable1.setModel(modelo);
-        
+
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(25);
         jTable1.getColumnModel().getColumn(1).setPreferredWidth(73);
         jTable1.getColumnModel().getColumn(2).setPreferredWidth(70);
         jTable1.getColumnModel().getColumn(3).setPreferredWidth(70);
         jTable1.getColumnModel().getColumn(4).setPreferredWidth(69);
         jTable1.getColumnModel().getColumn(5).setPreferredWidth(135);
-        
 
         jTable1.getTableHeader().setForeground(new Color(38, 52, 69));
         jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
     }
-    
+
     public void limpiarTable() {
         modelo.setRowCount(0);
+    }
+
+    public void cargarTable() {
+        for (Colectivo col : cd.listarColectivo()) {
+            modelo.addRow(new Object[]{col.getID_colectivo(), col.getMatricula(), col.getMarca(), col.getModelo(), col.getCapacidad(), col.getChofer()});
+        }
     }
 }

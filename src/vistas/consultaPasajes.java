@@ -2,21 +2,23 @@ package vistas;
 
 import java.awt.Color;
 import java.awt.Font;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.Pasajero;
-import persistencia.PasajeroData;
+import modelo.Pasaje;
+import persistencia.PasajeData;
 
 public class consultaPasajes extends javax.swing.JInternalFrame {
 
     public DefaultTableModel modelo = new DefaultTableModel();
-    PasajeroData pj;
+    PasajeData pd;
 
     public consultaPasajes() {
         initComponents();
 
-        pj = new PasajeroData(Principal.conexion);
+        pd = new PasajeData(Principal.conexion);
 
         initTable();
+        listarTodos();
     }
 
     @SuppressWarnings("unchecked")
@@ -61,7 +63,7 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(38, 52, 69));
 
         jLabel1.setBackground(new java.awt.Color(37, 99, 235));
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 25)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("BUSCAR PASAJES");
@@ -71,16 +73,16 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Busqueda por ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 1, 14), new java.awt.Color(38, 52, 69))); // NOI18N
@@ -173,33 +175,44 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(12, 12, 12)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGap(19, 19, 19)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void buscarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarIDActionPerformed
+        
+        limpiarTable();
+        
+        try {
+            int id = Integer.parseInt(txtIDpasaje.getText());
+            listarID(id);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un numero!", "Error", 2);
+            return;
+        }
 
     }//GEN-LAST:event_buscarIDActionPerformed
 
     private void BTNlistarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNlistarTodosActionPerformed
-
-
+        limpiarTable();
+        
+        listarTodos();
     }//GEN-LAST:event_BTNlistarTodosActionPerformed
 
 
@@ -221,20 +234,20 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
 
         modelo.addColumn("ID");
         modelo.addColumn("Pasajero");
-        modelo.addColumn("Asiento");
-        modelo.addColumn("Ruta");
+        modelo.addColumn("asiento");
+        modelo.addColumn("ruta");
         modelo.addColumn("fecha venta");
         modelo.addColumn("hora venta");
         modelo.addColumn("precio");
 
         jTable1.setModel(modelo);
 
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(45);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(35);
         jTable1.getColumnModel().getColumn(1).setPreferredWidth(130);
-        jTable1.getColumnModel().getColumn(2).setPreferredWidth(55);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(60);
         jTable1.getColumnModel().getColumn(3).setPreferredWidth(176);
         jTable1.getColumnModel().getColumn(4).setPreferredWidth(90);
-        jTable1.getColumnModel().getColumn(5).setPreferredWidth(75);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(80);
         jTable1.getColumnModel().getColumn(6).setPreferredWidth(90);
 
         jTable1.getTableHeader().setForeground(new Color(38, 52, 69));
@@ -245,4 +258,28 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
     public void limpiarTable() {
         modelo.setRowCount(0);
     }
+
+    public void listarTodos() {
+
+        for (Pasaje pasaje : pd.listarPasaje()) {
+
+            String ruta = pasaje.getViaje().getOrigen() + " - " + pasaje.getViaje().getDestino();
+            String pasajero = pasaje.getPasajero().getNombre() + " " + pasaje.getPasajero().getApellido();
+
+            modelo.addRow(new Object[]{pasaje.getIdPasaje(), pasajero, pasaje.getAsiento().getNumeroAsiento(), ruta, pasaje.getFechaVenta(), pasaje.getHoraVenta(), pasaje.getPrecio()});
+        }
+
+    }
+
+    public void listarID(int id) {
+
+        Pasaje pasaje = pd.buscarPasajePorId(id);
+
+        String ruta = pasaje.getViaje().getOrigen() + " - " + pasaje.getViaje().getDestino();
+        String pasajero = pasaje.getPasajero().getNombre() + " " + pasaje.getPasajero().getApellido();
+
+        modelo.addRow(new Object[]{pasaje.getIdPasaje(), pasajero, pasaje.getAsiento().getNumeroAsiento(), ruta, pasaje.getFechaVenta(), pasaje.getHoraVenta(), pasaje.getPrecio()});
+
+    }
+
 }
