@@ -316,7 +316,24 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        
+        if (pasajeActual == null) {
+            JOptionPane.showMessageDialog(this, "Primero debe buscar un pasaje por su ID.");
+            return;
+        }
+
+        Pasaje pasajeEditado = validarFormulario();
+
+        if (pasajeEditado == null) {
+            return;
+        }
+
+        pasajeEditado.setIdPasaje(pasajeActual.getIdPasaje());
+
+        pd.actualizarPasaje(pasajeEditado);
+
+        pasajeActual = null;
+        limpiar();
+        txtIdPasaje.setText("");
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -386,7 +403,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         txtFechaVenta.setText("");
         txtHoraVenta.setText("");
         txtPrecio.setText("");
-        checkboxEstado.setSelected(true);
+        checkboxEstado.setSelected(false);
         if (comboxPasajero.getItemCount() > 0) {
             comboxPasajero.setSelectedIndex(0);
         }
@@ -458,11 +475,6 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             hora = LocalTime.parse(txtHoraVenta.getText().trim(), formatoHora);
         } catch (DateTimeParseException ex) {
             JOptionPane.showMessageDialog(this, "La fecha debe tener formato dia/mes/anio (por ejemplo 7/11/2026) y la hora hora:minuto (por ejemplo 08:30).");
-            return null;
-        }
-        
-        if (!hora.isBefore(ruta.getHoraSalida())) {
-            JOptionPane.showMessageDialog(this, "La hora de venta debe ser anterior a la hora de salida del viaje");
             return null;
         }
         
