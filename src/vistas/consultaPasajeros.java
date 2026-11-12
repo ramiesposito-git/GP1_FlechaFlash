@@ -17,7 +17,6 @@ public class consultaPasajeros extends javax.swing.JInternalFrame {
         pj = new PasajeroData(Principal.conexion);
 
         initTable();
-        cargarTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -57,14 +56,14 @@ public class consultaPasajeros extends javax.swing.JInternalFrame {
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Busqueda por ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 13), new java.awt.Color(38, 52, 69))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Busqueda por ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 1, 14), new java.awt.Color(38, 52, 69))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(38, 52, 69));
         jLabel2.setText("ID:");
 
         buscarID.setBackground(new java.awt.Color(45, 108, 223));
-        buscarID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buscarID.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         buscarID.setForeground(new java.awt.Color(255, 255, 255));
         buscarID.setText("Buscar");
         buscarID.addActionListener(this::buscarIDActionPerformed);
@@ -94,7 +93,7 @@ public class consultaPasajeros extends javax.swing.JInternalFrame {
         );
 
         BTNlistarTodos.setBackground(new java.awt.Color(45, 108, 223));
-        BTNlistarTodos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        BTNlistarTodos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         BTNlistarTodos.setForeground(new java.awt.Color(255, 255, 255));
         BTNlistarTodos.setText("LISTAR TODOS");
         BTNlistarTodos.addActionListener(this::BTNlistarTodosActionPerformed);
@@ -102,7 +101,7 @@ public class consultaPasajeros extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(38, 52, 69));
 
         jLabel1.setBackground(new java.awt.Color(37, 99, 235));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 25)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("BUSCAR PASAJEROS");
@@ -153,7 +152,7 @@ public class consultaPasajeros extends javax.swing.JInternalFrame {
                         .addComponent(BTNlistarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -174,7 +173,9 @@ public class consultaPasajeros extends javax.swing.JInternalFrame {
 
         limpiarTable();
 
-        cargarTable();
+        for (Pasajero pasajero : pj.listarPasajero()) {
+            modelo.addRow(new Object[]{pasajero.getIdPasajero(), pasajero.getDni(), pasajero.getNombre(), pasajero.getApellido(), pasajero.getCorreo(), pasajero.getTelefono()});
+        }
 
     }//GEN-LAST:event_BTNlistarTodosActionPerformed
 
@@ -216,13 +217,5 @@ public class consultaPasajeros extends javax.swing.JInternalFrame {
 
     public void limpiarTable() {
         modelo.setRowCount(0);
-    }
-
-    public void cargarTable() {
-        limpiarTable();
-
-        for (Pasajero pasajero : pj.listarPasajero()) {
-            modelo.addRow(new Object[]{pasajero.getIdPasajero(), pasajero.getDni(), pasajero.getNombre(), pasajero.getApellido(), pasajero.getCorreo(), pasajero.getTelefono()});
-        }
     }
 }

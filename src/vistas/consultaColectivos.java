@@ -8,25 +8,24 @@ import modelo.Colectivo;
 import persistencia.ColectivoData;
 
 public class consultaColectivos extends javax.swing.JInternalFrame {
-
+    
     public DefaultTableModel modelo = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
-
+        
     };
-
+    
     ColectivoData cd;
-
+    
     public consultaColectivos() {
         initComponents();
-
+        
         cd = new ColectivoData(Principal.conexion);
         initTable();
-        cargarTable();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -43,14 +42,14 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
 
         setClosable(true);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Buscar por ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 13), new java.awt.Color(38, 52, 69))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Buscar por ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 1, 14), new java.awt.Color(38, 52, 69))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(38, 52, 69));
         jLabel2.setText("ID colectivo:");
 
         buscarID.setBackground(new java.awt.Color(45, 108, 223));
-        buscarID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buscarID.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         buscarID.setForeground(new java.awt.Color(255, 255, 255));
         buscarID.setText("Buscar");
         buscarID.addActionListener(this::buscarIDActionPerformed);
@@ -79,7 +78,7 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        BTNlistarTodos.setBackground(new java.awt.Color(45, 108, 223));
+        BTNlistarTodos.setBackground(new java.awt.Color(37, 99, 235));
         BTNlistarTodos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         BTNlistarTodos.setForeground(new java.awt.Color(255, 255, 255));
         BTNlistarTodos.setText("LISTAR TODOS");
@@ -104,7 +103,7 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(38, 52, 69));
 
         jLabel1.setBackground(new java.awt.Color(37, 99, 235));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 25)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("LISTAR COLECTIVOS");
@@ -132,10 +131,10 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BTNlistarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33))
@@ -149,11 +148,11 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BTNlistarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)))
+                        .addGap(45, 45, 45)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
         );
@@ -162,34 +161,38 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buscarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarIDActionPerformed
-
+        
         limpiarTable();
         int id = 0;
-
+        
         try {
-
+            
             id = Integer.valueOf(txtIdColectivo.getText());
-
+            
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Ingrese un vlaor numerico!");
             return;
         }
-
+        
         Colectivo col = cd.buscarColectivoPorId(id);
-
+        
         if (col == null) {
             JOptionPane.showMessageDialog(this, "No existe colectivo con ese ID!\nIntente uno diferente.");
             return;
         }
-
+        
         modelo.addRow(new Object[]{col.getID_colectivo(), col.getMatricula(), col.getMarca(), col.getModelo(), col.getCapacidad(), col.getChofer()});
 
     }//GEN-LAST:event_buscarIDActionPerformed
 
     private void BTNlistarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNlistarTodosActionPerformed
-
+        
         limpiarTable();
-        cargarTable();
+        
+        for (Colectivo col : cd.listarColectivo()) {
+            modelo.addRow(new Object[]{col.getID_colectivo(), col.getMatricula(), col.getMarca(), col.getModelo(), col.getCapacidad(), col.getChofer()});
+        }
+
     }//GEN-LAST:event_BTNlistarTodosActionPerformed
 
 
@@ -206,36 +209,29 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     public void initTable() {
-
+        
         modelo.addColumn("ID");
         modelo.addColumn("Matricula");
         modelo.addColumn("Marca");
         modelo.addColumn("Modelo");
         modelo.addColumn("Capacidad");
         modelo.addColumn("Chofer");
-
+        
         jTable1.setModel(modelo);
-
+        
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(25);
         jTable1.getColumnModel().getColumn(1).setPreferredWidth(73);
         jTable1.getColumnModel().getColumn(2).setPreferredWidth(70);
         jTable1.getColumnModel().getColumn(3).setPreferredWidth(70);
         jTable1.getColumnModel().getColumn(4).setPreferredWidth(69);
         jTable1.getColumnModel().getColumn(5).setPreferredWidth(135);
+        
 
         jTable1.getTableHeader().setForeground(new Color(38, 52, 69));
         jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
     }
-
+    
     public void limpiarTable() {
         modelo.setRowCount(0);
-    }
-
-    public void cargarTable() {
-        limpiarTable();
-
-        for (Colectivo col : cd.listarColectivo()) {
-            modelo.addRow(new Object[]{col.getID_colectivo(), col.getMatricula(), col.getMarca(), col.getModelo(), col.getCapacidad(), col.getChofer()});
-        }
     }
 }

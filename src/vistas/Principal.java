@@ -39,9 +39,10 @@ public class Principal extends javax.swing.JFrame {
         menuAsiento = new javax.swing.JMenuItem();
         jmiPasaje = new javax.swing.JMenuItem();
         jmConsultar = new javax.swing.JMenu();
-        consultarAsiento = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jmiConsultaAsiento = new javax.swing.JMenuItem();
+        jmiConsultaColectivo = new javax.swing.JMenuItem();
+        jmiConsultaPasajero = new javax.swing.JMenuItem();
+        jmiConsultaRuta = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,20 +90,25 @@ public class Principal extends javax.swing.JFrame {
 
         jmConsultar.setText("Consultar");
 
-        consultarAsiento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        consultarAsiento.setText("consultar Asientos");
-        consultarAsiento.addActionListener(this::consultarAsientoActionPerformed);
-        jmConsultar.add(consultarAsiento);
+        jmiConsultaAsiento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiConsultaAsiento.setText("consultar Asientos");
+        jmiConsultaAsiento.addActionListener(this::jmiConsultaAsientoActionPerformed);
+        jmConsultar.add(jmiConsultaAsiento);
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem1.setText("consultar Colectivos");
-        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
-        jmConsultar.add(jMenuItem1);
+        jmiConsultaColectivo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiConsultaColectivo.setText("consultar Colectivos");
+        jmiConsultaColectivo.addActionListener(this::jmiConsultaColectivoActionPerformed);
+        jmConsultar.add(jmiConsultaColectivo);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem2.setText("consultar Pasajeros");
-        jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
-        jmConsultar.add(jMenuItem2);
+        jmiConsultaPasajero.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiConsultaPasajero.setText("consultar Pasajeros");
+        jmiConsultaPasajero.addActionListener(this::jmiConsultaPasajeroActionPerformed);
+        jmConsultar.add(jmiConsultaPasajero);
+
+        jmiConsultaRuta.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmiConsultaRuta.setText("consultar Ruta");
+        jmiConsultaRuta.addActionListener(this::jmiConsultaRutaActionPerformed);
+        jmConsultar.add(jmiConsultaRuta);
 
         jmbPrincipal.add(jmConsultar);
 
@@ -175,7 +181,7 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_menuAsientoActionPerformed
 
-    private void consultarAsientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarAsientoActionPerformed
+    private void jmiConsultaAsientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiConsultaAsientoActionPerformed
         jdpPrincipal.removeAll();
 
         consultaAsientos ca = new consultaAsientos();
@@ -185,7 +191,7 @@ public class Principal extends javax.swing.JFrame {
 
         jdpPrincipal.repaint();
         jdpPrincipal.revalidate();
-    }//GEN-LAST:event_consultarAsientoActionPerformed
+    }//GEN-LAST:event_jmiConsultaAsientoActionPerformed
 
     private void jmiPasajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPasajeActionPerformed
         jdpPrincipal.removeAll();
@@ -199,7 +205,7 @@ public class Principal extends javax.swing.JFrame {
         jdpPrincipal.revalidate();
     }//GEN-LAST:event_jmiPasajeActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jmiConsultaColectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiConsultaColectivoActionPerformed
         consultaColectivos ccol = new consultaColectivos();
         
         jdpPrincipal.removeAll();
@@ -209,9 +215,9 @@ public class Principal extends javax.swing.JFrame {
         
         jdpPrincipal.revalidate();
         jdpPrincipal.repaint();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jmiConsultaColectivoActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void jmiConsultaPasajeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiConsultaPasajeroActionPerformed
         jdpPrincipal.removeAll();
         
         consultaPasajeros cp = new consultaPasajeros();
@@ -221,7 +227,19 @@ public class Principal extends javax.swing.JFrame {
         
         jdpPrincipal.repaint();
         jdpPrincipal.revalidate();
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jmiConsultaPasajeroActionPerformed
+
+    private void jmiConsultaRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiConsultaRutaActionPerformed
+        jdpPrincipal.removeAll();
+        
+        consultaRutaViaje crv = new consultaRutaViaje();
+        crv.setVisible(true);
+        
+        jdpPrincipal.add(crv);
+        
+        jdpPrincipal.repaint();
+        jdpPrincipal.revalidate();
+    }//GEN-LAST:event_jmiConsultaRutaActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -246,13 +264,14 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem consultarAsiento;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JDesktopPane jdpPrincipal;
     private javax.swing.JMenu jmConsultar;
     private javax.swing.JMenu jmGestion;
     private javax.swing.JMenuBar jmbPrincipal;
+    private javax.swing.JMenuItem jmiConsultaAsiento;
+    private javax.swing.JMenuItem jmiConsultaColectivo;
+    private javax.swing.JMenuItem jmiConsultaPasajero;
+    private javax.swing.JMenuItem jmiConsultaRuta;
     private javax.swing.JMenuItem jmiPasaje;
     private javax.swing.JMenuItem menuAsiento;
     private javax.swing.JMenuItem menuColectivo;
