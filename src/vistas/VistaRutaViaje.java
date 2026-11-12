@@ -405,14 +405,9 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
             return null;
         }
         
-        if (comboxIdColectivo.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione un colectivo (si no hay ninguno, cargue uno primero).");
-            return null;
-        }
-        
-        int idColectivo = Integer.parseInt(comboxIdColectivo.getSelectedItem().toString());
-        Colectivo colectivo = cd.buscarColectivoPorId(idColectivo);
+        Colectivo colectivo = (Colectivo) comboxIdColectivo.getSelectedItem();
         if (colectivo == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione un colectivo (si no hay ninguno, cargue uno primero).");
             return null;
         }
         

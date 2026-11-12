@@ -35,8 +35,8 @@ public class PasajeData {
             ps.setInt(2, pasaje.getAsiento().getIdAsiento());
             ps.setInt(3, pasaje.getViaje().getIdRuta());
 
-            ps.setDate(4, Date.valueOf(LocalDate.now()));
-            ps.setTime(5, Time.valueOf(LocalTime.now()));
+            ps.setDate(4, Date.valueOf(pasaje.getFechaVenta()));
+            ps.setTime(5, Time.valueOf(pasaje.getHoraVenta()));
             ps.setDouble(6, pasaje.getPrecio());
             ps.setBoolean(7, pasaje.getEstado());
 
