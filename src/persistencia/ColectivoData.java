@@ -107,36 +107,37 @@ public class ColectivoData {
         }
     }
 
-    public void bajaColectivo(int id) {
+    public boolean bajaColectivo(int id) {
+        
         String sql = "UPDATE colectivos SET estado=0 WHERE id_colectivo=?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
-            int exito = stm.executeUpdate();
-            if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Baja de colectivo con exito");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontro ningun colectivo para dar de baja");
-            }
+            int a = stm.executeUpdate();
+            if (a > 0) {
+                return true;
+            } 
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al dar de baja el colectivo" + ex.getMessage());
         }
+        return false;
     }
 
-    public void borrarColectivo(int id) {
+    public boolean borrarColectivo(int id) {
         String sql = "DELETE FROM colectivos WHERE id_colectivo=?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
-            int exito = stm.executeUpdate();
-            if (exito == 1) {
-                JOptionPane.showMessageDialog(null, " Colectivo borrado con exito de la base de datos");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontro colectivo para eliminar");
-            }
+            int a = stm.executeUpdate();
+            if (a > 0) {
+                return true;
+            } 
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al borrar el colectivo" + ex.getMessage());
         }
+        return false;
     }
 
     public ArrayList<Colectivo> listarColectivo() {
