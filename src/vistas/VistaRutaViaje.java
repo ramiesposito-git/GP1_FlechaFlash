@@ -204,7 +204,7 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Buscar Ruta", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12))); // NOI18N
 
         btnBuscar.setBackground(new java.awt.Color(46, 116, 189));
-        btnBuscar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnBuscar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("BUSCAR");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
@@ -223,9 +223,9 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtIdRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBuscar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,7 +370,7 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -441,6 +441,11 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
             return;
         }
 
+        if (esIgual(id)) {
+            JOptionPane.showMessageDialog(this, "Debe modificar al menos uno de sus datos!");
+            return;
+        }
+        
         ruta.setIdRuta(id);
 
         rvd.actualizarRutaViaje(ruta);
@@ -602,27 +607,49 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
     }
     
     public boolean esIgual(int id) {
-        boolean esIgual = true;
-
         RutaViaje ruta = rvd.buscarRutaViajePorId(id);
 
-        if (!ruta.getOrigen().equals(txtOrigenBuscar.getText())) {
-            esIgual = false;
-        } else if (!ruta.getDestino().equals(txtDestinoBuscar.getText())) {
-            esIgual = false;
-        } else if (!ruta.getHoraSalida().equals(txtHoraSalidaBuscar.getText())) {
-            esIgual = false;
-        } else if (!ruta.getHoraLlegada().equals(txtHoraLlegadaBuscar.getText())) {
-            esIgual = false;
-        } else if (ruta.getPrecio() != Double.parseDouble(txtPrecioBuscar.getText())) {
-            esIgual = false;
-        } else if (!ruta.isEstado() == checkEstadoBuscar.isSelected()) {
-            esIgual = false;
-        } else if (!ruta.getColectivo().equals(comboxIdColectivoBuscar.getSelectedItem())) {
-            esIgual = false;
+        if (ruta == null) {
+            return false;
         }
 
-        return esIgual;
+        Colectivo colectivo = (Colectivo) comboxIdColectivoBuscar.getSelectedItem();
+
+        if (colectivo == null || ruta.getColectivo() == null) {
+            return false;
+        }
+        if (!ruta.getOrigen().equals(txtOrigenBuscar.getText().trim())) {
+            return false;
+        }
+        if (!ruta.getDestino().equals(txtDestinoBuscar.getText().trim())) {
+            return false;
+        }
+        if (!ruta.getHoraSalida().format(formatoHora).equals(txtHoraSalidaBuscar.getText().trim())) {
+        return false;
+        }
+        if (!ruta.getHoraLlegada().format(formatoHora).equals(txtHoraLlegadaBuscar.getText().trim())) {
+            return false;
+        }
+
+        double precio;
+
+        try {
+            precio = Double.parseDouble(txtPrecioBuscar.getText().trim().replace(',', '.'));
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+
+        if (Double.compare(ruta.getPrecio(), precio) != 0) {
+            return false;
+        }
+        if (ruta.isEstado() != checkEstadoBuscar.isSelected()) {
+            return false;
+        }
+        if (ruta.getColectivo().getID_colectivo() != colectivo.getID_colectivo()) {
+            return false;
+        }
+
+        return true;
     }
     
     private void limpiarBuscar() {
