@@ -123,13 +123,13 @@ public class PasajeroData {
     }
 
     public void borrarpasajero(int id) {
-        String sql = "DELETE FROM Colectivo WHERE id_pasajero=?";
+        String sql = "DELETE FROM pasajero WHERE idPasajero=?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             int exito = stm.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, " Pasajero borrado con exito de la base de datos");
+                JOptionPane.showMessageDialog(null, "Pasajero borrado con exito de la base de datos");
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontro pasajero para eliminar");
             }
