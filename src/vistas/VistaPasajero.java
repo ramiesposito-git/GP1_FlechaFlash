@@ -11,6 +11,7 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
     public VistaPasajero() {
         initComponents();
         pd = new PasajeroData(Principal.conexion);
+        cargarCombo();
     }
 
     @SuppressWarnings("unchecked")
@@ -35,9 +36,7 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
+        ComboBoxPasajeros = new javax.swing.JComboBox<>();
         btnEditar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -190,40 +189,24 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Buscar Pasajero", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12))); // NOI18N
 
-        jLabel8.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel8.setText("Indique el ID:");
-
-        txtID.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-
-        btnBuscar.setBackground(new java.awt.Color(46, 116, 189));
-        btnBuscar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        btnBuscar.setText("BUSCAR");
-        btnBuscar.setPreferredSize(new java.awt.Dimension(90, 30));
-        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
+        ComboBoxPasajeros.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        ComboBoxPasajeros.addActionListener(this::ComboBoxPasajerosActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addComponent(ComboBoxPasajeros, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addComponent(ComboBoxPasajeros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         btnEditar.setBackground(new java.awt.Color(197, 140, 49));
@@ -346,7 +329,7 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,9 +354,9 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
 
         try {
             Integer.valueOf(txtDNI.getText());/*intentamos parsear solo para asegurarnos que se ingresaron numeros, la forma en la que se crea el OBJ Pasajero (String) esta debajo de este try/catch*/
-            Integer.valueOf(txtTelefono.getText()); 
+            Integer.valueOf(txtTelefono.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "ingrese formatos numericos", "DNI, Telefono", 2);
+            JOptionPane.showMessageDialog(this, "ingrese formatos numericos en DNI o Telefono!", "DNI - Telefono", 2);
             return;
         }
 
@@ -392,13 +375,19 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
-        if (txtID.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe indicar un ID", "", 2);
+        Pasajero seleccion = (Pasajero) ComboBoxPasajeros.getSelectedItem();
+        if (seleccion == null) {
+            JOptionPane.showMessageDialog(this, "Primero seleccione un pasajero!");
+            return;
+        }
+        
+        if (campoVacio()) {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos!");
             return;
         }
 
-        if (esIgual(Integer.valueOf(txtID.getText()))) {
-            JOptionPane.showMessageDialog(this, "debe modificar al menos uno de sus datos!");
+        if (esIgual(seleccion.getIdPasajero())) {
+            JOptionPane.showMessageDialog(this, "Debe modificar al menos uno de sus datos!");
             return;
         }
 
@@ -409,50 +398,42 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
         String telefono = txtTelefonoBuscar.getText();
         boolean activo = checkActivoBuscar.isSelected();
 
-        Pasajero p = new Pasajero(Integer.parseInt(txtID.getText()), dni, nombre, apellido, correo, telefono, activo);
+        Pasajero pasajeroEditado = new Pasajero(seleccion.getIdPasajero(), dni, nombre, apellido, correo, telefono, activo);
 
-        pd.actualizarPasajero(p);
+        pd.actualizarPasajero(pasajeroEditado);
         limpiarCamposBuscar();
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        try {
-            int id = Integer.parseInt(txtID.getText());
-            
-            Pasajero p = pd.buscarPasajeroPorId(id);
-            
-            if (p == null) {
-                JOptionPane.showMessageDialog(this, "No se encontro un pasajero con el ID especificado!");
-                return;
-            }
-            
-            txtNombreBuscar.setText(p.getNombre());
-            txtApellidoBuscar.setText(p.getApellido());
-            txtDNIBuscar.setText(p.getDni());
-            txtCorreoBuscar.setText(p.getCorreo());
-            txtTelefonoBuscar.setText(p.getTelefono());
-            checkActivoBuscar.setSelected(p.isEstado());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un ID valido (unicamente valores numericos)", "Valor invalido", 2);
-            return;
-        }
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if (txtID.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Primero ingrese una ID.");
+
+        Pasajero seleccion = (Pasajero) ComboBoxPasajeros.getSelectedItem();
+        
+        if (seleccion == null) {
+            JOptionPane.showMessageDialog(this, "Primero seleccione un pasajero!");
             return;
         }
         
-        int id = Integer.parseInt(txtID.getText());
         
-        pd.borrarpasajero(id);
-        limpiarCamposBuscar();
+        pd.borrarpasajero(seleccion.getIdPasajero());
+
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void ComboBoxPasajerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxPasajerosActionPerformed
+
+        Pasajero p = (Pasajero) ComboBoxPasajeros.getSelectedItem();
+        
+        txtNombreBuscar.setText(p.getNombre());
+        txtApellidoBuscar.setText(p.getApellido());
+        txtDNIBuscar.setText(p.getDni());
+        txtCorreoBuscar.setText(p.getCorreo());
+        txtTelefonoBuscar.setText(p.getTelefono());
+        checkActivoBuscar.setSelected(p.isEstado());
+
+    }//GEN-LAST:event_ComboBoxPasajerosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
+    private javax.swing.JComboBox<Pasajero> ComboBoxPasajeros;
     private javax.swing.JButton btnCargar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
@@ -470,7 +451,6 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -482,7 +462,6 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCorreoBuscar;
     private javax.swing.JTextField txtDNI;
     private javax.swing.JTextField txtDNIBuscar;
-    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombreBuscar;
     private javax.swing.JTextField txtTelefono;
@@ -532,12 +511,23 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
     }
 
     public void limpiarCamposBuscar() {
-        txtID.setText("");
         txtNombreBuscar.setText("");
         txtApellidoBuscar.setText("");
         txtDNIBuscar.setText("");
         txtCorreoBuscar.setText("");
         txtTelefonoBuscar.setText("");
         checkActivoBuscar.setSelected(false);
+    }
+
+    public void cargarCombo() {
+
+        for (Pasajero pasajero : pd.listarPasajero()) {
+
+            ComboBoxPasajeros.addItem(pasajero);
+
+        }
+
+        ComboBoxPasajeros.setSelectedIndex(0);
+
     }
 }
