@@ -15,6 +15,9 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         initComponents();
         cd = new ColectivoData(Principal.conexion);
         SpinnerCapacidad.setModel(spinnerModel);
+        btnEditar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        SpinnerCapacidad.setValue(0);
     }
 
     @SuppressWarnings("unchecked")
@@ -68,19 +71,22 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(38, 52, 69));
         jLabel2.setText("Matricula:");
 
-        txtMatricula.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtMatricula.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtMatricula.setForeground(new java.awt.Color(38, 52, 69));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(38, 52, 69));
         jLabel3.setText("Marca:");
 
-        txtMarca.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtMarca.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtMarca.setForeground(new java.awt.Color(38, 52, 69));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(38, 52, 69));
         jLabel4.setText("Modelo:");
 
-        txtModelo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtModelo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtModelo.setForeground(new java.awt.Color(38, 52, 69));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(38, 52, 69));
@@ -90,7 +96,8 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         jLabel6.setForeground(new java.awt.Color(38, 52, 69));
         jLabel6.setText("Chofer:");
 
-        txtChofer.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtChofer.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtChofer.setForeground(new java.awt.Color(38, 52, 69));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(38, 52, 69));
@@ -132,30 +139,25 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(checkActivo)
                             .addComponent(SpinnerCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtChofer, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtChofer, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)))
+                                .addGap(1, 1, 1)
+                                .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(34, 34, 34))
         );
         jPanel1Layout.setVerticalGroup(
@@ -164,28 +166,30 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(SpinnerCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SpinnerCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txtChofer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtChofer, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(checkActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -211,7 +215,7 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Eliminar - Editar Colectivo", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 17), new java.awt.Color(38, 52, 69))); // NOI18N
@@ -263,9 +267,11 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         jLabel9.setForeground(new java.awt.Color(38, 52, 69));
         jLabel9.setText("Matricula:");
 
-        txtMatriculaEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtMatriculaEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtMatriculaEditar.setForeground(new java.awt.Color(38, 52, 69));
 
-        txtMarcaEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtMarcaEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtMarcaEditar.setForeground(new java.awt.Color(38, 52, 69));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(38, 52, 69));
@@ -275,7 +281,8 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         jLabel11.setForeground(new java.awt.Color(38, 52, 69));
         jLabel11.setText("Modelo:");
 
-        txtModeloEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtModeloEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtModeloEditar.setForeground(new java.awt.Color(38, 52, 69));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(38, 52, 69));
@@ -285,7 +292,8 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         jLabel13.setForeground(new java.awt.Color(38, 52, 69));
         jLabel13.setText("Chofer:");
 
-        txtChoferEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtChoferEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtChoferEditar.setForeground(new java.awt.Color(38, 52, 69));
 
         SpinnerCapacidadEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -298,67 +306,63 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtMatriculaEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtModeloEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtMarcaEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(19, 19, 19))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(6, 6, 6))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel11))
+                                .addGap(6, 6, 6)))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMatriculaEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMarcaEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtModeloEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel12))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel14))
+                        .addGap(6, 6, 6)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(SpinnerCapacidadEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtChoferEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(checkActivoEditar)))
-                .addGap(32, 32, 32))
+                            .addComponent(txtChoferEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(checkActivoEditar))
+                        .addGap(26, 26, 26))))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(0, 13, Short.MAX_VALUE)
+                .addGap(0, 8, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(txtMatriculaEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMatriculaEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(txtMarcaEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMarcaEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(txtModeloEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtModeloEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(SpinnerCapacidadEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SpinnerCapacidadEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
                 .addGap(5, 5, 5)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(txtChoferEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtChoferEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(checkActivoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
-                .addGap(10, 10, 10))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         btnEliminar.setBackground(new java.awt.Color(194, 76, 80));
@@ -386,8 +390,10 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -395,13 +401,13 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -424,7 +430,7 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(35, 35, 35))
+                .addGap(58, 58, 58))
         );
 
         pack();
@@ -454,7 +460,13 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
         if (txtID.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe indicar un ID", "", 2);
+            JOptionPane.showMessageDialog(this, "Debe indicar un ID", "ID", 2);
+            return;
+        }
+
+        if (camposVaciosEditar()) {
+            JOptionPane.showMessageDialog(this, "complete todos los campos o asegurese de \nbuscar un registro primero", "Campos vacios", 2);
+            txtID.setText("");
             return;
         }
 
@@ -463,40 +475,91 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
             return;
         }
 
-        String matricula = txtMatriculaEditar.getText();
-        String marca = txtMarcaEditar.getText();
-        String modelo = txtModeloEditar.getText();
-        int capacidad = (Integer) SpinnerCapacidadEditar.getValue();
-        String chofer = txtChoferEditar.getText();
-        boolean estado = checkActivoEditar.isSelected();
+        try {
+            String matricula = txtMatriculaEditar.getText();
+            String marca = txtMarcaEditar.getText();
+            String modelo = txtModeloEditar.getText();
+            int capacidad = (Integer) SpinnerCapacidadEditar.getValue();
+            String chofer = txtChoferEditar.getText();
+            boolean estado = checkActivoEditar.isSelected();
 
-        Colectivo colectivo = new Colectivo(Integer.parseInt(txtID.getText()), matricula, marca, modelo, capacidad, chofer, estado);
-        cd.actualizarColectivo(colectivo);
+            Colectivo colectivo = new Colectivo(Integer.parseInt(txtID.getText()), matricula, marca, modelo, capacidad, chofer, estado);
+            boolean a = cd.actualizarColectivo(colectivo);
+
+            if (a) {
+                JOptionPane.showMessageDialog(null, "Colectivo actualizado con exito");
+            } else {
+                JOptionPane.showMessageDialog(null, "El registro no existe.\nIntente de nuevo con otro ID");
+                return;
+            }
+
+            vaciarCamposEditar();
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un Id valido!");
+            return;
+        }
 
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int id = Integer.parseInt(txtID.getText());
-        
-        boolean a = cd.borrarColectivo(id);
-        
-        if (a) {
-            JOptionPane.showMessageDialog(this, "Se elimino correctamente el registro");
-        } else{
-            JOptionPane.showConfirmDialog(this, "Ocurrio un error y no se pudo eliminar el registro.\nIntente denuevo");
-        }  
+
+        if (txtID.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe indicar un ID", "ID", 2);
+            return;
+        }
+
+        if (camposVaciosEditar()) {
+            JOptionPane.showMessageDialog(this, "complete todos los campos o asegurese de \nbuscar un registro primero", "Campos vacios", 2);
+            txtID.setText("");
+            return;
+        }
+
+        try {
+
+            int id = Integer.parseInt(txtID.getText());
+
+            boolean a = cd.borrarColectivo(id);
+
+            if (a) {
+                JOptionPane.showMessageDialog(this, "Se elimino correctamente el registro");
+            } else {
+                JOptionPane.showMessageDialog(this, "El registro no existe.\nIntente de nuevo");
+                return;
+            }
+
+            vaciarCamposEditar();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un Id valido!");
+            return;
+        }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
         try {
+
+            if (txtID.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe indicar un ID", "ID", 2);
+                return;
+            }
+
             int id = Integer.parseInt(txtID.getText());
 
             Colectivo colectivo = cd.buscarColectivoPorId(id);
 
             if (colectivo == null) {
                 JOptionPane.showMessageDialog(this, "No se encontro un colectivo con el ID especificado!");
+                vaciarCamposEditar();
+                txtID.setText("");
+                btnEditar.setEnabled(false);
+                btnEliminar.setEnabled(false);
                 return;
+            } else {
+                btnEditar.setEnabled(true);
+                btnEliminar.setEnabled(true);
             }
 
             txtMatriculaEditar.setText(colectivo.getMatricula());
@@ -555,7 +618,17 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
 
     public boolean camposVacios() {
 
-        if (txtMatricula.getText().isEmpty() || txtMarca.getText().isEmpty() || txtModelo.getText().isEmpty() || (Integer) SpinnerCapacidad.getValue() == 1 || txtChofer.getText().isEmpty()) {
+        if (txtMatricula.getText().isEmpty() || txtMarca.getText().isEmpty() || txtModelo.getText().isEmpty() || (Integer) SpinnerCapacidad.getValue() == 0 || txtChofer.getText().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public boolean camposVaciosEditar() {
+
+        if (txtMatriculaEditar.getText().isEmpty() || txtMarcaEditar.getText().isEmpty() || txtModeloEditar.getText().isEmpty() || (Integer) SpinnerCapacidadEditar.getValue() == 1 || txtChoferEditar.getText().isEmpty()) {
             return true;
         } else {
             return false;
@@ -568,7 +641,11 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         boolean igual = true;
 
         Colectivo colectivo = cd.buscarColectivoPorId(id);
-
+        
+        if (colectivo == null) {
+            return false;
+        }
+        
         if (!txtMatriculaEditar.getText().equals(colectivo.getMatricula())) {
             igual = false;
         } else if (!txtMarcaEditar.getText().equals(colectivo.getMarca())) {
@@ -594,6 +671,16 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         SpinnerCapacidad.setValue(1);
         txtChofer.setText("");
         checkActivo.setSelected(false);
+    }
+
+    public void vaciarCamposEditar() {
+        txtMatriculaEditar.setText("");
+        txtMarcaEditar.setText("");
+        txtModeloEditar.setText("");
+        SpinnerCapacidadEditar.setValue(1);
+        txtChoferEditar.setText("");
+        checkActivoEditar.setSelected(false);
+        txtID.setText("");
     }
 
 }

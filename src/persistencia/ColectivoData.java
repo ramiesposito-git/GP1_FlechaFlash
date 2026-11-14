@@ -68,7 +68,7 @@ public class ColectivoData {
         return colectivo;
     }
 
-    public void actualizarColectivo(Colectivo colectivo) {
+    public boolean  actualizarColectivo(Colectivo colectivo) {
 
         String SQL = "UPDATE `colectivos` SET `matricula`= ?,`marca`= ?,`modelo`= ?,`capacidad`= ?,`chofer`= ?,`estado`= ? WHERE ID_colectivo = ?";
 
@@ -83,12 +83,13 @@ public class ColectivoData {
             stm.setInt(7, colectivo.getID_colectivo());
 
             int aa = stm.executeUpdate();
-            if (aa == 1) {
-                JOptionPane.showMessageDialog(null, "Colectivo actualizado con exito");
+            if (aa > 0) {
+                return true;
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al actualizar colectivo" + ex.getMessage());
         }
+        return false;
     }
 
     public void altaColectivo(int id) {
