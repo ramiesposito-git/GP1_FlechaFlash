@@ -100,22 +100,22 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
         btnGuardar.setText("CARGAR");
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
-        comboxIdColectivo.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        comboxIdColectivo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         comboxIdColectivo.setForeground(new java.awt.Color(38, 52, 69));
 
-        txtPrecio.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtPrecio.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtPrecio.setForeground(new java.awt.Color(38, 52, 69));
 
-        txtHoraLlegada.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtHoraLlegada.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtHoraLlegada.setForeground(new java.awt.Color(38, 52, 69));
 
-        txtHoraSalida.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtHoraSalida.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtHoraSalida.setForeground(new java.awt.Color(38, 52, 69));
 
-        txtDestino.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtDestino.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtDestino.setForeground(new java.awt.Color(38, 52, 69));
 
-        txtOrigen.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtOrigen.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtOrigen.setForeground(new java.awt.Color(38, 52, 69));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -394,7 +394,7 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();

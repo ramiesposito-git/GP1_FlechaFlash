@@ -17,9 +17,15 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
     public VistaAsiento() {
         initComponents();
         ad = new AsientoData(Principal.conexion);
+
+        SpinnerNroAsiento.setModel(sm);
+        SpinnerNroAsientoEditar.setModel(sm);
+
         vaciarCampos();
         cargarCombo();
-        SpinnerNroAsiento.setModel(sm);
+
+        modificarBTN.setEnabled(false);
+        eliminarBTN.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -49,8 +55,8 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         checkActivoEditar = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        txtNroAsientoEditar = new javax.swing.JTextField();
-        txtColectivoEditar = new javax.swing.JTextField();
+        ComboBoxColectivosEditar = new javax.swing.JComboBox<>();
+        SpinnerNroAsientoEditar = new javax.swing.JSpinner();
 
         jLabel2.setText("jLabel2");
 
@@ -72,7 +78,7 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
 
         SpinnerNroAsiento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        ComboBoxColectivos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        ComboBoxColectivos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         btnCargar.setBackground(new java.awt.Color(52, 142, 110));
         btnCargar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -114,10 +120,13 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel7)
                             .addComponent(jLabel4))
-                        .addGap(5, 5, 5)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(checkActivo)
-                            .addComponent(SpinnerNroAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(SpinnerNroAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(checkActivo)))
                         .addGap(92, 92, 92))))
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -133,7 +142,7 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4)
                     .addComponent(SpinnerNroAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel7)
                     .addComponent(checkActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -168,12 +177,12 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Eliminar - Editar Asiento", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 1, 17))); // NOI18N
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 2, true), "Buscar Asiento", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 1, 12))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Buscar Asiento", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 1, 12))); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setText("Indique el ID:");
 
-        idAsientotxt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        idAsientotxt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         buscarBTN.setBackground(new java.awt.Color(46, 116, 189));
         buscarBTN.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -190,9 +199,9 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(idAsientotxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buscarBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,8 +209,8 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
                 .addGap(10, 10, 10)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(idAsientotxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buscarBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(idAsientotxt, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscarBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -231,6 +240,10 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         jLabel9.setForeground(new java.awt.Color(38, 52, 69));
         jLabel9.setText("Colectivo:");
 
+        ComboBoxColectivosEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        SpinnerNroAsientoEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -238,65 +251,63 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(checkActivoEditar)
-                            .addComponent(txtNroAsientoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(eliminarBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(modificarBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtColectivoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel9)
+                            .addComponent(modificarBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ComboBoxColectivosEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(checkActivoEditar)
+                                    .addComponent(SpinnerNroAsientoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(eliminarBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(14, 14, 14))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtColectivoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtNroAsientoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(checkActivoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(eliminarBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(modificarBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(ComboBoxColectivosEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(SpinnerNroAsientoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel8))
+                    .addComponent(checkActivoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modificarBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(eliminarBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(30, 30, 30)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,9 +315,9 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -331,17 +342,23 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
 
     private void modificarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBTNActionPerformed
 
+        if (idAsientotxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un ID! y realize la busqueda primero!");
+            return;
+        }
+
         if (esIgual(Integer.parseInt(idAsientotxt.getText()))) {
             JOptionPane.showMessageDialog(this, "Debe modificar almenos un campo!");
             return;
         }
 
-        int idAsiento = Integer.parseInt(idAsientotxt.getText());
-        int idColectivo = Integer.parseInt(txtColectivoEditar.getText());
-        int nroAsiento = Integer.parseInt(txtNroAsientoEditar.getText());
+        Colectivo colectivo = (Colectivo) ComboBoxColectivosEditar.getSelectedItem();
+        int nroAsiento = (Integer) SpinnerNroAsientoEditar.getValue();
         boolean activo = checkActivoEditar.isSelected();
 
-        boolean a = ad.actualizarAsiento(idColectivo, nroAsiento, activo, idAsiento);
+        Asiento asientoModificado = new Asiento(Integer.parseInt(idAsientotxt.getText()), colectivo, nroAsiento, activo);
+
+        boolean a = ad.actualizarAsiento(asientoModificado);
 
         if (a) {
             JOptionPane.showMessageDialog(this, "Asiento editado con exito!");
@@ -350,9 +367,19 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
             return;
         }
 
+        vaciarCampos();
+
+        modificarBTN.setEnabled(false);
+        eliminarBTN.setEnabled(false);
     }//GEN-LAST:event_modificarBTNActionPerformed
 
     private void eliminarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBTNActionPerformed
+
+        if (idAsientotxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un ID! y realize la busqueda primero!");
+            return;
+        }
+
         int idAsiento = Integer.parseInt(idAsientotxt.getText());
 
         boolean a = ad.eliminarAsiento(idAsiento);
@@ -363,10 +390,19 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Ocurrio un error y no se pudo editar el asiento.");
             return;
         }
-        
+
+        vaciarCampos();
+
+        modificarBTN.setEnabled(false);
+        eliminarBTN.setEnabled(false);
     }//GEN-LAST:event_eliminarBTNActionPerformed
 
     private void buscarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBTNActionPerformed
+
+        if (idAsientotxt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un ID!");
+            return;
+        }
 
         try {
             int id = Integer.parseInt(idAsientotxt.getText());
@@ -374,15 +410,20 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
 
             if (asiento == null) {
                 JOptionPane.showMessageDialog(this, "No se encontraron asientos con ese ID, intente otro");
+                modificarBTN.setEnabled(false);
+                eliminarBTN.setEnabled(false);
                 return;
+            } else {
+                modificarBTN.setEnabled(true);
+                eliminarBTN.setEnabled(true);
             }
-
-            txtColectivoEditar.setText(asiento.getColectivo().getID_colectivo() + "");
-            txtNroAsientoEditar.setText(asiento.getNumeroAsiento() + "");
+            
+            ComboBoxColectivosEditar.setSelectedItem(asiento.getColectivo());
+            SpinnerNroAsientoEditar.setValue(asiento.getNumeroAsiento());
             checkActivoEditar.setSelected(asiento.getEstado());
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingresa un numero!", "Error", 2);
+            JOptionPane.showMessageDialog(this, "Ingresa un numero en ID!", "Error", 2);
             return;
         }
 
@@ -391,7 +432,9 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Colectivo> ComboBoxColectivos;
+    private javax.swing.JComboBox<Colectivo> ComboBoxColectivosEditar;
     private javax.swing.JSpinner SpinnerNroAsiento;
+    private javax.swing.JSpinner SpinnerNroAsientoEditar;
     private javax.swing.JButton btnCargar;
     private javax.swing.JButton buscarBTN;
     private javax.swing.JCheckBox checkActivo;
@@ -413,34 +456,35 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JButton modificarBTN;
-    private javax.swing.JTextField txtColectivoEditar;
-    private javax.swing.JTextField txtNroAsientoEditar;
     // End of variables declaration//GEN-END:variables
 
     public void cargarCombo() {
 
         ColectivoData cd = new ColectivoData(Principal.conexion);
 
-        ArrayList<Colectivo> colectivos = (ArrayList<Colectivo>) cd.listarColectivo();
-
-        for (Colectivo colectivo : colectivos) {
+        for (Colectivo colectivo : cd.listarColectivo()) {
             ComboBoxColectivos.addItem(colectivo);
+            ComboBoxColectivosEditar.addItem(colectivo);
         }
 
     }
 
     public boolean camposVacios() {
-        if (ComboBoxColectivos.getSelectedIndex() == -1 || (int) SpinnerNroAsiento.getValue() == 0 || (int) SpinnerNroAsiento.getValue() < 0) {
+        if (ComboBoxColectivos.getSelectedIndex() == -1 || (int) SpinnerNroAsiento.getValue() == 0) {
             return true;
         }
 
         return false;
-
     }
 
     public void vaciarCampos() {
         ComboBoxColectivos.setSelectedIndex(-1);
+        ComboBoxColectivosEditar.setSelectedIndex(-1);
         SpinnerNroAsiento.setValue(0);
+        SpinnerNroAsientoEditar.setValue(0);
+        checkActivo.setSelected(false);
+        checkActivoEditar.setSelected(false);
+        idAsientotxt.setText("");
     }
 
     public boolean esIgual(int id) {
@@ -449,16 +493,22 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
 
         boolean esIgual = true;
 
-        if (!asiento.getColectivo().toString().equals(txtColectivoEditar)) {
+        if (asiento.getColectivo() != (Colectivo) ComboBoxColectivosEditar.getSelectedItem()) {
             esIgual = false;
-        } else if (asiento.getNumeroAsiento() != Integer.parseInt(txtNroAsientoEditar.getText())) {
+        } 
+        
+        if (asiento.getNumeroAsiento() != (Integer) SpinnerNroAsientoEditar.getValue()) {
             esIgual = false;
-        } else if (asiento.getEstado() != checkActivoEditar.isSelected()) {
+        } 
+        
+        if (asiento.getEstado() != checkActivoEditar.isSelected()) {
             esIgual = false;
         }
 
+        if (esIgual) {
+            System.out.println("Es igual: "+esIgual);
+        }
         return esIgual;
-
     }
 
 }

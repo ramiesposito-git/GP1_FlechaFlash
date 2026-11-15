@@ -68,7 +68,7 @@ public class ColectivoData {
         return colectivo;
     }
 
-    public boolean  actualizarColectivo(Colectivo colectivo) {
+    public boolean actualizarColectivo(Colectivo colectivo) {
 
         String SQL = "UPDATE `colectivos` SET `matricula`= ?,`marca`= ?,`modelo`= ?,`capacidad`= ?,`chofer`= ?,`estado`= ? WHERE ID_colectivo = ?";
 
@@ -109,7 +109,7 @@ public class ColectivoData {
     }
 
     public boolean bajaColectivo(int id) {
-        
+
         String sql = "UPDATE colectivos SET estado=0 WHERE id_colectivo=?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -117,8 +117,8 @@ public class ColectivoData {
             int a = stm.executeUpdate();
             if (a > 0) {
                 return true;
-            } 
-            
+            }
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al dar de baja el colectivo" + ex.getMessage());
         }
@@ -133,8 +133,8 @@ public class ColectivoData {
             int a = stm.executeUpdate();
             if (a > 0) {
                 return true;
-            } 
-            
+            }
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al borrar el colectivo" + ex.getMessage());
         }
@@ -161,7 +161,7 @@ public class ColectivoData {
                 colectivo.setEstado(rs.getBoolean("estado"));
                 colectivos.add(colectivo);
             }
-            
+
             if (!tiene_resultados) {
                 JOptionPane.showMessageDialog(null, "No se encontraron colectivos!");
                 System.out.println("no hay resultados");

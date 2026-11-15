@@ -77,7 +77,7 @@ public class AsientoData {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se encontro el asiento con el ID indicado!" + ex.getMessage());
+            System.out.println("Error al buscar asiento: " + ex.getMessage());
             return null;
         }
 
@@ -85,9 +85,10 @@ public class AsientoData {
 
     }
 
-    public boolean actualizarAsiento(int idColectivo, int numeroAsiento, boolean estado, int id) {
+    public boolean actualizarAsiento(Asiento asiento) {
 
-        if(asientoExistente(idColectivo, numeroAsiento)){
+        
+        if(asientoExistente(asiento.getColectivo().getID_colectivo(), asiento.getNumeroAsiento())){
             return false;
         }
         
@@ -95,14 +96,14 @@ public class AsientoData {
 
         try {
             PreparedStatement stm = connexion.prepareStatement(SQL);
-            stm.setInt(1, idColectivo);
-            stm.setInt(2, numeroAsiento);
-            stm.setBoolean(3, estado);
-            stm.setInt(4, id);
+            stm.setInt(1, asiento.getColectivo().getID_colectivo());
+            stm.setInt(2, asiento.getNumeroAsiento());
+            stm.setBoolean(3, asiento.getEstado());
+            stm.setInt(4, asiento.getIdAsiento());
 
             int a = stm.executeUpdate();
 
-            if (a > 0) {
+            if (a != 0) {
                 return true;
             }
 
