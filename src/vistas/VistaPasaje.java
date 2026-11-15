@@ -15,7 +15,6 @@ import persistencia.PasajeData;
 import persistencia.PasajeroData;
 import persistencia.RutaViajeData;
 
-
 public class VistaPasaje extends javax.swing.JInternalFrame {
 
     private PasajeData pd;
@@ -24,23 +23,23 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     private AsientoData ad;
     private final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
-    
+
     public VistaPasaje() {
         initComponents();
         pd = new PasajeData(Principal.conexion);
         pjd = new PasajeroData(Principal.conexion);
         rvd = new RutaViajeData(Principal.conexion);
         ad = new AsientoData(Principal.conexion);
-        
+
         txtFechaVenta.setEditable(false);
         txtHoraVenta.setEditable(false);
         txtFechaVentaBuscar.setEditable(false);
         txtHoraVentaBuscar.setEditable(false);
-        
+
         cargarComboPasajeros();
         cargarComboAsientos();
         cargarComboRuta();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -381,10 +380,11 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         Pasaje pasaje = validarFormulario();
+
         if (pasaje == null) {
             return;
         }
- 
+
         pd.crearPasaje(pasaje);
         limpiar();
     }//GEN-LAST:event_btnCrearActionPerformed
@@ -393,7 +393,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         int id;
         try {
             id = Integer.parseInt(txtIdPasaje.getText().trim());
-            
+
             if (id <= 0) {
                 JOptionPane.showMessageDialog(this, "Ingrese un ID mayor que cero.");
                 return;
@@ -402,12 +402,12 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "El ID debe ser un número entero.");
             return;
         }
- 
+
         Pasaje pasaje = pd.buscarPasajePorId(id);
         if (pasaje == null) {
-            return; 
+            return;
         }
- 
+
         txtFechaVentaBuscar.setText(pasaje.getFechaVenta().format(formatoFecha));
         txtHoraVentaBuscar.setText(pasaje.getHoraVenta().format(formatoHora));
         txtPrecioBuscar.setText(String.valueOf(pasaje.getPrecio()));
@@ -427,11 +427,11 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Ingrese un ID mayor a cero");
                 return;
             }
-        }catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "El ID debe ser un número entero.");
             return;
         }
-    
+
         Pasaje pasajeEditado = validarFormularioEditar();
 
         if (pasajeEditado == null) {
@@ -442,7 +442,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Debe modificar al menos uno de sus datos!");
             return;
         }
-        
+
         pasajeEditado.setIdPasaje(id);
 
         pd.actualizarPasaje(pasajeEditado);
@@ -458,7 +458,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Ingrese un ID mayor a cero");
                 return;
             }
-        }catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "El ID debe ser un número entero.");
             return;
         }
@@ -519,7 +519,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             comboxPasajeroBuscar.addItem(p);
         }
     }
-    
+
     private void cargarComboAsientos() {
         comboxAsiento.removeAllItems();
         comboxAsientoBuscar.removeAllItems();
@@ -529,8 +529,8 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             comboxAsientoBuscar.addItem(a);
         }
     }
-    
-    private void cargarComboRuta(){
+
+    private void cargarComboRuta() {
         comboxRuta.removeAllItems();
         comboxRutaBuscar.removeAllItems();
 
@@ -539,7 +539,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             comboxRutaBuscar.addItem(r);
         }
     }
-    
+
     private void limpiar() {
         txtFechaVenta.setText("");
         txtHoraVenta.setText("");
@@ -555,9 +555,11 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             comboxRuta.setSelectedIndex(0);
         }
     }
-    
+
     private void seleccionarPasajero(Pasajero pasajero) {
-        if (pasajero == null) return;
+        if (pasajero == null) {
+            return;
+        }
 
         for (int i = 0; i < comboxPasajeroBuscar.getItemCount(); i++) {
             Pasajero p = comboxPasajeroBuscar.getItemAt(i);
@@ -570,9 +572,11 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         comboxPasajeroBuscar.addItem(pasajero);
         comboxPasajeroBuscar.setSelectedItem(pasajero);
     }
-    
+
     private void seleccionarRuta(RutaViaje ruta) {
-        if (ruta == null) return;
+        if (ruta == null) {
+            return;
+        }
 
         for (int i = 0; i < comboxRutaBuscar.getItemCount(); i++) {
             RutaViaje r = comboxRutaBuscar.getItemAt(i);
@@ -585,9 +589,11 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         comboxRutaBuscar.addItem(ruta);
         comboxRutaBuscar.setSelectedItem(ruta);
     }
-    
+
     private void seleccionarAsiento(Asiento asiento) {
-        if (asiento == null) return;
+        if (asiento == null) {
+            return;
+        }
 
         for (int i = 0; i < comboxAsientoBuscar.getItemCount(); i++) {
             Asiento a = comboxAsientoBuscar.getItemAt(i);
@@ -600,12 +606,12 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         comboxAsientoBuscar.addItem(asiento);
         comboxAsientoBuscar.setSelectedItem(asiento);
     }
-    
+
     private Pasaje validarFormulario() {
         Pasajero pasajero = (Pasajero) comboxPasajero.getSelectedItem();
         RutaViaje ruta = (RutaViaje) comboxRuta.getSelectedItem();
         Asiento asiento = (Asiento) comboxAsiento.getSelectedItem();
-        
+
         if (pasajero == null) {
             JOptionPane.showMessageDialog(this, "Seleccione un pasajero, si no hay ninguno cargue uno primero.");
             return null;
@@ -618,12 +624,12 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Seleccione un asiento.");
             return null;
         }
-        
+
         if (txtPrecio.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingrese el precio del pasaje.");
             return null;
         }
-        
+
         double precio;
         try {
             precio = Double.parseDouble(txtPrecio.getText().trim().replace(',', '.'));
@@ -631,13 +637,14 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "El precio debe ser un número (por ejemplo 2500.50).");
             return null;
         }
+
         if (precio <= 0) {
             JOptionPane.showMessageDialog(this, "El precio debe ser mayor que cero.");
             return null;
         }
-        
+
         Pasaje pasaje = new Pasaje();
-        
+
         // Fecha y hora automáticas
         pasaje.setFechaVenta(LocalDate.now());
         pasaje.setHoraVenta(LocalTime.now());
@@ -646,10 +653,10 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         pasaje.setViaje(ruta);
         pasaje.setPrecio(precio);
         pasaje.setEstado(checkboxEstado.isSelected());
-        
+
         return pasaje;
     }
-    
+
     private void limpiarBuscar() {
         txtIdPasaje.setText("");
         txtFechaVentaBuscar.setText("");
@@ -666,7 +673,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             comboxRutaBuscar.setSelectedIndex(0);
         }
     }
-    
+
     private Pasaje validarFormularioEditar() {
         Pasajero pasajero = (Pasajero) comboxPasajeroBuscar.getSelectedItem();
         RutaViaje ruta = (RutaViaje) comboxRutaBuscar.getSelectedItem();
@@ -698,12 +705,12 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             precio = Double.parseDouble(txtPrecioBuscar.getText().trim().replace(',', '.'));
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this,"El precio debe ser un número válido.");
+            JOptionPane.showMessageDialog(this, "El precio debe ser un número válido.");
             return null;
         }
 
         if (precio <= 0) {
-        JOptionPane.showMessageDialog(this,"El precio debe ser mayor que cero.");
+            JOptionPane.showMessageDialog(this, "El precio debe ser mayor que cero.");
             return null;
         }
 
@@ -717,7 +724,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
         return pasaje;
     }
-    
+
     public boolean esIgual(int id) {
         Pasaje pasaje = pd.buscarPasajePorId(id);
 
@@ -741,7 +748,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         if (pasaje.getViaje().getIdRuta() != ruta.getIdRuta()) {
             return false;
         }
-        
+
         double precio;
         try {
             precio = Double.parseDouble(txtPrecioBuscar.getText().trim().replace(',', '.'));

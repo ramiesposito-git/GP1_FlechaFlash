@@ -215,7 +215,7 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Eliminar - Editar Colectivo", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 17), new java.awt.Color(38, 52, 69))); // NOI18N
@@ -224,7 +224,8 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         jPanel2.setForeground(new java.awt.Color(38, 52, 69));
         jPanel2.setPreferredSize(new java.awt.Dimension(272, 75));
 
-        txtID.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        txtID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtID.setForeground(new java.awt.Color(38, 52, 69));
 
         btnBuscar.setBackground(new java.awt.Color(46, 116, 189));
         btnBuscar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -235,7 +236,7 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(38, 52, 69));
-        jLabel15.setText("Indique el ID:");
+        jLabel15.setText("Indique un ID:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -255,10 +256,10 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel6.setPreferredSize(new java.awt.Dimension(272, 75));
@@ -430,7 +431,7 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(58, 58, 58))
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -465,7 +466,7 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         }
 
         if (camposVaciosEditar()) {
-            JOptionPane.showMessageDialog(this, "complete todos los campos o asegurese de \nbuscar un registro primero", "Campos vacios", 2);
+            JOptionPane.showMessageDialog(this, "complete todos los campos o asegurese de \nprimero buscar un registro", "Campos vacios", 2);
             txtID.setText("");
             return;
         }
@@ -510,7 +511,7 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         }
 
         if (camposVaciosEditar()) {
-            JOptionPane.showMessageDialog(this, "complete todos los campos o asegurese de \nbuscar un registro primero", "Campos vacios", 2);
+            JOptionPane.showMessageDialog(this, "Primero debe buscar un registro!", "Campos vacios", 2);
             txtID.setText("");
             return;
         }

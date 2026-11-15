@@ -103,6 +103,6 @@ public class RutaViaje {
     
     @Override
     public String toString() {
-        return this.origen +" a "+ this.destino +" ("+ horaSalida +" : "+ horaLlegada+") ";
+        return this.origen +" - "+ this.destino +" ("+ horaSalida +" : "+ horaLlegada+") ";
     }
 }

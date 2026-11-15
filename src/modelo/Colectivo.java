@@ -94,6 +94,30 @@ public class Colectivo {
     public String toString() {
         return "ID: "+ this.ID_colectivo +" - Cap: "+ this.capacidad;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 61 * hash + this.ID_colectivo;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final Colectivo other = (Colectivo) obj;
+        return this.ID_colectivo == other.ID_colectivo;
+    }
+    
     
     
 }
