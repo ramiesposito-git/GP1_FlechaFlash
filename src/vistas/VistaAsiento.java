@@ -46,9 +46,9 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         idAsientotxt = new javax.swing.JTextField();
         buscarBTN = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
         modificarBTN = new javax.swing.JButton();
         eliminarBTN = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -62,7 +62,7 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
 
         setClosable(true);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Nuevo Asiento", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 1, 17))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Nuevo Asiento", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 1, 17), new java.awt.Color(38, 52, 69))); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(38, 52, 69));
@@ -175,12 +175,9 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Eliminar - Editar Asiento", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 1, 17))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Nuevo Asiento", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 1, 17), new java.awt.Color(38, 52, 69))); // NOI18N
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Buscar Asiento", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 1, 12))); // NOI18N
-
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel5.setText("Indique el ID:");
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Buscar Asiento", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(38, 52, 69))); // NOI18N
 
         idAsientotxt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -190,13 +187,17 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         buscarBTN.setText("BUSCAR");
         buscarBTN.addActionListener(this::buscarBTNActionPerformed);
 
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(38, 52, 69));
+        jLabel15.setText("Indique un ID:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel5)
+                .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(idAsientotxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -208,9 +209,9 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
                     .addComponent(idAsientotxt, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buscarBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(buscarBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel15))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -317,7 +318,7 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -448,10 +449,10 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
     private javax.swing.JButton eliminarBTN;
     private javax.swing.JTextField idAsientotxt;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

@@ -165,7 +165,9 @@ public class RutaViajeData {
     }
 
     public boolean borrarRutaViaje(int id) {
+        
         String sql = "DELETE FROM ruta_viaje WHERE ID_ruta=?";
+        
         try {
             
             PreparedStatement stm = connection.prepareStatement(sql);

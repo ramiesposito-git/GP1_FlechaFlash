@@ -234,7 +234,7 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         btnBuscar.setPreferredSize(new java.awt.Dimension(90, 30));
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(38, 52, 69));
         jLabel15.setText("Indique un ID:");
 
@@ -247,9 +247,9 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
+                .addGap(60, 60, 60))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

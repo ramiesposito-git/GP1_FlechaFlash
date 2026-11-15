@@ -10,8 +10,8 @@ import modelo.*;
 public class PasajeData {
 
     Connection connection;
-    private PasajeroData pjd;  
-    private AsientoData ad;     
+    private PasajeroData pjd;
+    private AsientoData ad;
     private RutaViajeData rvd;
 
     public PasajeData(Conexion conexion) {
@@ -41,7 +41,7 @@ public class PasajeData {
             ps.setBoolean(7, pasaje.getEstado());
 
             ps.executeUpdate();
-            
+
             ResultSet rs = ps.getGeneratedKeys();
 
             if (rs.next()) {
@@ -86,7 +86,7 @@ public class PasajeData {
             ps.close();
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error: "+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
         }
 
     }
@@ -116,13 +116,15 @@ public class PasajeData {
     }
 
     public Pasaje buscarPasajePorId(int id) {
+
         Pasaje pasaje = null;
         String sql = "SELECT * FROM pasaje WHERE ID_pasaje = ?";
-        try{
+
+        try {
             PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
-            
+
             if (rs.next()) {
                 pasaje = new Pasaje();
                 pasaje.setIdPasaje(id);
@@ -133,26 +135,28 @@ public class PasajeData {
                 pasaje.setHoraVenta(rs.getTime("hora_venta").toLocalTime());
                 pasaje.setPrecio(rs.getDouble("precio"));
                 pasaje.setEstado(rs.getBoolean("estado"));
-            }else{
-                JOptionPane.showMessageDialog(null, "No existe una pasaje con el id: " + id);
+            } else {
+                return null;
             }
+
             stm.close();
             rs.close();
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Error al buscar el pasaje: " + ex.getMessage());
+
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar Pasaje: " + ex.getMessage());
         }
-        
+
         return pasaje;
     }
-    
+
     public ArrayList<Pasaje> listarPasaje() {
         ArrayList<Pasaje> pasajes = new ArrayList<>();
         String sql = "SELECT * FROM pasaje";
-        try{
+        try {
             PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = stm.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 Pasaje pasaje = new Pasaje();
                 pasaje.setIdPasaje(rs.getInt("ID_pasaje"));
                 pasaje.setPasajero(pjd.buscarPasajeroPorId(rs.getInt("idPasajero")));
@@ -166,29 +170,36 @@ public class PasajeData {
             }
             stm.close();
             rs.close();
-        }catch(SQLException ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al listar los pasajes: " + ex.getMessage());
         }
         return pasajes;
     }
-    
-    public void borrarPasaje(int id) {
+
+    public boolean borrarPasaje(int id) {
+
         String sql = "DELETE FROM pasaje WHERE ID_pasaje=?";
-        try{
+
+        try {
             PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setInt(1, id);
-            int exito = stm.executeUpdate();
-            if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Pasaje borrado con exito de la base de datos");
-            }else {
-                JOptionPane.showMessageDialog(null, "No se encontro el pasaje para eliminar");
+
+            int a = stm.executeUpdate();
+
+            if (a != 0) {
+                return true;
             }
+
             stm.close();
-        }catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al borrar el pasaje: " + ex.getMessage());
+
+        } catch (SQLException ex) {
+            System.out.println("Error al borrar Pasaje: " + ex.getMessage());
+            return false;
         }
+
+        return false;
     }
-    
+
     public void bajaLogicaPasaje(int id) {
         String sql = "UPDATE pasaje SET estado=0 WHERE ID_pasaje=?";
         try {
@@ -205,7 +216,7 @@ public class PasajeData {
             JOptionPane.showMessageDialog(null, "Error al dar de baja el pasaje: " + ex.getMessage());
         }
     }
-    
+
     public void altaLogicaPasaje(int id) {
         String sql = "UPDATE pasaje SET estado=1 WHERE ID_pasaje=?";
         try {

@@ -1,10 +1,11 @@
 package vistas;
 
+import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 import modelo.Asiento;
 import modelo.Pasaje;
@@ -21,24 +22,24 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     private PasajeroData pjd;
     private RutaViajeData rvd;
     private AsientoData ad;
-    private final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     private final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
     public VistaPasaje() {
+
         initComponents();
+
         pd = new PasajeData(Principal.conexion);
         pjd = new PasajeroData(Principal.conexion);
         rvd = new RutaViajeData(Principal.conexion);
         ad = new AsientoData(Principal.conexion);
 
-        txtFechaVenta.setEditable(false);
-        txtHoraVenta.setEditable(false);
-        txtFechaVentaBuscar.setEditable(false);
-        txtHoraVentaBuscar.setEditable(false);
+        cargarCombosPasajeros();
+        cargarCombosAsientos();
+        cargarCombosRuta();
 
-        cargarComboPasajeros();
-        cargarComboAsientos();
-        cargarComboRuta();
+        btnEliminar.setEnabled(false);
+        btnEditar.setEnabled(false);
 
     }
 
@@ -50,18 +51,14 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         comboxPasajero = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        comboxAsiento = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        comboxRuta = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        txtFechaVenta = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        txtHoraVenta = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtPrecio = new javax.swing.JTextField();
         checkboxEstado = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
         btnCrear = new javax.swing.JButton();
+        comboxRuta = new javax.swing.JComboBox<>();
+        comboxAsiento = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -90,25 +87,31 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Eliminar -  Editar Pasaje", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 17), new java.awt.Color(38, 52, 69))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        comboxPasajero.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        comboxPasajero.setForeground(new java.awt.Color(38, 52, 69));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(38, 52, 69));
         jLabel2.setText("Pasajero:");
 
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(38, 52, 69));
         jLabel3.setText("Asiento:");
 
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(38, 52, 69));
         jLabel4.setText("Destino:");
 
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel5.setText("Fecha de venta:");
-
-        jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel6.setText("Hora de venta:");
-
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(38, 52, 69));
         jLabel7.setText("Precio:");
 
-        jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        txtPrecio.setEditable(false);
+        txtPrecio.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtPrecio.setForeground(new java.awt.Color(38, 52, 69));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(38, 52, 69));
         jLabel8.setText("Estado:");
 
         btnCrear.setBackground(new java.awt.Color(52, 142, 110));
@@ -117,6 +120,10 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         btnCrear.setText("CARGAR");
         btnCrear.addActionListener(this::btnCrearActionPerformed);
 
+        comboxRuta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        comboxAsiento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -124,62 +131,50 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(50, 50, 50)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(comboxPasajero, 0, 140, Short.MAX_VALUE)
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(checkboxEstado)
-                            .addComponent(txtHoraVenta)
-                            .addComponent(txtFechaVenta)
-                            .addComponent(comboxRuta, 0, 140, Short.MAX_VALUE)
-                            .addComponent(comboxAsiento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(comboxPasajero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtPrecio)))
+                            .addComponent(comboxRuta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(comboxAsiento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(119, 119, 119)
-                        .addComponent(btnCrear)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addGap(116, 116, 116)
+                        .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(65, 65, 65)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(comboxPasajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(comboxAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(comboxRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(comboxRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtFechaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtHoraVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(comboxAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(checkboxEstado))
-                .addGap(18, 18, 18)
-                .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkboxEstado)
+                    .addComponent(jLabel8))
+                .addGap(36, 36, 36)
+                .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -197,7 +192,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jLabel1)
-                .addContainerGap(379, Short.MAX_VALUE))
+                .addContainerGap(406, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,21 +213,22 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         btnBuscar.setText("BUSCAR");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
-        jLabel9.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel9.setText("Indique el ID:");
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(38, 52, 69));
+        jLabel9.setText("Indique un ID:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtIdPasaje, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtIdPasaje, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,41 +253,63 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         btnEliminar.setText("ELIMINAR");
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
-        jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(38, 52, 69));
         jLabel10.setText("Pasajero:");
 
-        jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(38, 52, 69));
         jLabel11.setText("Asiento:");
 
-        jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(38, 52, 69));
         jLabel12.setText("Destino:");
 
-        jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(38, 52, 69));
         jLabel13.setText("Fecha de venta:");
 
-        jLabel14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(38, 52, 69));
         jLabel14.setText("Hora de venta:");
 
-        jLabel15.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(38, 52, 69));
         jLabel15.setText("Precio:");
 
-        jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(38, 52, 69));
         jLabel16.setText("Estado:");
+
+        comboxPasajeroBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        comboxPasajeroBuscar.setForeground(new java.awt.Color(38, 52, 69));
+
+        comboxAsientoBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        comboxAsientoBuscar.setForeground(new java.awt.Color(38, 52, 69));
+
+        comboxRutaBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        comboxRutaBuscar.setForeground(new java.awt.Color(38, 52, 69));
+
+        txtHoraVentaBuscar.setEditable(false);
+        txtHoraVentaBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtHoraVentaBuscar.setForeground(new java.awt.Color(38, 52, 69));
+
+        txtPrecioBuscar.setEditable(false);
+        txtPrecioBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtPrecioBuscar.setForeground(new java.awt.Color(38, 52, 69));
+
+        txtFechaVentaBuscar.setEditable(false);
+        txtFechaVentaBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtFechaVentaBuscar.setForeground(new java.awt.Color(38, 52, 69));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addComponent(btnEditar)
-                            .addGap(71, 71, 71)
-                            .addComponent(btnEliminar))
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel11)
                             .addComponent(jLabel10)
@@ -301,56 +319,64 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
                             .addComponent(jLabel15)
                             .addComponent(jLabel16))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboxAsientoBuscar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(comboxPasajeroBuscar, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(comboxRutaBuscar, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtHoraVentaBuscar)
-                            .addComponent(txtPrecioBuscar, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(comboxAsientoBuscar, javax.swing.GroupLayout.Alignment.LEADING, 0, 140, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(checkboxEstadoBuscar)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtFechaVentaBuscar))))
-                .addGap(35, 35, 35))
+                                .addComponent(txtHoraVentaBuscar)
+                                .addComponent(txtFechaVentaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(comboxRutaBuscar, 0, 140, Short.MAX_VALUE)
+                            .addComponent(txtPrecioBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboxPasajeroBuscar, javax.swing.GroupLayout.Alignment.LEADING, 0, 140, Short.MAX_VALUE)))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                            .addGap(30, 30, 30)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                            .addGap(31, 31, 31)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(10, 10, 10)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(15, 15, 15)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(comboxPasajeroBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(comboxAsientoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(comboxRutaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(txtFechaVentaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtFechaVentaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(txtHoraVentaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtHoraVentaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(txtPrecioBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtPrecioBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
                     .addComponent(checkboxEstadoBuscar))
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -361,8 +387,8 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(30, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -371,8 +397,8 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -380,93 +406,152 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        Pasaje pasaje = validarFormulario();
 
-        if (pasaje == null) {
+        Pasajero pasajero = (Pasajero) comboxPasajero.getSelectedItem();
+        RutaViaje ruta = (RutaViaje) comboxAsiento.getSelectedItem();
+        Asiento asiento = (Asiento) comboxAsiento.getSelectedItem();
+
+        if (pasajero == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione un pasajero, si no hay ninguno cargue uno primero.");
             return;
         }
+        if (ruta == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione una ruta, si no hay ninguna cargue una primero.");
+            return;
+        }
+        if (asiento == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione un asiento.");
+            return;
+        }
+
+        Pasaje pasaje = new Pasaje();
+
+        pasaje.setPasajero(pasajero);
+        pasaje.setAsiento(asiento);
+        pasaje.setViaje(ruta);
+        pasaje.setPrecio(ruta.getPrecio()); //mismo precio que el de la ruta seleccionada...
+        pasaje.setEstado(checkboxEstado.isSelected());
+        pasaje.setFechaVenta(LocalDate.now());
+        pasaje.setHoraVenta(LocalTime.now());
 
         pd.crearPasaje(pasaje);
         limpiar();
     }//GEN-LAST:event_btnCrearActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        int id;
-        try {
-            id = Integer.parseInt(txtIdPasaje.getText().trim());
-
-            if (id <= 0) {
-                JOptionPane.showMessageDialog(this, "Ingrese un ID mayor que cero.");
-                return;
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "El ID debe ser un número entero.");
-            return;
-        }
-
-        Pasaje pasaje = pd.buscarPasajePorId(id);
-        if (pasaje == null) {
-            return;
-        }
-
-        txtFechaVentaBuscar.setText(pasaje.getFechaVenta().format(formatoFecha));
-        txtHoraVentaBuscar.setText(pasaje.getHoraVenta().format(formatoHora));
-        txtPrecioBuscar.setText(String.valueOf(pasaje.getPrecio()));
-        checkboxEstadoBuscar.setSelected(pasaje.getEstado());
-
-        seleccionarPasajero(pasaje.getPasajero());
-        seleccionarRuta(pasaje.getViaje());
-        seleccionarAsiento(pasaje.getAsiento());
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int id;
+
         try {
-            id = Integer.parseInt(txtIdPasaje.getText().trim());
+            int id = Integer.parseInt(txtIdPasaje.getText().trim());
 
             if (id <= 0) {
                 JOptionPane.showMessageDialog(this, "Ingrese un ID mayor a cero");
                 return;
             }
+
+            Pasajero pasajero = (Pasajero) comboxPasajeroBuscar.getSelectedItem();
+            Asiento asiento = (Asiento) comboxAsientoBuscar.getSelectedItem();
+            RutaViaje ruta = (RutaViaje) comboxRutaBuscar.getSelectedItem();
+            LocalDate fechaActualizada = LocalDate.now();
+            LocalTime horaActualizada = LocalTime.now();
+            double precio = Double.valueOf(ruta.getPrecio());
+            boolean estado = checkboxEstadoBuscar.isSelected();
+
+            Pasaje pasajeModificado = new Pasaje(id, pasajero, asiento, ruta, fechaActualizada, horaActualizada, precio, estado);
+
+            if (esIgual(id)) {
+                JOptionPane.showMessageDialog(this, "Debe modificar al menos uno de sus datos!");
+                return;
+            }
+
+            pd.actualizarPasaje(pasajeModificado);
+            limpiarBuscar();
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "El ID debe ser un número entero.");
             return;
         }
 
-        Pasaje pasajeEditado = validarFormularioEditar();
-
-        if (pasajeEditado == null) {
-            return;
-        }
-
-        if (esIgual(id)) {
-            JOptionPane.showMessageDialog(this, "Debe modificar al menos uno de sus datos!");
-            return;
-        }
-
-        pasajeEditado.setIdPasaje(id);
-
-        pd.actualizarPasaje(pasajeEditado);
-        limpiarBuscar();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int id;
-        try {
-            id = Integer.parseInt(txtIdPasaje.getText().trim());
 
-            if (id <= 0) {
-                JOptionPane.showMessageDialog(this, "Ingrese un ID mayor a cero");
-                return;
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "El ID debe ser un número entero.");
+        int a = JOptionPane.showConfirmDialog(this, "Estas seguro de eliminar el registro?");
+
+        if (a == -1 || a == 1) {
             return;
         }
 
-        pd.borrarPasaje(id);
+        if (txtIdPasaje.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Primero ingrese un ID!");
+            return;
+        }
+
+        try {
+
+            int id = Integer.valueOf(txtIdPasaje.getText());
+
+            if (id <= 0) {
+                JOptionPane.showMessageDialog(this, "Ingrese un valor valido para ID!");
+                return;
+            }
+
+            boolean aux = pd.borrarPasaje(id);
+
+            if (aux) {
+                JOptionPane.showMessageDialog(this, "Registro eliminado correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Ocurrio un error y no se pudo eliminar el registro\nIntenta de nuevo.");
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingresa un valor numerico en ID!");
+            return;
+        }
+
         limpiarBuscar();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+
+        try {
+
+            int idPasaje = Integer.valueOf(txtIdPasaje.getText());
+            Pasaje pasaje = pd.buscarPasajePorId(idPasaje);
+
+            if (idPasaje <= 0) {
+                JOptionPane.showMessageDialog(this, "Ingresa un numero valido!");
+                btnEliminar.setEnabled(false);
+                btnEditar.setEnabled(false);
+                return;
+            }
+
+            if (pasaje == null) {
+                JOptionPane.showMessageDialog(null, "No se encontraron registros con el ID indicado\nIntente con otro.");
+                btnEliminar.setEnabled(false);
+                btnEditar.setEnabled(false);
+                return;
+            }
+
+            btnEliminar.setEnabled(true);
+            btnEditar.setEnabled(true);
+
+            RutaViaje rutaSeleccionada = (RutaViaje) comboxRutaBuscar.getSelectedItem();
+
+            comboxPasajeroBuscar.setSelectedItem(pasaje.getPasajero());
+            comboxAsientoBuscar.setSelectedItem(pasaje.getAsiento());
+            comboxRutaBuscar.setSelectedItem(pasaje.getViaje());
+            txtFechaVentaBuscar.setText(pasaje.getFechaVenta().toString());
+            txtHoraVentaBuscar.setText(pasaje.getHoraVenta().toString());
+            txtPrecio.setText(rutaSeleccionada.getPrecio() + "");
+            checkboxEstadoBuscar.setSelected(pasaje.getEstado());
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un valor numerico!");
+            return;
+        }
+
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -493,8 +578,6 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -502,160 +585,63 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField txtFechaVenta;
     private javax.swing.JTextField txtFechaVentaBuscar;
-    private javax.swing.JTextField txtHoraVenta;
     private javax.swing.JTextField txtHoraVentaBuscar;
     private javax.swing.JTextField txtIdPasaje;
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtPrecioBuscar;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarComboPasajeros() {
+    private void cargarCombosPasajeros() {
+
         comboxPasajero.removeAllItems();
         comboxPasajeroBuscar.removeAllItems();
 
         for (Pasajero p : pjd.listarPasajero()) {
-            comboxPasajero.addItem(p);
-            comboxPasajeroBuscar.addItem(p);
+
+            if (p.isEstado()) {
+                comboxPasajero.addItem(p); //solo aquellos pasajeros que esten "activos"
+                comboxPasajeroBuscar.addItem(p);
+            }
+
         }
     }
 
-    private void cargarComboAsientos() {
+    private void cargarCombosAsientos() {
         comboxAsiento.removeAllItems();
         comboxAsientoBuscar.removeAllItems();
 
         for (Asiento a : ad.listarAsientos()) {
-            comboxAsiento.addItem(a);
-            comboxAsientoBuscar.addItem(a);
+
+            if (a.getEstado()) {
+                comboxAsiento.addItem(a); //solo lista aquellos asientos "activos" o "no-ocupados"
+                comboxAsientoBuscar.addItem(a);
+            }
+
         }
     }
 
-    private void cargarComboRuta() {
+    private void cargarCombosRuta() {
+
         comboxRuta.removeAllItems();
         comboxRutaBuscar.removeAllItems();
 
-        for (RutaViaje r : rvd.listarRutaViaje()) {
-            comboxRuta.addItem(r);
-            comboxRutaBuscar.addItem(r);
+        for (RutaViaje rutaViaje : rvd.listarRutaViaje()) {
+            if (rutaViaje.isEstado() && rutaViaje.getColectivo().isEstado()) { //solo aquellas rutas activas y que los colectivos asignados a ellas tambein esten activos
+                comboxRuta.addItem(rutaViaje);
+                comboxRutaBuscar.addItem(rutaViaje);
+            }
         }
+
     }
 
     private void limpiar() {
-        txtFechaVenta.setText("");
-        txtHoraVenta.setText("");
         txtPrecio.setText("");
         checkboxEstado.setSelected(false);
-        if (comboxPasajero.getItemCount() > 0) {
-            comboxPasajero.setSelectedIndex(0);
-        }
-        if (comboxAsiento.getItemCount() > 0) {
-            comboxAsiento.setSelectedIndex(0);
-        }
-        if (comboxRuta.getItemCount() > 0) {
-            comboxRuta.setSelectedIndex(0);
-        }
-    }
+        comboxPasajero.setSelectedIndex(-1);
+        comboxAsiento.setSelectedIndex(-1);
+        comboxAsiento.setSelectedIndex(-1);
 
-    private void seleccionarPasajero(Pasajero pasajero) {
-        if (pasajero == null) {
-            return;
-        }
-
-        for (int i = 0; i < comboxPasajeroBuscar.getItemCount(); i++) {
-            Pasajero p = comboxPasajeroBuscar.getItemAt(i);
-
-            if (p.getIdPasajero() == pasajero.getIdPasajero()) {
-                comboxPasajeroBuscar.setSelectedIndex(i);
-                return;
-            }
-        }
-        comboxPasajeroBuscar.addItem(pasajero);
-        comboxPasajeroBuscar.setSelectedItem(pasajero);
-    }
-
-    private void seleccionarRuta(RutaViaje ruta) {
-        if (ruta == null) {
-            return;
-        }
-
-        for (int i = 0; i < comboxRutaBuscar.getItemCount(); i++) {
-            RutaViaje r = comboxRutaBuscar.getItemAt(i);
-
-            if (r.getIdRuta() == ruta.getIdRuta()) {
-                comboxRutaBuscar.setSelectedIndex(i);
-                return;
-            }
-        }
-        comboxRutaBuscar.addItem(ruta);
-        comboxRutaBuscar.setSelectedItem(ruta);
-    }
-
-    private void seleccionarAsiento(Asiento asiento) {
-        if (asiento == null) {
-            return;
-        }
-
-        for (int i = 0; i < comboxAsientoBuscar.getItemCount(); i++) {
-            Asiento a = comboxAsientoBuscar.getItemAt(i);
-
-            if (a.getIdAsiento() == asiento.getIdAsiento()) {
-                comboxAsientoBuscar.setSelectedIndex(i);
-                return;
-            }
-        }
-        comboxAsientoBuscar.addItem(asiento);
-        comboxAsientoBuscar.setSelectedItem(asiento);
-    }
-
-    private Pasaje validarFormulario() {
-        Pasajero pasajero = (Pasajero) comboxPasajero.getSelectedItem();
-        RutaViaje ruta = (RutaViaje) comboxRuta.getSelectedItem();
-        Asiento asiento = (Asiento) comboxAsiento.getSelectedItem();
-
-        if (pasajero == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione un pasajero, si no hay ninguno cargue uno primero.");
-            return null;
-        }
-        if (ruta == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione una ruta, si no hay ninguna cargue una primero.");
-            return null;
-        }
-        if (asiento == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione un asiento.");
-            return null;
-        }
-
-        if (txtPrecio.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese el precio del pasaje.");
-            return null;
-        }
-
-        double precio;
-        try {
-            precio = Double.parseDouble(txtPrecio.getText().trim().replace(',', '.'));
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "El precio debe ser un número (por ejemplo 2500.50).");
-            return null;
-        }
-
-        if (precio <= 0) {
-            JOptionPane.showMessageDialog(this, "El precio debe ser mayor que cero.");
-            return null;
-        }
-
-        Pasaje pasaje = new Pasaje();
-
-        // Fecha y hora automáticas
-        pasaje.setFechaVenta(LocalDate.now());
-        pasaje.setHoraVenta(LocalTime.now());
-        pasaje.setPasajero(pasajero);
-        pasaje.setAsiento(asiento);
-        pasaje.setViaje(ruta);
-        pasaje.setPrecio(precio);
-        pasaje.setEstado(checkboxEstado.isSelected());
-
-        return pasaje;
     }
 
     private void limpiarBuscar() {
@@ -664,106 +650,49 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         txtHoraVentaBuscar.setText("");
         txtPrecioBuscar.setText("");
         checkboxEstadoBuscar.setSelected(false);
-        if (comboxPasajeroBuscar.getItemCount() > 0) {
-            comboxPasajeroBuscar.setSelectedIndex(0);
-        }
-        if (comboxAsientoBuscar.getItemCount() > 0) {
-            comboxAsientoBuscar.setSelectedIndex(0);
-        }
-        if (comboxRutaBuscar.getItemCount() > 0) {
-            comboxRutaBuscar.setSelectedIndex(0);
-        }
-    }
+        comboxPasajeroBuscar.setSelectedIndex(-1);
+        comboxAsientoBuscar.setSelectedIndex(-1);
+        comboxRutaBuscar.setSelectedIndex(-1);
 
-    private Pasaje validarFormularioEditar() {
-        Pasajero pasajero = (Pasajero) comboxPasajeroBuscar.getSelectedItem();
-        RutaViaje ruta = (RutaViaje) comboxRutaBuscar.getSelectedItem();
-        Asiento asiento = (Asiento) comboxAsientoBuscar.getSelectedItem();
-
-        if (pasajero == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione un pasajero.");
-            return null;
-        }
-
-        if (ruta == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione una ruta.");
-            return null;
-        }
-
-        if (asiento == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione un asiento.");
-            return null;
-        }
-
-        if (txtPrecioBuscar.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese el precio del pasaje.");
-            return null;
-        }
-
-        double precio;
-
-        try {
-            precio = Double.parseDouble(txtPrecioBuscar.getText().trim().replace(',', '.'));
-
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "El precio debe ser un número válido.");
-            return null;
-        }
-
-        if (precio <= 0) {
-            JOptionPane.showMessageDialog(this, "El precio debe ser mayor que cero.");
-            return null;
-        }
-
-        Pasaje pasaje = new Pasaje();
-
-        pasaje.setPasajero(pasajero);
-        pasaje.setAsiento(asiento);
-        pasaje.setViaje(ruta);
-        pasaje.setPrecio(precio);
-        pasaje.setEstado(checkboxEstadoBuscar.isSelected());
-
-        return pasaje;
     }
 
     public boolean esIgual(int id) {
+
         Pasaje pasaje = pd.buscarPasajePorId(id);
 
         if (pasaje == null) {
-            return false;
+            return true;
         }
 
         Pasajero pasajero = (Pasajero) comboxPasajeroBuscar.getSelectedItem();
         Asiento asiento = (Asiento) comboxAsientoBuscar.getSelectedItem();
         RutaViaje ruta = (RutaViaje) comboxRutaBuscar.getSelectedItem();
 
-        if (pasajero == null || asiento == null || ruta == null) {
-            return false;
-        }
         if (pasaje.getPasajero().getIdPasajero() != pasajero.getIdPasajero()) {
             return false;
         }
+
         if (pasaje.getAsiento().getIdAsiento() != asiento.getIdAsiento()) {
             return false;
         }
+
         if (pasaje.getViaje().getIdRuta() != ruta.getIdRuta()) {
             return false;
         }
 
-        double precio;
-        try {
-            precio = Double.parseDouble(txtPrecioBuscar.getText().trim().replace(',', '.'));
-        } catch (NumberFormatException ex) {
+        if (pasaje.getFechaVenta() != LocalDate.parse(txtFechaVentaBuscar.getText())) {
             return false;
         }
 
-        if (Double.compare(pasaje.getPrecio(), precio) != 0) {
+        if (pasaje.getHoraVenta() != LocalTime.parse(txtHoraVentaBuscar.getText())) {
             return false;
         }
+
         if (pasaje.getEstado() != checkboxEstadoBuscar.isSelected()) {
             return false;
         }
 
         return true;
+
     }
 }
