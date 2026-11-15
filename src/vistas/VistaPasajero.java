@@ -441,9 +441,14 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
             return;
         }
 
+        int respuesta = JOptionPane.showConfirmDialog(this, "Está seguro de eliminar al pasajero " + seleccion.toString() + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+        if (respuesta != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
         pd.borrarpasajero(seleccion.getIdPasajero());
         cargarCombo();
-
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void ComboBoxPasajerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxPasajerosActionPerformed

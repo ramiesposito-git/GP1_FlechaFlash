@@ -375,13 +375,19 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
 
     private void eliminarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBTNActionPerformed
 
-        if (idAsientotxt.getText().isEmpty()) {
+        if (idAsientotxt.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingrese un ID! y realize la busqueda primero!");
             return;
         }
 
         int idAsiento = Integer.parseInt(idAsientotxt.getText());
 
+        int respuesta = JOptionPane.showConfirmDialog(this, "Está seguro de eliminar el asiento con ID: " + idAsiento + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+        if (respuesta != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
         boolean a = ad.eliminarAsiento(idAsiento);
 
         if (a) {

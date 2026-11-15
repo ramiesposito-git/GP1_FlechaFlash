@@ -516,6 +516,12 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
 
             int id = Integer.parseInt(txtID.getText());
 
+            int respuesta = JOptionPane.showConfirmDialog(this, "Está seguro de eliminar el colectivo con ID: " + id + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+            if (respuesta != JOptionPane.YES_OPTION) {
+                return;
+            }
+        
             boolean a = cd.borrarColectivo(id);
 
             if (a) {
