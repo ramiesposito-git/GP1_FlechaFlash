@@ -335,6 +335,15 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         int nroAsiento = (int) SpinnerNroAsiento.getValue();
         boolean activo = checkActivo.isSelected();
 
+        if (colectivo == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione un colectivo!");
+            return;
+        }
+        
+        if (nroAsiento <= 0 || nroAsiento > colectivo.getCapacidad()) {
+            JOptionPane.showMessageDialog(this, "El número de asiento debe estar entre 1 y " + colectivo.getCapacidad());
+            return;
+        }
         Asiento asiento = new Asiento(colectivo, nroAsiento, activo);
         ad.crearAsiento(asiento);
 
@@ -357,6 +366,16 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         int nroAsiento = (Integer) SpinnerNroAsientoEditar.getValue();
         boolean activo = checkActivoEditar.isSelected();
 
+        if (colectivo == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione un colectivo!");
+            return;
+        }
+
+        if (nroAsiento <= 0 || nroAsiento > colectivo.getCapacidad()) {
+            JOptionPane.showMessageDialog(this,"El número de asiento debe estar entre 1 y " + colectivo.getCapacidad());
+            return;
+        }
+        
         Asiento asientoModificado = new Asiento(Integer.parseInt(idAsientotxt.getText()), colectivo, nroAsiento, activo);
 
         boolean a = ad.actualizarAsiento(asientoModificado);

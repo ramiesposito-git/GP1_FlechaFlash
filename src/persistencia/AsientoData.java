@@ -23,6 +23,10 @@ public class AsientoData {
 
     public void crearAsiento(Asiento asiento) {
 
+        if (!capacidadValida(asiento)) {
+            return;
+        }
+        
         if (asientoExistente(asiento.getColectivo().getID_colectivo(), asiento.getNumeroAsiento())) {
             JOptionPane.showMessageDialog(null, "Ya existe el asiento " + asiento.getNumeroAsiento() + " en el colectivo ID " + asiento.getColectivo().getID_colectivo() + "\nintente con otro!");
             return;
@@ -86,6 +90,14 @@ public class AsientoData {
     }
 
     public boolean actualizarAsiento(Asiento asiento) {
+        if (!capacidadValida(asiento)) {
+            return false;
+        }
+
+        if (asientoExistenteEditar(asiento)) {
+            JOptionPane.showMessageDialog(null, "Ya existe el asiento " + asiento.getNumeroAsiento() + " en este colectivo!");
+            return false;
+        }
         
         String SQL = "UPDATE `asiento` SET `ID_colectivo`= ?,`numero_asiento`= ?,`estado`=? WHERE ID_asiento = ?";
 
@@ -103,9 +115,8 @@ public class AsientoData {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al actualizar asiento: " + ex.getMessage());
         }
-
         return false;
     }
 
@@ -252,6 +263,59 @@ public class AsientoData {
         }
 
         return asientos;
+    }
+    
+    public boolean capacidadValida(Asiento asiento) {
+        if (asiento == null || asiento.getColectivo() == null) {
+            JOptionPane.showMessageDialog(null, "Seleccione un colectivo válido!");
+            return false;
+        }
 
+        String sql = "SELECT capacidad FROM colectivos WHERE ID_colectivo = ?";
+
+        try (PreparedStatement ps = connexion.prepareStatement(sql)) {
+            
+            ps.setInt(1, asiento.getColectivo().getID_colectivo());
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    JOptionPane.showMessageDialog(null, "El colectivo no existe!");
+                    return false;
+                }   
+
+                int capacidad = rs.getInt("capacidad");
+                int numero = asiento.getNumeroAsiento();
+
+                if (numero <= 0 || numero > capacidad) {
+                    JOptionPane.showMessageDialog(null, "El número de asiento debe estar entre 1 y " + capacidad);
+                    return false;
+                }
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al validar la capacidad: " + ex.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+    
+    public boolean asientoExistenteEditar(Asiento asiento) {
+        String sql = "SELECT 1 FROM asiento WHERE ID_colectivo = ? AND numero_asiento = ? AND ID_asiento <> ?";
+
+        try (PreparedStatement ps = connexion.prepareStatement(sql)) {
+
+            ps.setInt(1, asiento.getColectivo().getID_colectivo());
+            ps.setInt(2, asiento.getNumeroAsiento());
+            ps.setInt(3, asiento.getIdAsiento());
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al comprobar el asiento: " + ex.getMessage());
+            return true;
+        }
     }
 }
