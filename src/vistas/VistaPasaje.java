@@ -699,8 +699,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
                 idAsientoActual = pasaje.getAsiento().getIdAsiento();
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Ingrese un ID de pasaje válido.");
-            return;
+            //No hay un pasaje seleccionado todavia.
         }
 
         for (Asiento a : ad.listarAsientos()) {

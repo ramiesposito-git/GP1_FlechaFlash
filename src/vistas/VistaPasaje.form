@@ -439,7 +439,7 @@
                       <Component id="btnEliminar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="btnEditar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                  <EmptySpace pref="24" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
