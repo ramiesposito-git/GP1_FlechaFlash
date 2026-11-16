@@ -1,5 +1,6 @@
 package persistencia;
 
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -47,7 +48,7 @@ public class PasajeData {
             if (rs.next()) {
                 int id = rs.getInt(1);
                 pasaje.setIdPasaje(id);
-                
+
                 return true;
             }
 
@@ -78,7 +79,7 @@ public class PasajeData {
             connection.setAutoCommit(false);
 
             int idAnterior;
-            
+
             //Busca y bloquea el pasaje para obtener su asiento anterior.
             try (PreparedStatement ps = connection.prepareStatement(buscarAnterior)) {
                 ps.setInt(1, pasajeActualizado.getIdPasaje());
@@ -97,7 +98,7 @@ public class PasajeData {
             int idRuta = pasajeActualizado.getViaje().getIdRuta();
             boolean nuevoActivo = false;
             int encontrados = 0;
-            
+
             //Bloquea los asientos involucrados para evitar modificaciones simultaneas.
             try (PreparedStatement ps = connection.prepareStatement(bloquearAsientos)) {
                 ps.setInt(1, idAnterior);
@@ -222,7 +223,7 @@ public class PasajeData {
         } finally {
             //Restaura el guardado automatico de la conexion.
             try {
-                
+
                 //Vuelve a activar el guardado automatico de la conexion.
                 connection.setAutoCommit(true);
             } catch (SQLException ex) {
@@ -319,9 +320,9 @@ public class PasajeData {
     public boolean borrarPasaje(Pasaje pasaje) {
 
         ad.altaAsiento(pasaje.getAsiento().getIdAsiento()); //primero le damos de alta al pasaje (vuelve a estar libre)
-        
+
         String sql = "DELETE FROM pasaje WHERE ID_pasaje=?";
-        
+
         try {
             PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setInt(1, pasaje.getIdPasaje());
@@ -333,7 +334,8 @@ public class PasajeData {
             }
 
             stm.close();
-
+        } catch (MySQLIntegrityConstraintViolationException ex) {
+            return false;
         } catch (SQLException ex) {
             System.out.println("Error al borrar Pasaje: " + ex.getMessage());
             return false;

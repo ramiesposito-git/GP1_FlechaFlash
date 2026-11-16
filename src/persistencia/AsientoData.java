@@ -1,5 +1,6 @@
 package persistencia;
 
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import modelo.Asiento;
 import modelo.Colectivo;
 import modelo.Conexion;
@@ -95,7 +96,6 @@ public class AsientoData {
         }
 
         if (asientoExistenteEditar(asiento)) {
-            JOptionPane.showMessageDialog(null, "Ya existe el asiento " + asiento.getNumeroAsiento() + " en este colectivo!");
             return false;
         }
         
@@ -115,7 +115,7 @@ public class AsientoData {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar asiento: " + ex.getMessage());
+            System.out.println("Error al actualizar asiento, revisar el metodo 'actualizarAsiento' de asientoData");
         }
         return false;
     }
@@ -130,7 +130,7 @@ public class AsientoData {
             int n = ps.executeUpdate();
 
             if (n == 1) {
-                System.out.println("alta correcta de asiento");
+                System.out.println("alta correcta de asiento "+idAsiento);
             } else {
                 System.out.println("no se le dio de alta al asiento, revisar el metodo 'AltaAsiento' de AsientoData");
             }
@@ -174,8 +174,11 @@ public class AsientoData {
                 return true;
             }
             
+        }catch(MySQLIntegrityConstraintViolationException ex){
+            return false;
         } catch (SQLException ex) {
-            System.getLogger(AsientoData.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.out.println(ex.getMessage());
+            return false;
         }
 
         return false;
@@ -266,8 +269,8 @@ public class AsientoData {
     }
     
     public boolean capacidadValida(Asiento asiento) {
+        
         if (asiento == null || asiento.getColectivo() == null) {
-            JOptionPane.showMessageDialog(null, "Seleccione un colectivo válido!");
             return false;
         }
 

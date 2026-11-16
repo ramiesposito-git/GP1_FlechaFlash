@@ -353,44 +353,43 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                  <Component id="btnEditar" min="-2" pref="103" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                  <Component id="btnEliminar" min="-2" pref="103" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                          <Component id="btnEditar" min="-2" pref="103" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                          <Component id="btnEliminar" min="-2" pref="103" max="-2" attributes="0"/>
+                      </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                           <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel14" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel15" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel16" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel10" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="comboxAsientoBuscar" min="-2" pref="180" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="checkboxEstadoBuscar" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtPrecioBuscar" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="txtHoraVentaBuscar" alignment="0" pref="90" max="32767" attributes="0"/>
-                                      <Component id="txtFechaVentaBuscar" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Component id="comboxPasajeroBuscar" alignment="0" min="-2" pref="162" max="-2" attributes="0"/>
-                                  <Component id="comboxRutaBuscar" alignment="1" min="-2" pref="252" max="-2" attributes="0"/>
+                              <Component id="checkboxEstadoBuscar" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtPrecioBuscar" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="txtHoraVentaBuscar" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtFechaVentaBuscar" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="comboxPasajeroBuscar" alignment="0" min="-2" pref="162" max="-2" attributes="0"/>
+                              <Component id="comboxRutaBuscar" alignment="0" min="-2" pref="238" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
+                  <EmptySpace pref="8" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -399,7 +398,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="comboxPasajeroBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -434,12 +433,12 @@
                       <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                       <Component id="checkboxEstadoBuscar" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnEliminar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="btnEditar" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="24" max="32767" attributes="0"/>
+                  <EmptySpace pref="20" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -726,7 +725,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="45" green="34" red="26" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Asiento:"/>
+            <Property name="text" type="java.lang.String" value="Asientos Disponibles:"/>
           </Properties>
         </Component>
       </SubComponents>

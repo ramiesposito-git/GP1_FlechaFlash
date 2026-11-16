@@ -1,5 +1,6 @@
 package persistencia;
 
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import modelo.Conexion;
 import modelo.RutaViaje;
 import java.sql.Connection;
@@ -65,12 +66,12 @@ public class RutaViajeData {
 
             if (a > 0) {
                 return true;
-            } 
+            }
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al actualizar ruta: " + ex.getMessage());
         }
-        
+
         return false;
     }
 
@@ -165,26 +166,29 @@ public class RutaViajeData {
     }
 
     public boolean borrarRutaViaje(int id) {
-        
+
         String sql = "DELETE FROM ruta_viaje WHERE ID_ruta=?";
-        
+
         try {
-            
+
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
-            
+
             int aux = stm.executeUpdate();
             stm.close();
-            
+
             if (aux != 0) {
                 return true;
             }
-            
+        } catch (MySQLIntegrityConstraintViolationException ex) {
+            System.out.println("Error al borrar Ruta-Viaje " + ex.getMessage());
+            return false;
+
         } catch (SQLException ex) {
-            System.out.println("Error al borrar Ruta-Viaje "+ex.getMessage());
-            return  false;
+            System.out.println("Error al borrar Ruta-Viaje " + ex.getMessage());
+            return false;
         }
-        
-        return  false;
+
+        return false;
     }
 }

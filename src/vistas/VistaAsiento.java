@@ -21,8 +21,9 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         SpinnerNroAsiento.setModel(sm);
         SpinnerNroAsientoEditar.setModel(sm);
 
-        vaciarCampos();
         cargarCombo();
+
+        vaciarCampos();
 
         modificarBTN.setEnabled(false);
         eliminarBTN.setEnabled(false);
@@ -339,7 +340,7 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Seleccione un colectivo!");
             return;
         }
-        
+
         if (nroAsiento <= 0 || nroAsiento > colectivo.getCapacidad()) {
             JOptionPane.showMessageDialog(this, "El número de asiento debe estar entre 1 y " + colectivo.getCapacidad());
             return;
@@ -357,11 +358,6 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
             return;
         }
 
-        if (esIgual(Integer.parseInt(idAsientotxt.getText()))) {
-            JOptionPane.showMessageDialog(this, "Debe modificar almenos un campo!");
-            return;
-        }
-
         Colectivo colectivo = (Colectivo) ComboBoxColectivosEditar.getSelectedItem();
         int nroAsiento = (Integer) SpinnerNroAsientoEditar.getValue();
         boolean activo = checkActivoEditar.isSelected();
@@ -372,10 +368,10 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         }
 
         if (nroAsiento <= 0 || nroAsiento > colectivo.getCapacidad()) {
-            JOptionPane.showMessageDialog(this,"El número de asiento debe estar entre 1 y " + colectivo.getCapacidad());
+            JOptionPane.showMessageDialog(this, "Asiento fuera de la capaciodad del colectivo.\nCapacidad maxima: " + colectivo.getCapacidad());
             return;
         }
-        
+
         Asiento asientoModificado = new Asiento(Integer.parseInt(idAsientotxt.getText()), colectivo, nroAsiento, activo);
 
         boolean a = ad.actualizarAsiento(asientoModificado);
@@ -383,7 +379,7 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         if (a) {
             JOptionPane.showMessageDialog(this, "Asiento editado con exito!");
         } else {
-            JOptionPane.showMessageDialog(this, "Asiento ya existente! intente otro diferente.");
+            JOptionPane.showMessageDialog(this, "El asiento Nº"+ SpinnerNroAsientoEditar.getValue() +" ya existe, intente con otro!");
             return;
         }
 
@@ -407,13 +403,13 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         if (respuesta != JOptionPane.YES_OPTION) {
             return;
         }
-        
+
         boolean a = ad.eliminarAsiento(idAsiento);
 
         if (a) {
             JOptionPane.showMessageDialog(this, "Asiento eliminado!");
         } else {
-            JOptionPane.showMessageDialog(this, "Ocurrio un error y no se pudo editar el asiento.");
+            JOptionPane.showMessageDialog(this, "No se pudo eliminar el asiento. \nAsegurese de que el asiento no este relacionado \ncon un Colectivo o Pasaje activo!");
             return;
         }
 
@@ -438,12 +434,13 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "No se encontraron asientos con ese ID, intente otro");
                 modificarBTN.setEnabled(false);
                 eliminarBTN.setEnabled(false);
+                vaciarCampos();
                 return;
             } else {
                 modificarBTN.setEnabled(true);
                 eliminarBTN.setEnabled(true);
             }
-            
+
             ComboBoxColectivosEditar.setSelectedItem(asiento.getColectivo());
             SpinnerNroAsientoEditar.setValue(asiento.getNumeroAsiento());
             checkActivoEditar.setSelected(asiento.getEstado());
@@ -521,19 +518,16 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
 
         if (asiento.getColectivo() != (Colectivo) ComboBoxColectivosEditar.getSelectedItem()) {
             esIgual = false;
-        } 
-        
+        }
+
         if (asiento.getNumeroAsiento() != (Integer) SpinnerNroAsientoEditar.getValue()) {
-            esIgual = false;
-        } 
-        
-        if (asiento.getEstado() != checkActivoEditar.isSelected()) {
             esIgual = false;
         }
 
-        if (esIgual) {
-            System.out.println("Es igual: "+esIgual);
+        if (asiento.getEstado() != checkActivoEditar.isSelected()) {
+            esIgual = false;
         }
+        
         return esIgual;
     }
 

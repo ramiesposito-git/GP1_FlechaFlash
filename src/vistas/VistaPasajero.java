@@ -396,7 +396,7 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        
+
         Pasajero seleccion = (Pasajero) ComboBoxPasajeros.getSelectedItem();
         if (seleccion == null) {
             JOptionPane.showMessageDialog(this, "Primero seleccione un pasajero!");
@@ -413,21 +413,21 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
             return;
         }
 
-        try{
-        String nombre = txtNombreBuscar.getText();
-        String apellido = txtApellidoBuscar.getText();
-        String dni = txtDNIBuscar.getText();
-        String correo = txtCorreoBuscar.getText();
-        String telefono = txtTelefonoBuscar.getText();
-        boolean activo = checkActivoBuscar.isSelected();
+        try {
+            String nombre = txtNombreBuscar.getText();
+            String apellido = txtApellidoBuscar.getText();
+            String dni = txtDNIBuscar.getText();
+            String correo = txtCorreoBuscar.getText();
+            String telefono = txtTelefonoBuscar.getText();
+            boolean activo = checkActivoBuscar.isSelected();
 
-        Pasajero pasajeroEditado = new Pasajero(seleccion.getIdPasajero(), dni, nombre, apellido, correo, telefono, activo);
+            Pasajero pasajeroEditado = new Pasajero(seleccion.getIdPasajero(), dni, nombre, apellido, correo, telefono, activo);
 
-        pd.actualizarPasajero(pasajeroEditado);
-        cargarCombo(); //actualiza el comboBox con los Registros actualizados
-        
-        }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Ingrese un valor numerico en DNI-Telefono!","DNI - Telefono",2);
+            pd.actualizarPasajero(pasajeroEditado);
+            cargarCombo(); //actualiza el comboBox con los Registros actualizados
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un valor numerico en DNI-Telefono!", "DNI - Telefono", 2);
             return;
         }
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -446,8 +446,13 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
         if (respuesta != JOptionPane.YES_OPTION) {
             return;
         }
-        
-        pd.borrarpasajero(seleccion.getIdPasajero());
+
+        if (pd.borrarpasajero(seleccion.getIdPasajero())) {
+            JOptionPane.showMessageDialog(this, "Pasajero eliminado correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo borrar el registro.\nAsegurese que no hayan registros de \nPasajes relacionados al Pasajero");
+            return;
+        }
         cargarCombo();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -459,7 +464,7 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
             CamposBuscar();
             return;
         }
-        
+
         txtNombreBuscar.setText(p.getNombre());
         txtApellidoBuscar.setText(p.getApellido());
         txtDNIBuscar.setText(p.getDni());
@@ -569,7 +574,7 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
     public void cargarCombo() {
 
         ComboBoxPasajeros.removeAllItems();
-        
+
         for (Pasajero pasajero : pd.listarPasajero()) {
             ComboBoxPasajeros.addItem(pasajero);
         }

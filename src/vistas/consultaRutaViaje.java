@@ -150,7 +150,7 @@ public class consultaRutaViaje extends javax.swing.JInternalFrame {
 
         int id = Integer.parseInt(txtIdRuta.getText());
         RutaViaje ruta = rvd.buscarRutaViajePorId(id);
-        modelo.addRow(new Object[]{ruta.getIdRuta(), ruta.getOrigen(), ruta.getDestino(), ruta.getHoraSalida(), ruta.getHoraLlegada(), ruta.getPrecio()});
+        modelo.addRow(new Object[]{ruta.getIdRuta(), ruta.getColectivo().getID_colectivo(), ruta.getOrigen(), ruta.getDestino(), ruta.getHoraSalida(), ruta.getHoraLlegada(), ruta.getPrecio()});
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
@@ -174,11 +174,13 @@ public class consultaRutaViaje extends javax.swing.JInternalFrame {
 
     public void initTable() {
         modelo.addColumn("ID");
+        modelo.addColumn("Colectivo");
         modelo.addColumn("Origen");
         modelo.addColumn("Destino");
         modelo.addColumn("Hora de Salida");
         modelo.addColumn("Hora de Llegada");
         modelo.addColumn("Precio");
+        
 
         jTable1.setModel(modelo);
     }
@@ -189,7 +191,7 @@ public class consultaRutaViaje extends javax.swing.JInternalFrame {
 
     public void cargarTable() {
         for (RutaViaje ruta : rvd.listarRutaViaje()) {
-            modelo.addRow(new Object[]{ruta.getIdRuta(), ruta.getOrigen(), ruta.getDestino(), ruta.getHoraSalida(), ruta.getHoraLlegada(), ruta.getPrecio()});
+            modelo.addRow(new Object[]{ruta.getIdRuta(),ruta.getColectivo().getID_colectivo(), ruta.getOrigen(), ruta.getDestino(), ruta.getHoraSalida(), ruta.getHoraLlegada(), ruta.getPrecio()});
         }
     }
 }

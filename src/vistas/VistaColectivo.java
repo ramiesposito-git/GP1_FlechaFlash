@@ -18,7 +18,9 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
         btnEditar.setEnabled(false);
         btnEliminar.setEnabled(false);
         SpinnerCapacidad.setValue(0);
+        SpinnerCapacidadEditar.setEnabled(false);
     }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -527,7 +529,7 @@ public class VistaColectivo extends javax.swing.JInternalFrame {
             if (a) {
                 JOptionPane.showMessageDialog(this, "Se elimino correctamente el registro");
             } else {
-                JOptionPane.showMessageDialog(this, "El registro no existe.\nIntente de nuevo");
+                JOptionPane.showMessageDialog(this, "Asegurese que no hayan registros de Asientos,Rutas y Pasajes\nrelacionados al colectivo");
                 return;
             }
 

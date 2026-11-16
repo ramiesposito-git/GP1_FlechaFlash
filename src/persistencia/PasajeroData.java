@@ -1,5 +1,6 @@
 package persistencia;
 
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import modelo.Conexion;
 import modelo.Pasajero;
 import java.sql.Connection;
@@ -122,20 +123,29 @@ public class PasajeroData {
         }
     }
 
-    public void borrarpasajero(int id) {
+    public boolean borrarpasajero(int id) {
         String sql = "DELETE FROM pasajero WHERE idPasajero=?";
+
         try {
+
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
-            int exito = stm.executeUpdate();
-            if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Pasajero borrado con exito de la base de datos");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontro pasajero para eliminar");
+
+            int a = stm.executeUpdate();
+
+            if (a != 1) {
+                return true;
             }
+
+        } catch (MySQLIntegrityConstraintViolationException ex) {
+            System.out.println("Error al borrar pasajero " + ex.getMessage());
+            return false;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al borrar el pasajero" + ex.getMessage());
+            System.out.println("Error al borrar pasajero " + ex.getMessage());
+            return false;
         }
+
+        return false;
     }
 
     public ArrayList<Pasajero> listarPasajero() {
@@ -155,7 +165,7 @@ public class PasajeroData {
                 String correo = rs.getString("correo");
                 String telefono = rs.getString("telefono");
                 boolean estado = rs.getBoolean("estado");
-                
+
                 Pasajero p = new Pasajero(idPasajero, dni, nombre, apellido, correo, telefono, estado);
                 pasajeros.add(p);
             }

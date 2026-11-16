@@ -138,7 +138,6 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuPasajeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPasajeroActionPerformed
-        jdpPrincipal.removeAll();
 
         VistaPasajero vp = new VistaPasajero();
         jdpPrincipal.add(vp);
@@ -149,8 +148,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuPasajeroActionPerformed
 
     private void menuColectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuColectivoActionPerformed
-
-        jdpPrincipal.removeAll();
 
         VistaColectivo va  = new VistaColectivo();
         jdpPrincipal.add(va);
@@ -163,7 +160,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuColectivoActionPerformed
 
     private void menuRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRutaActionPerformed
-        jdpPrincipal.removeAll();
 
         VistaRutaViaje VR = new VistaRutaViaje();
         jdpPrincipal.add(VR);
@@ -176,8 +172,6 @@ public class Principal extends javax.swing.JFrame {
 
     private void menuAsientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAsientoActionPerformed
 
-        jdpPrincipal.removeAll();
-
         VistaAsiento va  = new VistaAsiento();
         jdpPrincipal.add(va);
         va.setVisible(true);
@@ -188,7 +182,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuAsientoActionPerformed
 
     private void jmiConsultaAsientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiConsultaAsientoActionPerformed
-        jdpPrincipal.removeAll();
 
         consultaAsientos ca = new consultaAsientos();
 
@@ -200,7 +193,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiConsultaAsientoActionPerformed
 
     private void jmiPasajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPasajeActionPerformed
-        jdpPrincipal.removeAll();
         
         VistaPasaje va = new VistaPasaje();
         
@@ -214,7 +206,6 @@ public class Principal extends javax.swing.JFrame {
     private void jmiConsultaColectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiConsultaColectivoActionPerformed
         consultaColectivos ccol = new consultaColectivos();
         
-        jdpPrincipal.removeAll();
         jdpPrincipal.add(ccol);
         
         ccol.setVisible(true);
@@ -224,7 +215,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiConsultaColectivoActionPerformed
 
     private void jmiConsultaPasajeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiConsultaPasajeroActionPerformed
-        jdpPrincipal.removeAll();
         
         consultaPasajeros cp = new consultaPasajeros();
         cp.setVisible(true);
@@ -236,7 +226,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiConsultaPasajeroActionPerformed
 
     private void jmiConsultaRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiConsultaRutaActionPerformed
-        jdpPrincipal.removeAll();
         
         consultaRutaViaje crv = new consultaRutaViaje();
         crv.setVisible(true);
@@ -248,7 +237,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiConsultaRutaActionPerformed
 
     private void jmiConsultaPasajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiConsultaPasajeActionPerformed
-        jdpPrincipal.removeAll();
         consultaPasajes cp = new consultaPasajes();
         cp.setVisible(true);
         

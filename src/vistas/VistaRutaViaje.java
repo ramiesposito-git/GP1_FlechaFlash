@@ -462,24 +462,22 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
         RutaViaje rv = (RutaViaje) ComboBoxRuta.getSelectedItem();
-        
+
         if (rv == null) {
             JOptionPane.showMessageDialog(this, "Primero selecciona una Ruta!");
             return;
         }
 
-        
-        int respuesta = JOptionPane.showConfirmDialog(this, "Estas seguro de eliminar la ruta " + rv.toString() +"?", "Confirmacion", JOptionPane.YES_NO_OPTION);
-        
+        int respuesta = JOptionPane.showConfirmDialog(this, "Estas seguro de eliminar la ruta " + rv.toString() + "?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+
         if (respuesta == -1 || respuesta == 1) {
             return;
         }
-        
-        
+
         if (rvd.borrarRutaViaje(rv.getIdRuta())) {
             JOptionPane.showMessageDialog(this, "Registro eliminado con exito!");
-        } else{
-            JOptionPane.showMessageDialog(this, "Ocurrio un problema y no se pudo eliminar el registro\nIntenta de nuevo!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ocurrio un problema y no se pudo eliminar el registro\nAsegurate que la ruta no esté relacionado con pasajes activos!");
         }
 
         limpiarBuscar();
@@ -502,7 +500,7 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
         txtHoraSalidaBuscar.setText(ruta.getHoraSalida().toString());
         txtPrecioBuscar.setText(ruta.getPrecio() + "");
         checkEstadoBuscar.setSelected(ruta.isEstado());
-        comboxIdColectivoBuscar.setSelectedItem((Colectivo) ruta.getColectivo());
+        comboxIdColectivoBuscar.setSelectedItem(ruta.getColectivo());
     }//GEN-LAST:event_ComboBoxRutaActionPerformed
 
 
@@ -606,8 +604,11 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
         comboxIdColectivoBuscar.removeAllItems();
 
         for (Colectivo colectivo : cd.listarColectivo()) {
-            comboxIdColectivo.addItem(colectivo);
-            comboxIdColectivoBuscar.addItem(colectivo);
+            if (colectivo.isEstado()) {
+                comboxIdColectivo.addItem(colectivo);
+                comboxIdColectivoBuscar.addItem(colectivo);
+            }
+
         }
     }
 
@@ -625,42 +626,44 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
 
         RutaViaje ruta = rvd.buscarRutaViajePorId(id);
 
-        if (ruta == null) {
-            return true;
+        try {
+
+            if (!ruta.getOrigen().equals(txtOrigenBuscar.getText().trim())) {
+                return false;
+            }
+
+            if (!ruta.getDestino().equals(txtDestinoBuscar.getText().trim())) {
+                return false;
+            }
+
+            if (!ruta.getHoraSalida().format(formatoHora).equals(txtHoraSalidaBuscar.getText().trim())) {
+                return false;
+            }
+
+            if (!ruta.getHoraLlegada().format(formatoHora).equals(txtHoraLlegadaBuscar.getText().trim())) {
+                return false;
+            }
+
+            double precio = Double.parseDouble(txtPrecioBuscar.getText().trim().replace(',', '.'));
+
+            if (precio != ruta.getPrecio()) {
+                return false;
+            }
+
+            if (ruta.isEstado() != checkEstadoBuscar.isSelected()) {
+                return false;
+            }
+
+            Colectivo colectivo = (Colectivo) comboxIdColectivoBuscar.getSelectedItem();
+
+            if (ruta.getColectivo().getID_colectivo() != colectivo.getID_colectivo()) {
+                return false;
+            }
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un valor valido para precio! \nSolo valores numericos, con . para incluir centavos", "Valor incorrecto", 2);
         }
-
-        if (!ruta.getOrigen().equals(txtOrigenBuscar.getText().trim())) {
-            return false;
-        }
-
-        if (!ruta.getDestino().equals(txtDestinoBuscar.getText().trim())) {
-            return false;
-        }
-
-        if (!ruta.getHoraSalida().format(formatoHora).equals(txtHoraSalidaBuscar.getText().trim())) {
-            return false;
-        }
-
-        if (!ruta.getHoraLlegada().format(formatoHora).equals(txtHoraLlegadaBuscar.getText().trim())) {
-            return false;
-        }
-
-        double precio = Double.parseDouble(txtPrecioBuscar.getText().trim().replace(',', '.'));
-
-        if (precio != ruta.getPrecio()) {
-            return false;
-        }
-
-        if (ruta.isEstado() != checkEstadoBuscar.isSelected()) {
-            return false;
-        }
-
-        Colectivo colectivo = (Colectivo) comboxIdColectivoBuscar.getSelectedItem();
-
-        if (ruta.getColectivo().getID_colectivo() != colectivo.getID_colectivo()) {
-            return false;
-        }
-
+        
         return true;
     }
 

@@ -1,5 +1,6 @@
 package persistencia;
 
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import modelo.Colectivo;
 import modelo.Conexion;
 import java.sql.Connection;
@@ -120,7 +121,8 @@ public class ColectivoData {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al dar de baja el colectivo" + ex.getMessage());
+            System.out.println("fallo al dar de baja al colectivo, revisar 'bajaColectivo' en 'ColectivoData'");
+            return false;
         }
         return false;
     }
@@ -134,10 +136,15 @@ public class ColectivoData {
             if (a > 0) {
                 return true;
             }
-
+            
+        } catch (MySQLIntegrityConstraintViolationException ex){
+            return false;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al borrar el colectivo" + ex.getMessage());
-        }
+            System.out.println("fallo al borrar colectivo, revisar 'borrarColectivo' en "+this.getClass()+" Error:"+ex.getMessage());
+            return false;
+        } 
+        
+        
         return false;
     }
 

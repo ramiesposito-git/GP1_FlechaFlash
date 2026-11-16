@@ -1,13 +1,12 @@
 package vistas;
 
-import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import javax.swing.JOptionPane;
 import modelo.Asiento;
+import modelo.Colectivo;
 import modelo.Pasaje;
 import modelo.Pasajero;
 import modelo.RutaViaje;
@@ -318,50 +317,50 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(38, 52, 69));
-        jLabel11.setText("Asiento:");
+        jLabel11.setText("Asientos Disponibles:");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
+                        .addGap(75, 75, 75)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(51, 51, 51)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel13)
                             .addComponent(jLabel14)
                             .addComponent(jLabel15)
                             .addComponent(jLabel16)
-                            .addComponent(jLabel11)
                             .addComponent(jLabel12)
-                            .addComponent(jLabel10))
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboxAsientoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(checkboxEstadoBuscar)
-                                .addComponent(txtPrecioBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtHoraVentaBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                    .addComponent(txtFechaVentaBuscar, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addComponent(comboxPasajeroBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(comboxRutaBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addComponent(checkboxEstadoBuscar)
+                            .addComponent(txtPrecioBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtHoraVentaBuscar, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtFechaVentaBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(comboxPasajeroBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboxRutaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
+                .addGap(22, 22, 22)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(comboxPasajeroBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -389,7 +388,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
                     .addComponent(checkboxEstadoBuscar))
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -452,6 +451,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         NuevoPasaje.setHoraVenta(LocalTime.now());
 
         if (pd.crearPasaje(NuevoPasaje)) {
+            JOptionPane.showMessageDialog(this, "Pasaje creado con correctamente\nID designado: " + NuevoPasaje.getIdPasaje());
             ad.bajaAsiento(NuevoPasaje.getAsiento().getIdAsiento()); //le damos de baja al asiento para que ya no se pueda comprar un boleto con ese asiento.
         } else {
             JOptionPane.showMessageDialog(this, "Ocurrio un error y no se pudo crear el pasaje.\nrevise los datos o cambie de asiento.");
@@ -472,13 +472,8 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "El ID debe ser un número entero.");
             return;
         }
-        
-        Pasaje anterior = pd.buscarPasajePorId(id);
 
-        if (anterior == null) {
-            JOptionPane.showMessageDialog(this, "El pasaje no existe.");
-            return;
-        }
+        Pasaje anterior = pd.buscarPasajePorId(id);
 
         Pasajero pasajero = (Pasajero) comboxPasajeroBuscar.getSelectedItem();
         Asiento asiento = (Asiento) comboxAsientoBuscar.getSelectedItem();
@@ -503,10 +498,14 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             cargarComboAsientos(ruta);
             cargarComboAsientosBuscar(ruta);
 
+            ad.altaAsiento(anterior.getAsiento().getIdAsiento());//se vuelve a dar de alta al asiento anterior   
             limpiarBuscar();
 
             btnEditar.setEnabled(false);
             btnEliminar.setEnabled(false);
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo actualizar el pasaje, intente nuevamente.");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -531,9 +530,9 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Ingrese un valor valido para ID!");
                 return;
             }
-            
+
             Pasaje pasaje = pd.buscarPasajePorId(id);
-            
+
             boolean aux = pd.borrarPasaje(pasaje);
 
             if (aux) {
@@ -573,7 +572,6 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
             btnEliminar.setEnabled(true);
             btnEditar.setEnabled(true);
-
 
             comboxPasajeroBuscar.setSelectedItem(pasaje.getPasajero());
             comboxAsientoBuscar.setSelectedItem(pasaje.getAsiento());
@@ -681,35 +679,20 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
         }
     }
-    
-    private void cargarComboAsientosBuscar(RutaViaje rutaBuscar){
+
+    private void cargarComboAsientosBuscar(RutaViaje rutaBuscar) {
         comboxAsientoBuscar.removeAllItems();
 
         if (rutaBuscar == null) {
             return;
         }
 
-        int idAsientoActual = -1;
-
-        try {
-            int idPasaje = Integer.parseInt(txtIdPasaje.getText().trim());
-            Pasaje pasaje = pd.buscarPasajePorId(idPasaje);
-
-            if (pasaje != null && pasaje.getAsiento() != null) {
-                idAsientoActual = pasaje.getAsiento().getIdAsiento();
-            }
-        } catch (NumberFormatException ex) {
-            //No hay un pasaje seleccionado todavia.
-        }
-
-        for (Asiento a : ad.listarAsientos()) {
-            boolean mismoColectivo = rutaBuscar.getColectivo().getID_colectivo() == a.getColectivo().getID_colectivo();
-            boolean disponible = a.getEstado() || a.getIdAsiento() == idAsientoActual;
-
-            if (mismoColectivo && disponible) {
-                comboxAsientoBuscar.addItem(a);
+        for (Asiento asiento : ad.listarAsientos()) {
+            if (asiento.getEstado() && rutaBuscar.getColectivo().equals(asiento.getColectivo())) { //solo los asientos desocupedos y los colectivos que realizan la misma.
+                comboxAsientoBuscar.addItem(asiento);
             }
         }
+
     }
 
     private void cargarCombosRuta() {
