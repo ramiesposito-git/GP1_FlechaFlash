@@ -460,38 +460,54 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-
+        int id;
         try {
-            int id = Integer.parseInt(txtIdPasaje.getText().trim());
+            id = Integer.parseInt(txtIdPasaje.getText().trim());
 
             if (id <= 0) {
                 JOptionPane.showMessageDialog(this, "Ingrese un ID mayor a cero");
                 return;
             }
-
-            Pasajero pasajero = (Pasajero) comboxPasajeroBuscar.getSelectedItem();
-            Asiento asiento = (Asiento) comboxAsientoBuscar.getSelectedItem();
-            RutaViaje ruta = (RutaViaje) comboxRutaBuscar.getSelectedItem();
-            LocalDate fechaActualizada = LocalDate.now();
-            LocalTime horaActualizada = LocalTime.now();
-            double precio = Double.valueOf(ruta.getPrecio());
-            boolean estado = checkboxEstadoBuscar.isSelected();
-
-            Pasaje pasajeModificado = new Pasaje(id, pasajero, asiento, ruta, fechaActualizada, horaActualizada, precio, estado);
-
-            if (esIgual(id)) {
-                JOptionPane.showMessageDialog(this, "Debe modificar al menos uno de sus datos!");
-                return;
-            }
-
-            pd.actualizarPasaje(pasajeModificado);
-            limpiarBuscar();
-
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "El ID debe ser un número entero.");
             return;
         }
+        
+        Pasaje anterior = pd.buscarPasajePorId(id);
 
+        if (anterior == null) {
+            JOptionPane.showMessageDialog(this, "El pasaje no existe.");
+            return;
+        }
+
+        Pasajero pasajero = (Pasajero) comboxPasajeroBuscar.getSelectedItem();
+        Asiento asiento = (Asiento) comboxAsientoBuscar.getSelectedItem();
+        RutaViaje ruta = (RutaViaje) comboxRutaBuscar.getSelectedItem();
+
+        if (pasajero == null || asiento == null || ruta == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione un pasajero, una ruta y un asiento.");
+            return;
+        }
+
+        boolean estado = checkboxEstadoBuscar.isSelected();
+
+        if (esIgual(id)) {
+            JOptionPane.showMessageDialog(this, "Debe modificar al menos uno de sus datos!");
+            return;
+        }
+
+        Pasaje modificado = new Pasaje(id, pasajero, asiento, ruta, anterior.getFechaVenta(), anterior.getHoraVenta(), ruta.getPrecio(), estado);
+
+        if (pd.actualizarPasaje(modificado)) {
+
+            cargarComboAsientos(ruta);
+            cargarComboAsientosBuscar(ruta);
+
+            limpiarBuscar();
+
+            btnEditar.setEnabled(false);
+            btnEliminar.setEnabled(false);
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -572,8 +588,6 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Ingrese un valor numerico!");
             return;
         }
-
-
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void comboxRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboxRutaActionPerformed
@@ -669,17 +683,33 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     }
     
     private void cargarComboAsientosBuscar(RutaViaje rutaBuscar){
-
         comboxAsientoBuscar.removeAllItems();
 
-        for (Asiento a : ad.listarAsientos()) {
+        if (rutaBuscar == null) {
+            return;
+        }
 
-            if (a.getEstado()) { //solo lista aquellos asientos "activos" o "no-ocupados"
-                if (rutaBuscar.getColectivo().getID_colectivo() == a.getColectivo().getID_colectivo()) { //Solo carga aquellos asientos pertenecientes al colectivo que realiza la ruta, de esa manera evitamos vender un asiento de otro viaje
-                    comboxAsientoBuscar.addItem(a);
-                }
+        int idAsientoActual = -1;
+
+        try {
+            int idPasaje = Integer.parseInt(txtIdPasaje.getText().trim());
+            Pasaje pasaje = pd.buscarPasajePorId(idPasaje);
+
+            if (pasaje != null && pasaje.getAsiento() != null) {
+                idAsientoActual = pasaje.getAsiento().getIdAsiento();
             }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Ingrese un ID de pasaje válido.");
+            return;
+        }
 
+        for (Asiento a : ad.listarAsientos()) {
+            boolean mismoColectivo = rutaBuscar.getColectivo().getID_colectivo() == a.getColectivo().getID_colectivo();
+            boolean disponible = a.getEstado() || a.getIdAsiento() == idAsientoActual;
+
+            if (mismoColectivo && disponible) {
+                comboxAsientoBuscar.addItem(a);
+            }
         }
     }
 

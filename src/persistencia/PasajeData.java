@@ -60,37 +60,175 @@ public class PasajeData {
         return false;
     }
 
-    public void actualizarPasaje(Pasaje pasajeActualizado) {
+    public boolean actualizarPasaje(Pasaje pasajeActualizado) {
+        String buscarAnterior = "SELECT ID_asiento FROM pasaje WHERE ID_pasaje=? FOR UPDATE";
 
-        String SQL = "UPDATE `pasaje` SET `idPasajero`= ? ,`ID_asiento`= ? ,`ID_ruta`= ?, `fecha_venta`=? ,`hora_venta`=?, `precio`=?, `estado`=? WHERE ID_pasaje = ? ";
+        String bloquearAsientos = "SELECT ID_asiento, estado FROM asiento WHERE ID_asiento IN (?, ?) ORDER BY ID_asiento FOR UPDATE";
+
+        String comprobarRuta = "SELECT 1 FROM asiento a INNER JOIN ruta_viaje r ON a.ID_colectivo = r.ID_colectivo WHERE a.ID_asiento=? AND r.ID_ruta=?";
+
+        String comprobarOcupado = "SELECT 1 FROM pasaje WHERE ID_asiento=? AND estado=1 AND ID_pasaje<>? LIMIT 1";
+
+        String actualizar = "UPDATE pasaje SET idPasajero=?, ID_asiento=?, ID_ruta=?, precio=?, estado=? WHERE ID_pasaje=?";
+
+        String actualizarAsiento = "UPDATE asiento SET estado=? WHERE ID_asiento=?";
 
         try {
-            PreparedStatement ps = connection.prepareStatement(SQL);
+            //Desactiva el guardado automático para controlar la transaccion.
+            connection.setAutoCommit(false);
 
-            ps.setInt(1, pasajeActualizado.getPasajero().getIdPasajero());
-            ps.setInt(2, pasajeActualizado.getAsiento().getIdAsiento());
-            ps.setInt(3, pasajeActualizado.getViaje().getIdRuta());
-            ps.setDate(4, Date.valueOf(pasajeActualizado.getFechaVenta()));
-            ps.setTime(5, Time.valueOf(pasajeActualizado.getHoraVenta()));
-            ps.setDouble(6, pasajeActualizado.getPrecio());
-            ps.setBoolean(7, pasajeActualizado.getEstado());
+            int idAnterior;
+            
+            //Busca y bloquea el pasaje para obtener su asiento anterior.
+            try (PreparedStatement ps = connection.prepareStatement(buscarAnterior)) {
+                ps.setInt(1, pasajeActualizado.getIdPasaje());
 
-            ps.setInt(8, pasajeActualizado.getIdPasaje());
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (!rs.next()) {
+                        JOptionPane.showMessageDialog(null, "El pasaje no existe.");
+                        //Deshace los cambios realizados si ocurre un error.
+                        connection.rollback();
+                        return false;
+                    }
+                    idAnterior = rs.getInt("ID_asiento");
+                }
+            }
+            int idNuevo = pasajeActualizado.getAsiento().getIdAsiento();
+            int idRuta = pasajeActualizado.getViaje().getIdRuta();
+            boolean nuevoActivo = false;
+            int encontrados = 0;
+            
+            //Bloquea los asientos involucrados para evitar modificaciones simultaneas.
+            try (PreparedStatement ps = connection.prepareStatement(bloquearAsientos)) {
+                ps.setInt(1, idAnterior);
+                ps.setInt(2, idNuevo);
 
-            int n = ps.executeUpdate();
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        encontrados++;
+                        if (rs.getInt("ID_asiento") == idNuevo) {
+                            nuevoActivo = rs.getBoolean("estado");
+                        }
+                    }
+                }
+            }
+            int esperados = 2;
 
-            if (n > 0) {
-                JOptionPane.showMessageDialog(null, "Pasaje actualizado con exito");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo actualizar el pasaje!\nrevise los datos ingresados");
+            if (idAnterior == idNuevo) {
+                esperados = 1;
+            }
+            if (encontrados != esperados) {
+                JOptionPane.showMessageDialog(null, "No se encontraron los asientos.");
+                connection.rollback();
+                return false;
             }
 
-            ps.close();
+            //Verifica que el asiento nuevo pertenece al colectivo de la ruta.
+            try (PreparedStatement ps = connection.prepareStatement(comprobarRuta)) {
+                ps.setInt(1, idNuevo);
+                ps.setInt(2, idRuta);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (!rs.next()) {
+                        JOptionPane.showMessageDialog(null, "El asiento no pertenece al colectivo de la ruta.");
+                        connection.rollback();
+                        return false;
+                    }
+                }
+            }
+
+            if (idAnterior != idNuevo && !nuevoActivo) {
+                JOptionPane.showMessageDialog(null, "El asiento seleccionado no está disponible.");
+                connection.rollback();
+                return false;
+            }
+
+            //Comprueba que otro pasaje activo no ocupe el asiento en esa ruta.
+            try (PreparedStatement ps = connection.prepareStatement(comprobarOcupado)) {
+                ps.setInt(1, idNuevo);
+                ps.setInt(2, pasajeActualizado.getIdPasaje());
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next() && pasajeActualizado.getEstado()) {
+                        JOptionPane.showMessageDialog(null, "El asiento ya está ocupado por otro pasaje.");
+                        connection.rollback();
+                        return false;
+                    }
+                }
+            }
+
+            //Guarda los  nuevos datos del pasaje en la base de datos.
+            try (PreparedStatement ps = connection.prepareStatement(actualizar)) {
+                ps.setInt(1, pasajeActualizado.getPasajero().getIdPasajero());
+                ps.setInt(2, idNuevo);
+                ps.setInt(3, idRuta);
+                ps.setDouble(4, pasajeActualizado.getPrecio());
+                ps.setBoolean(5, pasajeActualizado.getEstado());
+                ps.setInt(6, pasajeActualizado.getIdPasaje());
+
+                int filas = ps.executeUpdate();
+
+                if (filas == 0) {
+                    JOptionPane.showMessageDialog(null, "No se pudo actualizar el pasaje.");
+                    connection.rollback();
+                    return false;
+                }
+            }
+
+            //Liberar el asiento anterior si ya no tiene pasajes activos
+            if (idAnterior != idNuevo) {
+                boolean anteriorOcupado;
+
+                //Comprueba si el asiento anterior sigue asociado a otro pasaje activo.
+                try (PreparedStatement ps = connection.prepareStatement(comprobarOcupado)) {
+                    ps.setInt(1, idAnterior);
+                    ps.setInt(2, pasajeActualizado.getIdPasaje());
+
+                    try (ResultSet rs = ps.executeQuery()) {
+                        anteriorOcupado = rs.next();
+                    }
+                }
+
+                //Actualiza el estado del asiento anterior despues del cambio.
+                try (PreparedStatement ps = connection.prepareStatement(actualizarAsiento)) {
+                    ps.setBoolean(1, !anteriorOcupado);
+                    ps.setInt(2, idAnterior);
+                    ps.executeUpdate();
+                }
+            }
+
+            //Actualizar el estado del asiento seleccionado
+            try (PreparedStatement ps = connection.prepareStatement(actualizarAsiento)) {
+                ps.setBoolean(1, !pasajeActualizado.getEstado());
+                ps.setInt(2, idNuevo);
+                ps.executeUpdate();
+            }
+
+            //Confirma todos los cambios realizados en la base de datos.
+            connection.commit();
+            JOptionPane.showMessageDialog(null, "Pasaje actualizado con éxito!");
+            return true;
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
-        }
+            //Deshace la transaccion si ocurre un error en la base de datos.
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al revertir cambios: " + e.getMessage());
+            }
+            JOptionPane.showMessageDialog(null, "No se pudo actualizar el pasaje: " + ex.getMessage());
+            return false;
 
+        } finally {
+            //Restaura el guardado automatico de la conexion.
+            try {
+                
+                //Vuelve a activar el guardado automatico de la conexion.
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error al restaurar la conexión: " + ex.getMessage());
+            }
+        }
     }
 
     public boolean vendido(Pasaje pasaje) {
