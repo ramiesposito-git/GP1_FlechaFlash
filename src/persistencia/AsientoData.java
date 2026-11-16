@@ -86,11 +86,6 @@ public class AsientoData {
     }
 
     public boolean actualizarAsiento(Asiento asiento) {
-
-        
-        if(asientoExistente(asiento.getColectivo().getID_colectivo(), asiento.getNumeroAsiento())){
-            return false;
-        }
         
         String SQL = "UPDATE `asiento` SET `ID_colectivo`= ?,`numero_asiento`= ?,`estado`=? WHERE ID_asiento = ?";
 
@@ -124,9 +119,9 @@ public class AsientoData {
             int n = ps.executeUpdate();
 
             if (n == 1) {
-                JOptionPane.showMessageDialog(null, "Asiento dado de alta correctamente!");
+                System.out.println("alta correcta de asiento");
             } else {
-                JOptionPane.showMessageDialog(null, "Error al dar de alta el asiento, corrobore ID");
+                System.out.println("no se le dio de alta al asiento, revisar el metodo 'AltaAsiento' de AsientoData");
             }
 
         } catch (SQLException ex) {
@@ -135,7 +130,7 @@ public class AsientoData {
     }
 
     public void bajaAsiento(int idAsiento) {
-        String SQL = "UPDATE asiento SET estado=0 WHERE ID_asiento = ?";
+        String SQL = "UPDATE `asiento` SET `estado`= 0 WHERE asiento.ID_asiento = ?";
 
         try {
             PreparedStatement ps = connexion.prepareStatement(SQL);
@@ -144,9 +139,9 @@ public class AsientoData {
             int n = ps.executeUpdate();
 
             if (n == 1) {
-                JOptionPane.showMessageDialog(null, "Asiento dado de baja correctamente!");
+                System.out.println("asiento dado de baja");
             } else {
-                JOptionPane.showMessageDialog(null, "Error al dar de baja el asiento, corrobore ID");
+                System.out.println("no se dio de baja al asiento, revisar 'bajaAsiento' en 'AsientoData'");
             }
 
         } catch (SQLException ex) {

@@ -21,11 +21,11 @@ public class PasajeData {
         this.rvd = new RutaViajeData(conexion);
     }
 
-    public void crearPasaje(Pasaje pasaje) {
+    public boolean crearPasaje(Pasaje pasaje) {
 
         if (vendido(pasaje)) {
             JOptionPane.showMessageDialog(null, "Pasaje vendido! Intente con otro asiento...");
-            return;
+            return false;
         }
 
         String SQL = "INSERT INTO `pasaje`(`idPasajero`, `ID_asiento`, `ID_ruta`, `fecha_venta`, `hora_venta`, `precio`, `estado`) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
@@ -46,7 +46,9 @@ public class PasajeData {
 
             if (rs.next()) {
                 int id = rs.getInt(1);
-                JOptionPane.showMessageDialog(null, "Pasaje creado! Id: " + id);
+                pasaje.setIdPasaje(id);
+                
+                return true;
             }
 
             ps.close();
@@ -55,7 +57,7 @@ public class PasajeData {
         } catch (SQLException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage());
         }
-
+        return false;
     }
 
     public void actualizarPasaje(Pasaje pasajeActualizado) {
@@ -176,13 +178,15 @@ public class PasajeData {
         return pasajes;
     }
 
-    public boolean borrarPasaje(int id) {
+    public boolean borrarPasaje(Pasaje pasaje) {
 
+        ad.altaAsiento(pasaje.getAsiento().getIdAsiento()); //primero le damos de alta al pasaje (vuelve a estar libre)
+        
         String sql = "DELETE FROM pasaje WHERE ID_pasaje=?";
-
+        
         try {
             PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            stm.setInt(1, id);
+            stm.setInt(1, pasaje.getIdPasaje());
 
             int a = stm.executeUpdate();
 

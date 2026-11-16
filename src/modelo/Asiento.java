@@ -60,4 +60,26 @@ public class Asiento {
         return "Asiento: " + this.numeroAsiento + " - colectivo: " + this.colectivo.getID_colectivo();
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + this.IdAsiento;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Asiento other = (Asiento) obj;
+        return this.IdAsiento == other.IdAsiento;
+    }
+    
 }

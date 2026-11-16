@@ -21,6 +21,8 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
         cd = new ColectivoData(Principal.conexion);
         cargarComboColectivos();
         cargarComboRuta();
+        limpiar();
+        limpiarBuscar();
     }
 
     @SuppressWarnings("unchecked")
@@ -616,9 +618,7 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
         txtHoraLlegada.setText("");
         txtPrecio.setText("");
         checkEstado.setSelected(false);
-        if (comboxIdColectivo.getItemCount() > 0) {
-            comboxIdColectivo.setSelectedIndex(0);
-        }
+        comboxIdColectivo.setSelectedIndex(-1);
     }
 
     public boolean esIgual(int id) {
@@ -672,7 +672,7 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
         txtHoraLlegadaBuscar.setText("");
         txtPrecioBuscar.setText("");
         checkEstadoBuscar.setSelected(false);
-        comboxIdColectivoBuscar.setSelectedIndex(0);
+        comboxIdColectivoBuscar.setSelectedIndex(-1);
 
     }
 

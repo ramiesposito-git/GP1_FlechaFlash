@@ -105,4 +105,29 @@ public class RutaViaje {
     public String toString() {
         return this.origen +" - "+ this.destino +" ("+ horaSalida +" : "+ horaLlegada+") ";
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + this.idRuta;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RutaViaje other = (RutaViaje) obj;
+        return this.idRuta == other.idRuta;
+    }
+    
+    
+    
 }

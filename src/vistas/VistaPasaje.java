@@ -35,11 +35,13 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         ad = new AsientoData(Principal.conexion);
 
         cargarCombosPasajeros();
-        cargarCombosAsientos();
         cargarCombosRuta();
 
         btnEliminar.setEnabled(false);
         btnEditar.setEnabled(false);
+
+        limpiar();
+        limpiarBuscar();
 
     }
 
@@ -48,7 +50,6 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        comboxPasajero = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -57,8 +58,9 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         checkboxEstado = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
         btnCrear = new javax.swing.JButton();
-        comboxRuta = new javax.swing.JComboBox<>();
         comboxAsiento = new javax.swing.JComboBox<>();
+        comboxRuta = new javax.swing.JComboBox<>();
+        comboxPasajero = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -69,26 +71,23 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         comboxPasajeroBuscar = new javax.swing.JComboBox<>();
-        comboxAsientoBuscar = new javax.swing.JComboBox<>();
         comboxRutaBuscar = new javax.swing.JComboBox<>();
         txtHoraVentaBuscar = new javax.swing.JTextField();
         txtPrecioBuscar = new javax.swing.JTextField();
         checkboxEstadoBuscar = new javax.swing.JCheckBox();
         txtFechaVentaBuscar = new javax.swing.JTextField();
+        comboxAsientoBuscar = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
 
         setClosable(true);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Eliminar -  Editar Pasaje", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 17), new java.awt.Color(38, 52, 69))); // NOI18N
-
-        comboxPasajero.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        comboxPasajero.setForeground(new java.awt.Color(38, 52, 69));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Nuevo Pasaje", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 17), new java.awt.Color(38, 52, 69))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(38, 52, 69));
@@ -96,11 +95,11 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(38, 52, 69));
-        jLabel3.setText("Asiento:");
+        jLabel3.setText("Viaje:");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(38, 52, 69));
-        jLabel4.setText("Destino:");
+        jLabel4.setText("Asiento:");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(38, 52, 69));
@@ -117,63 +116,78 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         btnCrear.setBackground(new java.awt.Color(52, 142, 110));
         btnCrear.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnCrear.setForeground(new java.awt.Color(255, 255, 255));
-        btnCrear.setText("CARGAR");
+        btnCrear.setText("NUEVO");
         btnCrear.addActionListener(this::btnCrearActionPerformed);
 
-        comboxRuta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
         comboxAsiento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        comboxAsiento.setForeground(new java.awt.Color(38, 52, 69));
+        comboxAsiento.setBorder(null);
+
+        comboxRuta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        comboxRuta.setForeground(new java.awt.Color(38, 52, 69));
+        comboxRuta.setBorder(null);
+        comboxRuta.addActionListener(this::comboxRutaActionPerformed);
+
+        comboxPasajero.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        comboxPasajero.setForeground(new java.awt.Color(38, 52, 69));
+        comboxPasajero.setBorder(null);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(comboxPasajero, 0, 140, Short.MAX_VALUE)
-                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(checkboxEstado)
-                            .addComponent(comboxRuta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(comboxAsiento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkboxEstado))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(122, 122, 122))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 14, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboxAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboxPasajero, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboxRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(comboxPasajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboxRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboxAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(checkboxEstado)
+                .addGap(91, 91, 91)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboxPasajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboxRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboxAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addComponent(checkboxEstado))
                     .addComponent(jLabel8))
-                .addGap(36, 36, 36)
+                .addGap(26, 26, 26)
                 .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -192,7 +206,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jLabel1)
-                .addContainerGap(406, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,13 +236,13 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtIdPasaje, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,13 +271,9 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         jLabel10.setForeground(new java.awt.Color(38, 52, 69));
         jLabel10.setText("Pasajero:");
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(38, 52, 69));
-        jLabel11.setText("Asiento:");
-
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(38, 52, 69));
-        jLabel12.setText("Destino:");
+        jLabel12.setText("Viaje:");
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(38, 52, 69));
@@ -283,12 +293,12 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
         comboxPasajeroBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         comboxPasajeroBuscar.setForeground(new java.awt.Color(38, 52, 69));
-
-        comboxAsientoBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        comboxAsientoBuscar.setForeground(new java.awt.Color(38, 52, 69));
+        comboxPasajeroBuscar.setBorder(null);
 
         comboxRutaBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         comboxRutaBuscar.setForeground(new java.awt.Color(38, 52, 69));
+        comboxRutaBuscar.setBorder(null);
+        comboxRutaBuscar.addActionListener(this::comboxRutaBuscarActionPerformed);
 
         txtHoraVentaBuscar.setEditable(false);
         txtHoraVentaBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -302,47 +312,54 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         txtFechaVentaBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtFechaVentaBuscar.setForeground(new java.awt.Color(38, 52, 69));
 
+        comboxAsientoBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        comboxAsientoBuscar.setForeground(new java.awt.Color(38, 52, 69));
+        comboxAsientoBuscar.setBorder(null);
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(38, 52, 69));
+        jLabel11.setText("Asiento:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                        .addGap(42, 42, 42)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel12)
                             .addComponent(jLabel13)
                             .addComponent(jLabel14)
                             .addComponent(jLabel15)
-                            .addComponent(jLabel16))
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(comboxAsientoBuscar, javax.swing.GroupLayout.Alignment.LEADING, 0, 140, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboxAsientoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(checkboxEstadoBuscar)
-                                .addComponent(txtHoraVentaBuscar)
-                                .addComponent(txtFechaVentaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(comboxRutaBuscar, 0, 140, Short.MAX_VALUE)
-                            .addComponent(txtPrecioBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboxPasajeroBuscar, javax.swing.GroupLayout.Alignment.LEADING, 0, 140, Short.MAX_VALUE)))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                            .addGap(30, 30, 30)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                            .addGap(31, 31, 31)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                                .addComponent(txtPrecioBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtHoraVentaBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                    .addComponent(txtFechaVentaBuscar, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addComponent(comboxPasajeroBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(comboxRutaBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(15, 15, 15)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -350,33 +367,33 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
                     .addComponent(comboxPasajeroBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(comboxAsientoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(comboxRutaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(comboxAsientoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(txtFechaVentaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFechaVentaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(txtHoraVentaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHoraVentaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(txtPrecioBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrecioBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
                     .addComponent(checkboxEstadoBuscar))
-                .addGap(20, 20, 20)
+                .addGap(25, 25, 25)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -388,7 +405,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
                 .addContainerGap(30, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -397,8 +414,8 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -408,7 +425,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
 
         Pasajero pasajero = (Pasajero) comboxPasajero.getSelectedItem();
-        RutaViaje ruta = (RutaViaje) comboxAsiento.getSelectedItem();
+        RutaViaje ruta = (RutaViaje) comboxRuta.getSelectedItem();
         Asiento asiento = (Asiento) comboxAsiento.getSelectedItem();
 
         if (pasajero == null) {
@@ -424,17 +441,21 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             return;
         }
 
-        Pasaje pasaje = new Pasaje();
+        Pasaje NuevoPasaje = new Pasaje();
 
-        pasaje.setPasajero(pasajero);
-        pasaje.setAsiento(asiento);
-        pasaje.setViaje(ruta);
-        pasaje.setPrecio(ruta.getPrecio()); //mismo precio que el de la ruta seleccionada...
-        pasaje.setEstado(checkboxEstado.isSelected());
-        pasaje.setFechaVenta(LocalDate.now());
-        pasaje.setHoraVenta(LocalTime.now());
+        NuevoPasaje.setPasajero(pasajero);
+        NuevoPasaje.setAsiento(asiento);
+        NuevoPasaje.setViaje(ruta);
+        NuevoPasaje.setPrecio(ruta.getPrecio()); //mismo precio que el de la ruta seleccionada...
+        NuevoPasaje.setEstado(checkboxEstado.isSelected());
+        NuevoPasaje.setFechaVenta(LocalDate.now());
+        NuevoPasaje.setHoraVenta(LocalTime.now());
 
-        pd.crearPasaje(pasaje);
+        if (pd.crearPasaje(NuevoPasaje)) {
+            ad.bajaAsiento(NuevoPasaje.getAsiento().getIdAsiento()); //le damos de baja al asiento para que ya no se pueda comprar un boleto con ese asiento.
+        } else {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error y no se pudo crear el pasaje.\nrevise los datos o cambie de asiento.");
+        }
         limpiar();
     }//GEN-LAST:event_btnCrearActionPerformed
 
@@ -494,8 +515,10 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Ingrese un valor valido para ID!");
                 return;
             }
-
-            boolean aux = pd.borrarPasaje(id);
+            
+            Pasaje pasaje = pd.buscarPasajePorId(id);
+            
+            boolean aux = pd.borrarPasaje(pasaje);
 
             if (aux) {
                 JOptionPane.showMessageDialog(this, "Registro eliminado correctamente.");
@@ -535,14 +558,14 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
             btnEliminar.setEnabled(true);
             btnEditar.setEnabled(true);
 
-            RutaViaje rutaSeleccionada = (RutaViaje) comboxRutaBuscar.getSelectedItem();
 
             comboxPasajeroBuscar.setSelectedItem(pasaje.getPasajero());
             comboxAsientoBuscar.setSelectedItem(pasaje.getAsiento());
             comboxRutaBuscar.setSelectedItem(pasaje.getViaje());
+
             txtFechaVentaBuscar.setText(pasaje.getFechaVenta().toString());
             txtHoraVentaBuscar.setText(pasaje.getHoraVenta().toString());
-            txtPrecio.setText(rutaSeleccionada.getPrecio() + "");
+
             checkboxEstadoBuscar.setSelected(pasaje.getEstado());
 
         } catch (NumberFormatException e) {
@@ -552,6 +575,30 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void comboxRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboxRutaActionPerformed
+
+        if (comboxRuta.getSelectedItem() == null) {
+            return;
+        }
+
+        RutaViaje ruta = (RutaViaje) comboxRuta.getSelectedItem();
+        txtPrecio.setText(ruta.getPrecio() + "");
+
+        cargarComboAsientos(ruta);
+
+    }//GEN-LAST:event_comboxRutaActionPerformed
+
+    private void comboxRutaBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboxRutaBuscarActionPerformed
+
+        if (comboxRutaBuscar.getSelectedItem() == null) {
+            return;
+        }
+
+        RutaViaje ruta = (RutaViaje) comboxRutaBuscar.getSelectedItem();
+        txtPrecioBuscar.setText(ruta.getPrecio() + "");
+        cargarComboAsientosBuscar(ruta);
+    }//GEN-LAST:event_comboxRutaBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -607,15 +654,30 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         }
     }
 
-    private void cargarCombosAsientos() {
+    private void cargarComboAsientos(RutaViaje ruta) {
         comboxAsiento.removeAllItems();
+
+        for (Asiento a : ad.listarAsientos()) {
+
+            if (a.getEstado()) { //solo lista aquellos asientos "activos" o "no-ocupados"
+                if (ruta.getColectivo().getID_colectivo() == a.getColectivo().getID_colectivo()) { //Solo carga aquellos asientos pertenecientes al colectivo que realiza la ruta, de esa manera evitamos vender un asiento de otro viaje
+                    comboxAsiento.addItem(a);
+                }
+            }
+
+        }
+    }
+    
+    private void cargarComboAsientosBuscar(RutaViaje rutaBuscar){
+
         comboxAsientoBuscar.removeAllItems();
 
         for (Asiento a : ad.listarAsientos()) {
 
-            if (a.getEstado()) {
-                comboxAsiento.addItem(a); //solo lista aquellos asientos "activos" o "no-ocupados"
-                comboxAsientoBuscar.addItem(a);
+            if (a.getEstado()) { //solo lista aquellos asientos "activos" o "no-ocupados"
+                if (rutaBuscar.getColectivo().getID_colectivo() == a.getColectivo().getID_colectivo()) { //Solo carga aquellos asientos pertenecientes al colectivo que realiza la ruta, de esa manera evitamos vender un asiento de otro viaje
+                    comboxAsientoBuscar.addItem(a);
+                }
             }
 
         }
@@ -640,7 +702,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         checkboxEstado.setSelected(false);
         comboxPasajero.setSelectedIndex(-1);
         comboxAsiento.setSelectedIndex(-1);
-        comboxAsiento.setSelectedIndex(-1);
+        comboxRuta.setSelectedIndex(-1);
 
     }
 
@@ -653,7 +715,6 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         comboxPasajeroBuscar.setSelectedIndex(-1);
         comboxAsientoBuscar.setSelectedIndex(-1);
         comboxRutaBuscar.setSelectedIndex(-1);
-
     }
 
     public boolean esIgual(int id) {
