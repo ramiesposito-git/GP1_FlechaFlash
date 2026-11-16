@@ -22,15 +22,14 @@ public class PasajeData {
     }
 
     public boolean crearPasaje(Pasaje pasaje) {
-
-        if (vendido(pasaje)) {
-            JOptionPane.showMessageDialog(null, "Pasaje vendido! Intente con otro asiento...");
-            return false;
-        }
-
         String SQL = "INSERT INTO `pasaje`(`idPasajero`, `ID_asiento`, `ID_ruta`, `fecha_venta`, `hora_venta`, `precio`, `estado`) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
 
         try {
+            if (vendido(pasaje)) {
+                JOptionPane.showMessageDialog(null, "Pasaje vendido! Intente con otro asiento...");
+                return false;
+            }
+            
             PreparedStatement ps = connection.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, pasaje.getPasajero().getIdPasajero());
             ps.setInt(2, pasaje.getAsiento().getIdAsiento());
@@ -233,7 +232,7 @@ public class PasajeData {
 
     public boolean vendido(Pasaje pasaje) {
 
-        String SQL = "SELECT * FROM `pasaje` WHERE pasaje.ID_asiento = ? AND pasaje.ID_ruta = ?";
+        String SQL = "SELECT * FROM pasaje WHERE pasaje.ID_asiento = ? AND pasaje.ID_ruta = ?";
         boolean vendido = false;
 
         try {
@@ -283,7 +282,7 @@ public class PasajeData {
             rs.close();
 
         } catch (SQLException ex) {
-            System.out.println("Error al buscar Pasaje: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al buscar Pasaje: " + ex.getMessage());
         }
 
         return pasaje;

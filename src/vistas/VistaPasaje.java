@@ -553,16 +553,16 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
         try {
-
-            int idPasaje = Integer.valueOf(txtIdPasaje.getText());
-            Pasaje pasaje = pd.buscarPasajePorId(idPasaje);
-
+            int idPasaje = Integer.valueOf(txtIdPasaje.getText().trim());
+            
             if (idPasaje <= 0) {
-                JOptionPane.showMessageDialog(this, "Ingresa un numero valido!");
+                JOptionPane.showMessageDialog(this, "Ingrese un ID mayor que cero.");
                 btnEliminar.setEnabled(false);
                 btnEditar.setEnabled(false);
                 return;
             }
+            
+            Pasaje pasaje = pd.buscarPasajePorId(idPasaje);
 
             if (pasaje == null) {
                 JOptionPane.showMessageDialog(null, "No se encontraron registros con el ID indicado\nIntente con otro.");
@@ -758,6 +758,10 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         Asiento asiento = (Asiento) comboxAsientoBuscar.getSelectedItem();
         RutaViaje ruta = (RutaViaje) comboxRutaBuscar.getSelectedItem();
 
+        if (pasajero == null || asiento == null || ruta == null) {
+            return false;
+        }
+         
         if (pasaje.getPasajero().getIdPasajero() != pasajero.getIdPasajero()) {
             return false;
         }
@@ -769,12 +773,8 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         if (pasaje.getViaje().getIdRuta() != ruta.getIdRuta()) {
             return false;
         }
-
-        if (pasaje.getFechaVenta() != LocalDate.parse(txtFechaVentaBuscar.getText())) {
-            return false;
-        }
-
-        if (pasaje.getHoraVenta() != LocalTime.parse(txtHoraVentaBuscar.getText())) {
+        
+        if (Double.compare(pasaje.getPrecio(), ruta.getPrecio()) != 0) {
             return false;
         }
 
@@ -783,6 +783,5 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         }
 
         return true;
-
     }
 }

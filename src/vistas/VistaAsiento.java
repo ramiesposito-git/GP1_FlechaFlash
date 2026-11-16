@@ -351,28 +351,42 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void modificarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBTNActionPerformed
+        int id;
 
-        if (idAsientotxt.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese un ID! y realize la busqueda primero!");
+        try {
+            id = Integer.parseInt(idAsientotxt.getText().trim());
+
+            if (id <= 0) {
+                JOptionPane.showMessageDialog(this, "Ingrese un ID mayor que cero.");
+                return;
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Ingrese un ID numérico válido.");
             return;
         }
-
-        if (esIgual(Integer.parseInt(idAsientotxt.getText()))) {
-            JOptionPane.showMessageDialog(this, "Debe modificar almenos un campo!");
-            return;
-        }
-
+        
         Colectivo colectivo = (Colectivo) ComboBoxColectivosEditar.getSelectedItem();
         int nroAsiento = (Integer) SpinnerNroAsientoEditar.getValue();
         boolean activo = checkActivoEditar.isSelected();
-
+        
         if (colectivo == null) {
             JOptionPane.showMessageDialog(this, "Seleccione un colectivo!");
             return;
         }
 
         if (nroAsiento <= 0 || nroAsiento > colectivo.getCapacidad()) {
-            JOptionPane.showMessageDialog(this,"El número de asiento debe estar entre 1 y " + colectivo.getCapacidad());
+            JOptionPane.showMessageDialog(this, "El número de asiento debe estar entre 1 y " + colectivo.getCapacidad());
+            return;
+        }
+        
+        if (ad.buscarAsiento(id) == null) {
+            JOptionPane.showMessageDialog(this, "El asiento no existe.");
+            return;
+        }
+
+        if (esIgual(id)) {
+            JOptionPane.showMessageDialog(this, "Debe modificar al menos un campo!");
             return;
         }
         
@@ -381,26 +395,36 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         boolean a = ad.actualizarAsiento(asientoModificado);
 
         if (a) {
-            JOptionPane.showMessageDialog(this, "Asiento editado con exito!");
+            JOptionPane.showMessageDialog(this, "Asiento editado con éxito!");
+
+            vaciarCampos();
+            modificarBTN.setEnabled(false);
+            eliminarBTN.setEnabled(false);
         } else {
             JOptionPane.showMessageDialog(this, "Asiento ya existente! intente otro diferente.");
-            return;
         }
-
-        vaciarCampos();
-
-        modificarBTN.setEnabled(false);
-        eliminarBTN.setEnabled(false);
     }//GEN-LAST:event_modificarBTNActionPerformed
 
     private void eliminarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBTNActionPerformed
+        int idAsiento;
 
-        if (idAsientotxt.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese un ID! y realize la busqueda primero!");
+        try {
+            idAsiento = Integer.parseInt(idAsientotxt.getText().trim());
+
+            if (idAsiento <= 0) {
+                JOptionPane.showMessageDialog(this, "Ingrese un ID mayor que cero.");
+                return;
+            }
+
+        }catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Ingrese un ID numérico válido.");
+                return;
+        }
+        
+        if (ad.buscarAsiento(idAsiento) == null) {
+            JOptionPane.showMessageDialog(this, "No existe un asiento con ese ID.");
             return;
         }
-
-        int idAsiento = Integer.parseInt(idAsientotxt.getText());
 
         int respuesta = JOptionPane.showConfirmDialog(this, "Está seguro de eliminar el asiento con ID: " + idAsiento + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
@@ -412,15 +436,13 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
 
         if (a) {
             JOptionPane.showMessageDialog(this, "Asiento eliminado!");
+            
+            vaciarCampos();
+            modificarBTN.setEnabled(false);
+            eliminarBTN.setEnabled(false);
         } else {
             JOptionPane.showMessageDialog(this, "Ocurrio un error y no se pudo editar el asiento.");
-            return;
         }
-
-        vaciarCampos();
-
-        modificarBTN.setEnabled(false);
-        eliminarBTN.setEnabled(false);
     }//GEN-LAST:event_eliminarBTNActionPerformed
 
     private void buscarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBTNActionPerformed
@@ -432,6 +454,14 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
 
         try {
             int id = Integer.parseInt(idAsientotxt.getText());
+            
+            if (id <= 0) {
+                JOptionPane.showMessageDialog(this, "Ingrese un ID mayor que cero.");
+                modificarBTN.setEnabled(false);
+                eliminarBTN.setEnabled(false);
+                return;
+            }
+            
             Asiento asiento = ad.buscarAsiento(id);
 
             if (asiento == null) {
@@ -517,24 +547,29 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
 
         Asiento asiento = ad.buscarAsiento(id);
 
-        boolean esIgual = true;
+        if (asiento == null) {
+            return false;
+        }
 
-        if (asiento.getColectivo() != (Colectivo) ComboBoxColectivosEditar.getSelectedItem()) {
-            esIgual = false;
-        } 
-        
+        Colectivo colectivo = (Colectivo) ComboBoxColectivosEditar.getSelectedItem();
+
+        if (colectivo == null || asiento.getColectivo() == null) {
+            return false;
+        }
+
+        if (asiento.getColectivo().getID_colectivo() != colectivo.getID_colectivo()) {
+            return false;
+        }
+
         if (asiento.getNumeroAsiento() != (Integer) SpinnerNroAsientoEditar.getValue()) {
-            esIgual = false;
-        } 
-        
-        if (asiento.getEstado() != checkActivoEditar.isSelected()) {
-            esIgual = false;
+            return false;
         }
 
-        if (esIgual) {
-            System.out.println("Es igual: "+esIgual);
+        if (asiento.getEstado() != checkActivoEditar.isSelected()) {
+            return false;
         }
-        return esIgual;
+
+        return true;
     }
 
 }

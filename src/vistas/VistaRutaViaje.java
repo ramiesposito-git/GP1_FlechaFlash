@@ -424,39 +424,30 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
             return;
         }
 
+        // Valida los campos antes de intentar editar.
+        RutaViaje rutaEditado = validarFormularioEditar();
+
+        if (rutaEditado == null) {
+            return;
+        }
+        
         if (esIgual(ruta.getIdRuta())) {
             JOptionPane.showMessageDialog(this, "Debe modificar al menos un campo!");
             return;
         }
 
-        try {
+        // Conserva el ID de la ruta seleccionada.
+        rutaEditado.setIdRuta(ruta.getIdRuta());
 
-            String origen = txtOrigenBuscar.getText();
-            String destino = txtDestinoBuscar.getText();
-            LocalTime llegada = LocalTime.parse(txtHoraLlegadaBuscar.getText());
-            LocalTime salida = LocalTime.parse(txtHoraSalidaBuscar.getText());
-            Double precio = Double.valueOf(txtPrecioBuscar.getText());
-            boolean estado = checkEstadoBuscar.isSelected();
-            Colectivo colectivo = (Colectivo) comboxIdColectivoBuscar.getSelectedItem();
+        boolean aux = rvd.actualizarRutaViaje(rutaEditado);
 
-            RutaViaje rvEditado = new RutaViaje(ruta.getIdRuta(), origen, destino, salida, llegada, colectivo, precio, estado);
-
-            boolean aux = rvd.actualizarRutaViaje(rvEditado);
-
-            if (aux) {
-                JOptionPane.showMessageDialog(this, "Registro actualizado correctamente!");
-            } else {
-                JOptionPane.showMessageDialog(this, "No se pudo actualizar correctamente el registro\nIntente nuevamente");
-            }
-
+        if (aux) {
+            JOptionPane.showMessageDialog(this, "Pasaje actualizado correctamente!");
             cargarComboRuta();
-
-        } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese la hora en un formato correcto! (HH:mm)", "Error de formato", 2);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un valor valido para precio! \nSolo valores numericos, con . para incluir centavos", "Valor incorrecto", 2);
+            limpiarBuscar();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo actualizar el pasaje.");
         }
-
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -624,9 +615,14 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
     public boolean esIgual(int id) {
 
         RutaViaje ruta = rvd.buscarRutaViajePorId(id);
-
+        Colectivo colectivo = (Colectivo) comboxIdColectivoBuscar.getSelectedItem();
+        
         if (ruta == null) {
             return true;
+        }
+        
+        if (colectivo == null || ruta.getColectivo() == null) {
+            return false;
         }
 
         if (!ruta.getOrigen().equals(txtOrigenBuscar.getText().trim())) {
@@ -647,16 +643,14 @@ public class VistaRutaViaje extends javax.swing.JInternalFrame {
 
         double precio = Double.parseDouble(txtPrecioBuscar.getText().trim().replace(',', '.'));
 
-        if (precio != ruta.getPrecio()) {
+        if (Double.compare(precio, ruta.getPrecio()) != 0) {
             return false;
         }
 
         if (ruta.isEstado() != checkEstadoBuscar.isSelected()) {
             return false;
         }
-
-        Colectivo colectivo = (Colectivo) comboxIdColectivoBuscar.getSelectedItem();
-
+        
         if (ruta.getColectivo().getID_colectivo() != colectivo.getID_colectivo()) {
             return false;
         }

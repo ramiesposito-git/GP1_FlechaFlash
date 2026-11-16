@@ -39,8 +39,6 @@ public class RutaViajeData {
                 r.setIdRuta(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Se guardo correctamente la ruta.");
             }
-            stm.close();
-            rs.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al guardar ruta: " + ex.getMessage());
         }
@@ -181,7 +179,7 @@ public class RutaViajeData {
             }
             
         } catch (SQLException ex) {
-            System.out.println("Error al borrar Ruta-Viaje "+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al borrar Ruta-Viaje: "+ex.getMessage());
             return  false;
         }
         
