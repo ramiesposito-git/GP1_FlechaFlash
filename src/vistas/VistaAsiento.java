@@ -1,6 +1,7 @@
 package vistas;
 
-import java.util.ArrayList;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -24,6 +25,8 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         cargarCombo();
 
         vaciarCampos();
+        
+        initIcon();
 
         modificarBTN.setEnabled(false);
         eliminarBTN.setEnabled(false);
@@ -44,7 +47,8 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         jPanel5 = new javax.swing.JPanel();
         btnCargar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelIcono = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         idAsientotxt = new javax.swing.JTextField();
@@ -154,26 +158,29 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(38, 52, 69));
         jPanel2.setPreferredSize(new java.awt.Dimension(329, 74));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("GESTION DE ASIENTOS");
+        jLabel10.setBackground(new java.awt.Color(37, 99, 235));
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("ADMINISTRAR ASIENTOS");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
+                .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jLabel10)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
+            .addComponent(jLabelIcono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Nuevo Asiento", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 1, 17), new java.awt.Color(38, 52, 69))); // NOI18N
@@ -303,23 +310,23 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -379,7 +386,7 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         if (a) {
             JOptionPane.showMessageDialog(this, "Asiento editado con exito!");
         } else {
-            JOptionPane.showMessageDialog(this, "El asiento Nº"+ SpinnerNroAsientoEditar.getValue() +" ya existe, intente con otro!");
+            JOptionPane.showMessageDialog(this, "El asiento Nº" + SpinnerNroAsientoEditar.getValue() + " ya existe, intente con otro!");
             return;
         }
 
@@ -464,7 +471,7 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox checkActivoEditar;
     private javax.swing.JButton eliminarBTN;
     private javax.swing.JTextField idAsientotxt;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -473,6 +480,7 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelIcono;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -527,8 +535,16 @@ public class VistaAsiento extends javax.swing.JInternalFrame {
         if (asiento.getEstado() != checkActivoEditar.isSelected()) {
             esIgual = false;
         }
-        
+
         return esIgual;
     }
 
+    public void initIcon() {
+
+        ImageIcon icono = new ImageIcon(getClass().getResource("/img/consultaIcono.png"));
+
+        Image escalada = icono.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+
+        jLabelIcono.setIcon(new ImageIcon(escalada));
+    }
 }

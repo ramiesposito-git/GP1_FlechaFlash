@@ -1,5 +1,7 @@
 package vistas;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.Pasajero;
 import persistencia.PasajeroData;
@@ -12,6 +14,7 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
         initComponents();
         pd = new PasajeroData(Principal.conexion);
         cargarCombo();
+        initIcon();
     }
 
     @SuppressWarnings("unchecked")
@@ -33,7 +36,8 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         btnCargar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabelIcono = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         ComboBoxPasajeros = new javax.swing.JComboBox<>();
@@ -171,26 +175,29 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
 
         jPanel3.setBackground(new java.awt.Color(38, 52, 69));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("GESTION DE PASAJEROS");
+        jLabel18.setBackground(new java.awt.Color(37, 99, 235));
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("ADMINISTRAR PASAJEROS");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jLabel18)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelIcono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Eliminar - Editar Pasajero", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 17), new java.awt.Color(38, 52, 69))); // NOI18N
@@ -200,7 +207,7 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
         ComboBoxPasajeros.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ComboBoxPasajeros.setForeground(new java.awt.Color(102, 102, 102));
         ComboBoxPasajeros.setBorder(null);
-        ComboBoxPasajeros.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ComboBoxPasajeros.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ComboBoxPasajeros.addActionListener(this::ComboBoxPasajerosActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -360,7 +367,7 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
@@ -481,12 +488,12 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JCheckBox checkActivo;
     private javax.swing.JCheckBox checkActivoBuscar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -494,6 +501,7 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelIcono;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -582,4 +590,16 @@ public class VistaPasajero extends javax.swing.JInternalFrame {
         ComboBoxPasajeros.setSelectedIndex(-1);
 
     }
+
+    public void initIcon() {
+
+        ImageIcon icono = new ImageIcon(
+                getClass().getResource("/img/pasajerosIcono.png")
+        );
+
+        Image escalada = icono.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+
+        jLabelIcono.setIcon(new ImageIcon(escalada));
+    }
+
 }

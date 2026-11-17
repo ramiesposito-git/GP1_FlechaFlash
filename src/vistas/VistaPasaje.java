@@ -1,8 +1,10 @@
 package vistas;
 
+import java.awt.Image;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 import modelo.Asiento;
@@ -41,6 +43,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
         limpiar();
         limpiarBuscar();
+        initIcon();
 
     }
 
@@ -61,7 +64,8 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         comboxRuta = new javax.swing.JComboBox<>();
         comboxPasajero = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelIcon = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btnBuscar = new javax.swing.JButton();
@@ -193,26 +197,29 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
         jPanel3.setBackground(new java.awt.Color(38, 52, 69));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ADMINISTRAR PASAJES");
+        jLabel18.setBackground(new java.awt.Color(37, 99, 235));
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("ADMINISTRAR PASAJES");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(jLabelIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jLabel18)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Eliminar -  Editar Pasaje", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 17), new java.awt.Color(38, 52, 69))); // NOI18N
@@ -353,7 +360,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
                                 .addComponent(txtFechaVentaBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(comboxPasajeroBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboxRutaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -503,7 +510,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
             btnEditar.setEnabled(false);
             btnEliminar.setEnabled(false);
-            
+
         } else {
             JOptionPane.showMessageDialog(this, "No se pudo actualizar el pasaje, intente nuevamente.");
         }
@@ -553,14 +560,14 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
         try {
             int idPasaje = Integer.valueOf(txtIdPasaje.getText().trim());
-            
+
             if (idPasaje <= 0) {
                 JOptionPane.showMessageDialog(this, "Ingrese un ID mayor que cero.");
                 btnEliminar.setEnabled(false);
                 btnEditar.setEnabled(false);
                 return;
             }
-            
+
             Pasaje pasaje = pd.buscarPasajePorId(idPasaje);
 
             if (pasaje == null) {
@@ -626,7 +633,6 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<Pasajero> comboxPasajeroBuscar;
     private javax.swing.JComboBox<RutaViaje> comboxRuta;
     private javax.swing.JComboBox<RutaViaje> comboxRutaBuscar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -634,16 +640,21 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelIcon;
+    private javax.swing.JLabel jLabelIcono;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JTextField txtFechaVentaBuscar;
     private javax.swing.JTextField txtHoraVentaBuscar;
     private javax.swing.JTextField txtIdPasaje;
@@ -744,7 +755,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         if (pasajero == null || asiento == null || ruta == null) {
             return false;
         }
-         
+
         if (pasaje.getPasajero().getIdPasajero() != pasajero.getIdPasajero()) {
             return false;
         }
@@ -756,7 +767,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         if (pasaje.getViaje().getIdRuta() != ruta.getIdRuta()) {
             return false;
         }
-        
+
         if (Double.compare(pasaje.getPrecio(), ruta.getPrecio()) != 0) {
             return false;
         }
@@ -766,5 +777,16 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         }
 
         return true;
+    }
+
+    public void initIcon() {
+
+        ImageIcon icono = new ImageIcon(
+                getClass().getResource("/img/pasajeIcono.png")
+        );
+
+        Image escalada = icono.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+
+        jLabelIcon.setIcon(new ImageIcon(escalada));
     }
 }

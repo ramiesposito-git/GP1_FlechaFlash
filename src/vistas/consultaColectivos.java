@@ -2,6 +2,8 @@ package vistas;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Colectivo;
@@ -25,6 +27,9 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
         cd = new ColectivoData(Principal.conexion);
         initTable();
         cargarTable();
+
+        initIcon();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -40,7 +45,7 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelIcono = new javax.swing.JLabel();
 
         setClosable(true);
 
@@ -115,19 +120,19 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelIcono, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -203,7 +208,7 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
     private javax.swing.JButton buscarID;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelIcono;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
@@ -223,7 +228,7 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
         jTable1.setModel(modelo);
 
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
-        jTable1.getColumnModel().getColumn(1).setPreferredWidth(75);  
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(75);
         jTable1.getColumnModel().getColumn(2).setPreferredWidth(85);
         jTable1.getColumnModel().getColumn(3).setPreferredWidth(80);
         jTable1.getColumnModel().getColumn(4).setPreferredWidth(80);
@@ -241,5 +246,16 @@ public class consultaColectivos extends javax.swing.JInternalFrame {
         for (Colectivo col : cd.listarColectivo()) {
             modelo.addRow(new Object[]{col.getID_colectivo(), col.getMatricula(), col.getMarca(), col.getModelo(), col.getCapacidad(), col.getChofer()});
         }
+    }
+
+    public void initIcon() {
+
+        ImageIcon icono = new ImageIcon(
+                getClass().getResource("/img/colectivoIcon.png")
+        );
+
+        Image escalada = icono.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+
+        jLabelIcono.setIcon(new ImageIcon(escalada));
     }
 }
