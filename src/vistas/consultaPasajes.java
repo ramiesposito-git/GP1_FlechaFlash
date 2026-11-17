@@ -9,8 +9,16 @@ import persistencia.PasajeData;
 
 public class consultaPasajes extends javax.swing.JInternalFrame {
 
-    public DefaultTableModel modelo = new DefaultTableModel();
+    
     PasajeData pd;
+    
+    public DefaultTableModel modelo = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+
+    };
 
     public consultaPasajes() {
         initComponents();
@@ -51,11 +59,13 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setAlignmentX(2.0F);
         jTable1.setGridColor(new java.awt.Color(204, 204, 204));
         jTable1.setName(""); // NOI18N
         jTable1.setSelectionBackground(new java.awt.Color(155, 197, 253));
         jTable1.setSelectionForeground(new java.awt.Color(38, 52, 69));
         jTable1.setShowGrid(false);
+        jTable1.setShowVerticalLines(true);
         jTable1.getTableHeader().setResizingAllowed(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
@@ -87,12 +97,12 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Busqueda por ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 1, 14), new java.awt.Color(38, 52, 69))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(38, 52, 69));
         jLabel2.setText("ID:");
 
         buscarID.setBackground(new java.awt.Color(45, 108, 223));
-        buscarID.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        buscarID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         buscarID.setForeground(new java.awt.Color(255, 255, 255));
         buscarID.setText("Buscar");
         buscarID.addActionListener(this::buscarIDActionPerformed);
@@ -102,16 +112,16 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap()
                 .addComponent(buscarID)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(buscarID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -119,29 +129,29 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtIDpasaje, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(txtIDpasaje, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(13, 13, 13)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtIDpasaje, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         BTNlistarTodos.setBackground(new java.awt.Color(45, 108, 223));
-        BTNlistarTodos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        BTNlistarTodos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         BTNlistarTodos.setForeground(new java.awt.Color(255, 255, 255));
         BTNlistarTodos.setText("LISTAR TODOS");
         BTNlistarTodos.addActionListener(this::BTNlistarTodosActionPerformed);
@@ -151,9 +161,9 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(56, 56, 56)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addComponent(BTNlistarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(67, 67, 67))
         );
@@ -175,11 +185,13 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +199,7 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(19, 19, 19)
+                .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -196,9 +208,9 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buscarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarIDActionPerformed
-        
+
         limpiarTable();
-        
+
         try {
             int id = Integer.parseInt(txtIDpasaje.getText());
             listarID(id);
@@ -211,7 +223,6 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
 
     private void BTNlistarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNlistarTodosActionPerformed
         limpiarTable();
-        
         listarTodos();
     }//GEN-LAST:event_BTNlistarTodosActionPerformed
 
@@ -235,6 +246,7 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
         modelo.addColumn("ID");
         modelo.addColumn("Pasajero");
         modelo.addColumn("asiento");
+        modelo.addColumn("colectivo");
         modelo.addColumn("ruta");
         modelo.addColumn("fecha venta");
         modelo.addColumn("hora venta");
@@ -242,13 +254,14 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
 
         jTable1.setModel(modelo);
 
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(35);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
         jTable1.getColumnModel().getColumn(1).setPreferredWidth(130);
-        jTable1.getColumnModel().getColumn(2).setPreferredWidth(60);
-        jTable1.getColumnModel().getColumn(3).setPreferredWidth(176);
-        jTable1.getColumnModel().getColumn(4).setPreferredWidth(90);
-        jTable1.getColumnModel().getColumn(5).setPreferredWidth(80);
-        jTable1.getColumnModel().getColumn(6).setPreferredWidth(90);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(65);
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(65);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(170); //720
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(90);
+        jTable1.getColumnModel().getColumn(6).setPreferredWidth(100);
+        jTable1.getColumnModel().getColumn(6).setPreferredWidth(70);
 
         jTable1.getTableHeader().setForeground(new Color(38, 52, 69));
         jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -266,7 +279,7 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
             String ruta = pasaje.getViaje().getOrigen() + " - " + pasaje.getViaje().getDestino();
             String pasajero = pasaje.getPasajero().getNombre() + " " + pasaje.getPasajero().getApellido();
 
-            modelo.addRow(new Object[]{pasaje.getIdPasaje(), pasajero, pasaje.getAsiento().getNumeroAsiento(), ruta, pasaje.getFechaVenta(), pasaje.getHoraVenta(), pasaje.getPrecio()});
+            modelo.addRow(new Object[]{pasaje.getIdPasaje(), pasajero, pasaje.getAsiento().getNumeroAsiento(), pasaje.getAsiento().getColectivo().getID_colectivo(), ruta, pasaje.getFechaVenta(), pasaje.getHoraVenta(), pasaje.getPrecio()});
         }
 
     }
@@ -278,7 +291,7 @@ public class consultaPasajes extends javax.swing.JInternalFrame {
         String ruta = pasaje.getViaje().getOrigen() + " - " + pasaje.getViaje().getDestino();
         String pasajero = pasaje.getPasajero().getNombre() + " " + pasaje.getPasajero().getApellido();
 
-        modelo.addRow(new Object[]{pasaje.getIdPasaje(), pasajero, pasaje.getAsiento().getNumeroAsiento(), ruta, pasaje.getFechaVenta(), pasaje.getHoraVenta(), pasaje.getPrecio()});
+        modelo.addRow(new Object[]{pasaje.getIdPasaje(), pasajero, pasaje.getAsiento().getNumeroAsiento(), pasaje.getAsiento().getColectivo().getID_colectivo(), ruta, pasaje.getFechaVenta(), pasaje.getHoraVenta(), pasaje.getPrecio()});
 
     }
 

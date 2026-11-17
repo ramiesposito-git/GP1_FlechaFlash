@@ -1,7 +1,11 @@
 package vistas;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Asiento;
 import modelo.Colectivo;
@@ -10,7 +14,14 @@ import persistencia.ColectivoData;
 
 public class consultaAsientos extends javax.swing.JInternalFrame {
 
-    public DefaultTableModel modelo = new DefaultTableModel();
+    public DefaultTableModel modelo = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+
+    };
+    ;
     AsientoData ad;
 
     public consultaAsientos() {
@@ -64,15 +75,19 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setSelectionBackground(new java.awt.Color(155, 197, 253));
+        jTable1.setSelectionForeground(new java.awt.Color(38, 52, 69));
+        jTable1.setShowVerticalLines(true);
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Buscar por ID:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Buscar por ID:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14), new java.awt.Color(38, 52, 69))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(38, 52, 69));
         jLabel2.setText("ID asiento:");
 
         buscarID.setBackground(new java.awt.Color(45, 108, 223));
-        buscarID.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        buscarID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         buscarID.setForeground(new java.awt.Color(255, 255, 255));
         buscarID.setText("buscar");
         buscarID.addActionListener(this::buscarIDActionPerformed);
@@ -84,14 +99,14 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
+                        .addGap(15, 15, 15)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtIDasiento, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addComponent(buscarID)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,13 +120,14 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Listar por Colectivo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Buscar por ID:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14), new java.awt.Color(38, 52, 69))); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(38, 52, 69));
         jLabel3.setText("Colectivo");
 
-        buscarPorColectivo.setBackground(new java.awt.Color(45, 108, 223));
-        buscarPorColectivo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        buscarPorColectivo.setBackground(new java.awt.Color(37, 99, 235));
+        buscarPorColectivo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         buscarPorColectivo.setForeground(new java.awt.Color(255, 255, 255));
         buscarPorColectivo.setText("buscar");
         buscarPorColectivo.addActionListener(this::buscarPorColectivoActionPerformed);
@@ -123,7 +139,7 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(13, 13, 13)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,7 +147,7 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
                         .addGap(6, 6, 6)
                         .addComponent(buscarPorColectivo))
                     .addComponent(ComboBoxColectivos, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(15, 15, 15))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +176,7 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel1)
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addContainerGap(272, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,14 +191,14 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
             .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -194,8 +210,8 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -226,7 +242,7 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
     private void buscarPorColectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarPorColectivoActionPerformed
 
         limpiarTable();
-        
+
         Colectivo colectivo = (Colectivo) ComboBoxColectivos.getSelectedItem();
 
         ArrayList<Asiento> asientos = ad.buscarAsientoPorColectivo(colectivo);
@@ -237,7 +253,16 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
         }
 
         for (Asiento asiento : asientos) {
-            modelo.addRow(new Object[]{asiento.getIdAsiento(), asiento.getColectivo().getID_colectivo(), asiento.getNumeroAsiento()});
+
+            String estado;
+
+            if (asiento.getEstado()) {
+                estado = "libre";
+            } else {
+                estado = "ocupado";
+            }
+
+            modelo.addRow(new Object[]{asiento.getNumeroAsiento(), asiento.getIdAsiento(), asiento.getColectivo().getID_colectivo(), estado});
         }
 
 
@@ -273,12 +298,15 @@ public class consultaAsientos extends javax.swing.JInternalFrame {
     }
 
     public void initTable() {
-
+        modelo.addColumn("N° Asiento ");
         modelo.addColumn("ID Asiento");
         modelo.addColumn("ID Colectivo");
-        modelo.addColumn("Numero de asiento");
+        modelo.addColumn("Estado");
 
         jTable1.setModel(modelo);
+
+        jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+        jTable1.getTableHeader().setForeground(new Color(38, 52, 69));
     }
 
     public void limpiarTable() {

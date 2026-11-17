@@ -1,12 +1,20 @@
 package vistas;
 
+import java.awt.Color;
+import java.awt.Font;
 import javax.swing.table.DefaultTableModel;
 import modelo.RutaViaje;
 import persistencia.RutaViajeData;
 
 public class consultaRutaViaje extends javax.swing.JInternalFrame {
 
-    public DefaultTableModel modelo = new DefaultTableModel();
+    public DefaultTableModel modelo = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+
+    };
     RutaViajeData rvd;
 
     public consultaRutaViaje() {
@@ -67,11 +75,15 @@ public class consultaRutaViaje extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setSelectionBackground(new java.awt.Color(155, 197, 253));
+        jTable1.setSelectionForeground(new java.awt.Color(38, 52, 69));
+        jTable1.setShowVerticalLines(true);
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Busqueda por ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true), "Busqueda por ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14), new java.awt.Color(38, 52, 69))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(38, 52, 69));
         jLabel2.setText("ID:");
 
         btnBuscar.setBackground(new java.awt.Color(45, 108, 223));
@@ -85,26 +97,26 @@ public class consultaRutaViaje extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtIdRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(btnBuscar)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(btnBuscar)
                     .addComponent(txtIdRuta))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
-        btnListar.setBackground(new java.awt.Color(45, 108, 223));
+        btnListar.setBackground(new java.awt.Color(37, 99, 235));
         btnListar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnListar.setForeground(new java.awt.Color(255, 255, 255));
         btnListar.setText("LISTAR TODOS");
@@ -116,30 +128,31 @@ public class consultaRutaViaje extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -150,13 +163,14 @@ public class consultaRutaViaje extends javax.swing.JInternalFrame {
 
         int id = Integer.parseInt(txtIdRuta.getText());
         RutaViaje ruta = rvd.buscarRutaViajePorId(id);
-        modelo.addRow(new Object[]{ruta.getIdRuta(), ruta.getColectivo().getID_colectivo(), ruta.getOrigen(), ruta.getDestino(), ruta.getHoraSalida(), ruta.getHoraLlegada(), ruta.getPrecio()});
+        modelo.addRow(new Object[]{ruta.getIdRuta(), ruta.getOrigen(), ruta.getDestino(), ruta.getColectivo().getID_colectivo(), ruta.getHoraSalida(), ruta.getHoraLlegada(), ruta.getPrecio()});
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         limpiarTable();
         cargarTable();
-        
+
     }//GEN-LAST:event_btnListarActionPerformed
 
 
@@ -174,15 +188,26 @@ public class consultaRutaViaje extends javax.swing.JInternalFrame {
 
     public void initTable() {
         modelo.addColumn("ID");
-        modelo.addColumn("Colectivo");
         modelo.addColumn("Origen");
         modelo.addColumn("Destino");
-        modelo.addColumn("Hora de Salida");
-        modelo.addColumn("Hora de Llegada");
+        modelo.addColumn("Colectivo");
+        modelo.addColumn("Horario");
         modelo.addColumn("Precio");
         
-
         jTable1.setModel(modelo);
+        
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(80);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(80);
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(60);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(80);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(60);
+        
+        
+        jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+        jTable1.getTableHeader().setForeground(new Color(38, 52, 69));
+        
+        
     }
 
     public void limpiarTable() {
@@ -191,7 +216,8 @@ public class consultaRutaViaje extends javax.swing.JInternalFrame {
 
     public void cargarTable() {
         for (RutaViaje ruta : rvd.listarRutaViaje()) {
-            modelo.addRow(new Object[]{ruta.getIdRuta(),ruta.getColectivo().getID_colectivo(), ruta.getOrigen(), ruta.getDestino(), ruta.getHoraSalida(), ruta.getHoraLlegada(), ruta.getPrecio()});
+            modelo.addRow(new Object[]{ruta.getIdRuta(), ruta.getOrigen(), ruta.getDestino(), ruta.getColectivo().getID_colectivo(), ruta.getHoraSalida() +" - "+ ruta.getHoraLlegada(), ruta.getPrecio()});
         }
+
     }
 }
