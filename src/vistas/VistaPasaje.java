@@ -24,8 +24,6 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     private RutaViajeData rvd;
     private AsientoData ad;
 
-    private final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
-
     public VistaPasaje() {
 
         initComponents();
@@ -43,6 +41,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
         limpiar();
         limpiarBuscar();
+
         initIcon();
 
     }
@@ -458,8 +457,11 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         NuevoPasaje.setHoraVenta(LocalTime.now());
 
         if (pd.crearPasaje(NuevoPasaje)) {
+            
             JOptionPane.showMessageDialog(this, "Pasaje creado con correctamente\nID designado: " + NuevoPasaje.getIdPasaje());
             ad.bajaAsiento(NuevoPasaje.getAsiento().getIdAsiento()); //le damos de baja al asiento para que ya no se pueda comprar un boleto con ese asiento.
+            actualizarComboBox(); //actualizamos los comboBox de asientos, para que se muestren los estados de los asientos actualizados.
+            
         } else {
             JOptionPane.showMessageDialog(this, "Ocurrio un error y no se pudo crear el pasaje.\nrevise los datos o cambie de asiento.");
         }
@@ -467,52 +469,53 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int id;
+
         try {
-            id = Integer.parseInt(txtIdPasaje.getText().trim());
+            int id = Integer.parseInt(txtIdPasaje.getText().trim());
 
             if (id <= 0) {
                 JOptionPane.showMessageDialog(this, "Ingrese un ID mayor a cero");
                 return;
             }
+
+            Pasaje anterior = pd.buscarPasajePorId(id);
+
+            Pasajero pasajero = (Pasajero) comboxPasajeroBuscar.getSelectedItem();
+            Asiento asiento = (Asiento) comboxAsientoBuscar.getSelectedItem();
+            RutaViaje ruta = (RutaViaje) comboxRutaBuscar.getSelectedItem();
+
+            if (pasajero == null || asiento == null || ruta == null) {
+                JOptionPane.showMessageDialog(this, "Seleccione un pasajero, una ruta y un asiento.");
+                return;
+            }
+
+            boolean estado = checkboxEstadoBuscar.isSelected();
+
+            if (esIgual(id)) {
+                JOptionPane.showMessageDialog(this, "Debe modificar al menos uno de sus datos!");
+                return;
+            }
+
+            Pasaje modificado = new Pasaje(id, pasajero, asiento, ruta, anterior.getFechaVenta(), anterior.getHoraVenta(), ruta.getPrecio(), estado);
+
+            if (pd.actualizarPasaje(modificado)) {
+
+                ad.altaAsiento(anterior.getAsiento().getIdAsiento());//se vuelve a dar de alta (libre) al asiento anterior   
+                ad.bajaAsiento(modificado.getAsiento().getIdAsiento());//se le da de baja (ocupado) al nuevo asiento
+
+                btnEditar.setEnabled(false);
+                btnEliminar.setEnabled(false);
+
+                actualizarComboBox(); //actualizamos los comboBox de asientos, para que se muestren los estados de los asientos actualizados.
+                limpiarBuscar();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo actualizar el pasaje, intente nuevamente.");
+            }
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "El ID debe ser un número entero.");
             return;
-        }
-
-        Pasaje anterior = pd.buscarPasajePorId(id);
-
-        Pasajero pasajero = (Pasajero) comboxPasajeroBuscar.getSelectedItem();
-        Asiento asiento = (Asiento) comboxAsientoBuscar.getSelectedItem();
-        RutaViaje ruta = (RutaViaje) comboxRutaBuscar.getSelectedItem();
-
-        if (pasajero == null || asiento == null || ruta == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione un pasajero, una ruta y un asiento.");
-            return;
-        }
-
-        boolean estado = checkboxEstadoBuscar.isSelected();
-
-        if (esIgual(id)) {
-            JOptionPane.showMessageDialog(this, "Debe modificar al menos uno de sus datos!");
-            return;
-        }
-
-        Pasaje modificado = new Pasaje(id, pasajero, asiento, ruta, anterior.getFechaVenta(), anterior.getHoraVenta(), ruta.getPrecio(), estado);
-
-        if (pd.actualizarPasaje(modificado)) {
-
-            cargarComboAsientos(ruta);
-            cargarComboAsientosBuscar(ruta);
-
-            ad.altaAsiento(anterior.getAsiento().getIdAsiento());//se vuelve a dar de alta al asiento anterior   
-            limpiarBuscar();
-
-            btnEditar.setEnabled(false);
-            btnEliminar.setEnabled(false);
-
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pudo actualizar el pasaje, intente nuevamente.");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -538,14 +541,19 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
                 return;
             }
 
-            Pasaje pasaje = pd.buscarPasajePorId(id);
+            Pasaje pasajeBorrar = pd.buscarPasajePorId(id);
 
-            boolean aux = pd.borrarPasaje(pasaje);
+            if (pd.borrarPasaje(pasajeBorrar)) {
 
-            if (aux) {
                 JOptionPane.showMessageDialog(this, "Registro eliminado correctamente.");
+
+                ad.altaAsiento(pasajeBorrar.getAsiento().getIdAsiento()); //se le da el alta (desocupado) al asiento que se libera.
+
+                actualizarComboBox(); //actualizamos los comboBox de asientos, para que se muestren los estados de los asientos actualizados.
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Ocurrio un error y no se pudo eliminar el registro\nIntenta de nuevo.");
+                return;
             }
 
         } catch (NumberFormatException e) {
@@ -554,6 +562,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         }
 
         limpiarBuscar();
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -615,6 +624,7 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         }
 
         RutaViaje ruta = (RutaViaje) comboxRutaBuscar.getSelectedItem();
+        
         txtPrecioBuscar.setText(ruta.getPrecio() + "");
         cargarComboAsientosBuscar(ruta);
     }//GEN-LAST:event_comboxRutaBuscarActionPerformed
@@ -691,15 +701,11 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
         }
     }
 
-    private void cargarComboAsientosBuscar(RutaViaje rutaBuscar) {
+    private void cargarComboAsientosBuscar(RutaViaje ruta) {
         comboxAsientoBuscar.removeAllItems();
-
-        if (rutaBuscar == null) {
-            return;
-        }
-
+        
         for (Asiento asiento : ad.listarAsientos()) {
-            if (asiento.getEstado() && rutaBuscar.getColectivo().equals(asiento.getColectivo())) { //solo los asientos desocupedos y los colectivos que realizan la misma.
+            if (asiento.getEstado() && ruta.getColectivo().getID_colectivo() == asiento.getColectivo().getID_colectivo()) { //solo los asientos desocupdos y los colectivos que realizan la misma.
                 comboxAsientoBuscar.addItem(asiento);
             }
         }
@@ -781,12 +787,24 @@ public class VistaPasaje extends javax.swing.JInternalFrame {
 
     public void initIcon() {
 
-        ImageIcon icono = new ImageIcon(
-                getClass().getResource("/img/pasajeIcono.png")
-        );
+        ImageIcon icono = new ImageIcon(getClass().getResource("/img/pasajeIcono.png"));
 
         Image escalada = icono.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
 
         jLabelIcon.setIcon(new ImageIcon(escalada));
+    }
+
+    public void actualizarComboBox() {
+
+        comboxAsiento.removeAll();
+        comboxAsientoBuscar.removeAll();
+        
+        for (Asiento asiento : ad.listarAsientos()) {
+            if (asiento.getEstado()) {
+                comboxAsiento.addItem(asiento);
+                comboxAsientoBuscar.addItem(asiento);
+            }
+        }
+
     }
 }

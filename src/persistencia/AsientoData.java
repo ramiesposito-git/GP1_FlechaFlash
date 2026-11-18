@@ -150,7 +150,7 @@ public class AsientoData {
             int n = ps.executeUpdate();
 
             if (n == 1) {
-                System.out.println("asiento dado de baja");
+                System.out.println("baja correcta al asiento "+ idAsiento);
             } else {
                 System.out.println("no se dio de baja al asiento, revisar 'bajaAsiento' en 'AsientoData'");
             }
